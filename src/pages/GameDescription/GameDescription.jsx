@@ -21,7 +21,7 @@ export const GameDescription = ({isLoggedIn, addToFavs, removeFromFavs}) => {
     const [year, setYear] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [gameData, setGameData] = useState({})
-    const [isFavourite, setIsFavourite] = useState(false)
+    // const [isFavourite, setIsFavourite] = useState(false)
 
     const { gameSlug } = useParams()
 

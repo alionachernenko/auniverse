@@ -6,8 +6,7 @@ import { GameDescription } from "./pages/GameDescription/GameDescription";
 import styled from "styled-components";
 import './App.css'
 import { Logo } from "./components/Logo/Logo";
-import { RiLoginBoxFill, RiShoppingBasket2Fill, RiUserFill} from 'react-icons/ri'
-import { IoLanguage } from 'react-icons/io5'
+import { RiLoginBoxFill, RiUserFill} from 'react-icons/ri'
 import { BsArrowUp } from 'react-icons/bs'
 import { SearchForm } from "./components/SearchForm/SearchForm";
 import { useState } from "react";
