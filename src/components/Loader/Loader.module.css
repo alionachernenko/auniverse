@@ -1,0 +1,15 @@
+.loader{
+    position: absolute;   
+}
+
+.homepage{
+    margin-left: 60px;
+
+}
+
+.catalog_game-description{
+    composes: loader;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

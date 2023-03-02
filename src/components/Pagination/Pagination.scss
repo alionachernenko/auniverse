@@ -1,0 +1,51 @@
+.container{
+    background-color: transparent;
+    display: flex;
+    gap: 10px;
+    list-style: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.page{
+    box-sizing: border-box;
+    width: auto;
+    min-width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    cursor: pointer;
+    background-color: transparent;
+    border-radius: 15px;
+    padding: 2px;
+}
+
+.page a{
+    color: white;
+}
+
+.active{
+    background-color: orange;
+}
+
+.active a{
+    color: white;
+}
+
+.next a, .prev a{
+    display: block;
+}
+
+.next:not(.disabled), .prev:not(.disabled) {
+    cursor: pointer;
+}
+.next svg, .prev svg {
+    display: block;
+    height: 30px;
+    width: 30px;
+}
+
+.prev svg {
+    transform: rotate(-180deg);
+}

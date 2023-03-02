@@ -1,0 +1,62 @@
+.searchform_catalog {
+    margin-bottom: 20px;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 40px;
+    font-family: 'Nunito', sans-serif;
+    position: relative;
+}
+
+.searchform_catalog input, .searchform_header input{
+    font-family: inherit;
+    font-size: 20px;
+    height: 100%;
+    width: 100%;
+    border-radius: 30px;
+    margin-right: 5px;
+    border: none;
+    padding-left: 10px;
+    box-sizing: border-box;
+    padding-right: 110px;
+}
+
+.searchform_catalog button{
+    height: 90%;
+    top: 50%;
+    transform: translateY(-50%);
+    position: absolute;
+    right: 3px;
+    border-radius: 30px;
+    border-color: transparent;
+    background-color: orange;
+    font-family: inherit;
+    font-size: 20px;
+    color: darkblue;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.searchform_header{
+    height: 100%;
+    width: 250px;
+    margin: 0;
+    font-family: 'Nunito', sans-serif;
+    position: relative;
+}
+
+.searchform_header button{
+    height: 90%; 
+    position: absolute; /**/
+    right: 3px; /**/
+    border-radius: 30px;/**/
+    border-color: transparent;/**/
+    background-color: orange;/**/
+    font-family: inherit;/**/
+    font-size: 10px;/**/
+    color: darkblue;/**/
+    font-weight: 900;
+    top: 50%;/**/
+    cursor: pointer;/**/
+    transform: translateY(-50%);
+}

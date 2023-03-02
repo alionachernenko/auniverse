@@ -1,5 +1,15 @@
 @import-normalize; /* bring in normalize.css styles */
 
+@font-face{
+  font-family: 'Nunito';
+  src: url(./fonts/Nunito-Regular.ttf);
+}
+html {
+  overflow-x: hidden;
+  height:100%;
+  margin-right: calc(-1 * (100vw - 100%));
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -7,9 +17,36 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100%;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+a{
+  text-decoration: none;
+  color: #ffffff
+}
+
+h1, h2, h3, h4, h5, h6, p, ul, li{
+  margin: 0;
+  padding: 0;
+}
+
+img{
+  display: block;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(5, 5, 34);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #442929;
 }
