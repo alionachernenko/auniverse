@@ -23,7 +23,7 @@ export const GameCard = ({ data, width, className }) => {
                     }))}
                 </ul>
             </div>
-            <Link to={`/catalog/${slug}`} aria-label={`Read more about ${name}`}>
+            <Link to={`/auniverse/catalog/${slug}`} aria-label={`Read more about ${name}`}>
                 <p>
                     Read more
                 </p>

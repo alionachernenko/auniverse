@@ -7,7 +7,7 @@ export const Login = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if(JSON.parse(localStorage.getItem('isLoggedIn')) === true) navigate(`/${JSON.parse(localStorage.getItem('userId'))}/profile`)
+        if(JSON.parse(localStorage.getItem('isLoggedIn')) === true) navigate(`/auniverse/${JSON.parse(localStorage.getItem('userId'))}/profile`)
     }, [navigate])
     
     return (

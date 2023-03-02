@@ -14,7 +14,7 @@ export const Profile = ({ isLoggedIn, setIsLoggedIn}) => {
     useEffect(() => {
         if (!isLoggedIn) {
         console.log('no')
-            navigate('/login')
+            navigate('/auniverse/login')
             return
         }
         
@@ -39,7 +39,7 @@ export const Profile = ({ isLoggedIn, setIsLoggedIn}) => {
     const logOut = () => {
         signOutUser()
             .then(() => {
-                navigate('/login/login-page')
+                navigate('/auniverse/login/login-page')
                 setIsLoggedIn(false)
                 localStorage.setItem('isLoggedIn', false)}
         );

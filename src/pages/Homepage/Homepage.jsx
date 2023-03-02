@@ -38,7 +38,7 @@ export const Homepage = () => {
                 <p>Dive into the universe of unexplored worlds,
                     bright locations and unique characters
                 </p>
-                <Link to='/catalog'>Go to the catalog</Link>
+                <Link to='/auniverse/catalog'>Go to the catalog</Link>
                 </Info>
         </Hero>
             <SliderSection>

@@ -39,7 +39,7 @@ function App() {
         e.preventDefault()
         setQuery(value)
         setPage(1)
-        navigation('/catalog')
+        navigation('/auniverse/catalog')
     }
 
     const handleLogInSubmit = (e, email, password) => {
@@ -84,35 +84,35 @@ function App() {
         <>
             <Header>
                 <Logo className={'logo_header'}>AUNIVERSE</Logo>
-                {location.pathname === '/' && <SearchForm onSubmit={handleFormSubmit} className={'searchform_header'} />}
+                {location.pathname === '/auniverse' && <SearchForm onSubmit={handleFormSubmit} className={'searchform_header'} />}
                     <nav>
                         <NavigationMenu>
-                            <li><Link to='/'>Home</Link></li>
-                            <li><Link to='/catalog'>Catalog</Link></li>
+                            <li><Link to='/auniverse'>Home</Link></li>
+                            <li><Link to='/auniverse/catalog'>Catalog</Link></li>
                         </NavigationMenu>
                     </nav>
                 <Options>
-                    {isLoggedIn && <li><Link to={`/${userId}/profile`}><RiUserFill/></Link></li>}
-                    {!isLoggedIn && <li><Link to={`/login/login-page`}><RiLoginBoxFill/></Link></li>}
+                    {isLoggedIn && <li><Link to={`/auniverse/${userId}/profile`}><RiUserFill/></Link></li>}
+                    {!isLoggedIn && <li><Link to={`/auniverse/login/login-page`}><RiLoginBoxFill/></Link></li>}
                     </Options>
             </Header>
             <Routes>
-                <Route path='/' element={<Homepage />} />
-                <Route path='/catalog' element={<Catalog onSubmit={handleFormSubmit} page={page} query={query} setPage={setPage} setQuery={setQuery} />} />
-                <Route path='/catalog/:gameSlug' element={<GameDescription isLoggedIn={isLoggedIn} addToFavs={addToFavs} removeFromFavs={removeFromFavs} userId={userId} />} />
-                <Route path='/login' element={<Login userId={userId} />} >
+                <Route path='/auniverse' element={<Homepage />} />
+                <Route path='/auniverse/catalog' element={<Catalog onSubmit={handleFormSubmit} page={page} query={query} setPage={setPage} setQuery={setQuery} />} />
+                <Route path='/auniverse/catalog/:gameSlug' element={<GameDescription isLoggedIn={isLoggedIn} addToFavs={addToFavs} removeFromFavs={removeFromFavs} userId={userId} />} />
+                <Route path='auniverse/login' element={<Login userId={userId} />} >
                     <Route path='login-page' element={<LoginForm onSubmit={handleLogInSubmit} />} />
                     <Route path='sign-page' element={<SignupForm onSignUp={handleSignUp}/>} />
                 </Route>
 
-                <Route path="/:userId/profile" element={<Profile isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+                <Route path="auniverse/:userId/profile" element={<Profile isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
             </Routes> 
             <Footer>
                 <Logo className={'logo_footer'}>AUNIVERSE</Logo>
                 <nav>
                     <ul>
-                        <li><Link to='/'>Home</Link></li>
-                        <li><Link to='/catalog'>Catalog</Link></li>
+                        <li><Link to='/auniverse'>Home</Link></li>
+                        <li><Link to='/auniverse/catalog'>Catalog</Link></li>
                     </ul>
                 </nav>
                 <div><BsArrowUp fill="black" size='30'/></div>
