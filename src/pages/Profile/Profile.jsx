@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+
 import { useEffect, useState } from "react"
 import { useNavigate} from "react-router-dom"
 import { getUserInfo } from "../../services/firebase"
@@ -34,7 +34,7 @@ export const Profile = ({ isLoggedIn, setIsLoggedIn}) => {
             console.log(res.val())
             setFavouriteGames([...Object.values(res.val())])
         })
-    }, [])
+    }, [isLoggedIn, navigate, userId])
 
     const logOut = () => {
         signOutUser()
