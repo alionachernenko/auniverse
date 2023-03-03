@@ -1,9 +1,17 @@
-export const LoginForm = ({onSubmit}) => {
+import {IoMdLogIn} from 'react-icons/io'
+
+export const LoginForm = ({ onSubmit }) => {
     return (
-        <form action="" onSubmit={(e) => onSubmit(e, e.target.elements.email.value, e.target.elements.password.value)}>
-                <input type="password" name="password" placeholder="password"/>
-                <input type="email" name="email" id="" />
-                <button type="submit"></button>
+        <form className='login_form' onSubmit={(e) => onSubmit(e, e.target.elements.email.value, e.target.elements.password.value)}>
+            <div className='icon-wrapper'>
+                <IoMdLogIn fill='orange' className='icon'/> 
+            </div>
+            
+            <p>Sign in</p>
+            <input type="email" name="email" id="" placeholder='email'/>
+            <input type="password" name="password" placeholder="password" />
+                
+                <button type="submit">Log In</button>
             </form>
     ) 
 }

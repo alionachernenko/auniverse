@@ -8,7 +8,7 @@ import { Loader } from "../../components/Loader/Loader"
 import css from './Catalog.module.css'
 import { GameList } from "../../components/GameList/GameList"
 
-export const Catalog = ({onSubmit, page, query, setPage, setQuery}) => {
+export const Catalog = ({onSubmit, page, query, setPage, setQuery, ordering, genre}) => {
     const [games, setGames] = useState([])
     const [totalPages, setTotalPages] = useState(5)
     const [isLoading, setIsLoading] = useState(true)
@@ -31,7 +31,7 @@ export const Catalog = ({onSubmit, page, query, setPage, setQuery}) => {
     }
         else {
             setIsLoading(true)
-            getGameBySearchQuery(query, page).then(res => {
+            getGameBySearchQuery(query, page, ordering, genre).then(res => {
                 setGames(res.data.results)
                 setTotalPages(res.data.count / 20)
                 setIsLoading(false)
@@ -40,7 +40,7 @@ export const Catalog = ({onSubmit, page, query, setPage, setQuery}) => {
                 setIsLoading(false)
             })
         }
-    }, [page, query])
+    }, [page, query, ordering, genre])
 
     const handlePageChange = (page) => {
         setPage(page + 1)

@@ -3,7 +3,7 @@
     width: 500px;
     margin-left: auto;
     margin-right: auto;
-    height: 40px;
+    height: auto;
     font-family: 'Nunito', sans-serif;
     position: relative;
 }
@@ -21,10 +21,39 @@
     padding-right: 110px;
 }
 
+.searchform_catalog input {
+    height: 40px;
+    margin-bottom: 10px;
+}
+
+.searchform_catalog label{
+    color: white;
+    margin-bottom: 5px;
+}
+
+.searchform_catalog > div{
+    display: flex;
+    justify-content: space-around;
+}
+
+.searchform_catalog > div div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.searchform_catalog select {
+    width: auto;
+    height: 30px;
+    border-radius: 15px;
+    font-family: inherit;
+    color: darkblue;
+    font-weight: 700;
+}
+
 .searchform_catalog button{
-    height: 90%;
-    top: 50%;
-    transform: translateY(-50%);
+    height: 36px;
+    top: 2px;
     position: absolute;
     right: 3px;
     border-radius: 30px;
@@ -35,6 +64,7 @@
     color: darkblue;
     font-weight: 900;
     cursor: pointer;
+
 }
 
 .searchform_header{
@@ -45,6 +75,9 @@
     position: relative;
 }
 
+.searchform_header div{
+    display: none;
+}
 .searchform_header button{
     height: 90%; 
     position: absolute; /**/

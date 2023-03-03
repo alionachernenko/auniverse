@@ -22,8 +22,12 @@ import { SignupForm } from "./components/SignupForm/SignupForm";
 
 function App() {
     const [page, setPage] = useState(1)
+    const [ordering, setOrdering] = useState('')
     const [query, setQuery] = useState('')
+    const [genre, setGenre] = useState('')
     const location = useLocation();
+    const [error, setError] = useState()
+    const navigate = useNavigate()
     const [isLoggedIn, setIsLoggedIn] = useState(() => {
         if (JSON.parse(localStorage.getItem('isLoggedIn'))) {
             return JSON.parse(localStorage.getItem('isLoggedIn'))
@@ -34,10 +38,12 @@ function App() {
     const navigation = useNavigate()
 
     
-    const handleFormSubmit = (e, value) => {
+    const handleFormSubmit = (e, value, ordering, genre) => {
         console.log('submit')
         e.preventDefault()
         setQuery(value)
+        setOrdering(ordering)
+        setGenre(genre)
         setPage(1)
         navigation('/auniverse/catalog')
     }
@@ -50,11 +56,11 @@ function App() {
             setUserId(user.uid)
             localStorage.setItem('userId', JSON.stringify(user.uid))
             setIsLoggedIn(true)
-            navigation(`/${user.uid}/profile`)
+            navigation(`auniverse/${user.uid}/profile`)
         })
         .catch((error) => {
             console.log(error.code)
-
+            setError(error.code)
         });
         localStorage.setItem('isLoggedIn', true)
     }
@@ -64,10 +70,12 @@ function App() {
             signUp(email, password).then((userCredential) => {
                 const user = userCredential.user;
                 addUser(user.uid, email, password, [])
+                navigate('/auniverse/login/login-page')
                 
         })
         .catch((error) => {
-            console.log(error)
+            console.log(error.message)
+            setError(error.code)
         });
     }
 
@@ -98,14 +106,14 @@ function App() {
             </Header>
             <Routes>
                 <Route path='/auniverse' element={<Homepage />} />
-                <Route path='/auniverse/catalog' element={<Catalog onSubmit={handleFormSubmit} page={page} query={query} setPage={setPage} setQuery={setQuery} />} />
+                <Route path='/auniverse/catalog' element={<Catalog onSubmit={handleFormSubmit} page={page} query={query} setPage={setPage} setQuery={setQuery} ordering={ordering} genre={genre} />} />
                 <Route path='/auniverse/catalog/:gameSlug' element={<GameDescription isLoggedIn={isLoggedIn} addToFavs={addToFavs} removeFromFavs={removeFromFavs} userId={userId} />} />
                 <Route path='auniverse/login' element={<Login userId={userId} />} >
                     <Route path='login-page' element={<LoginForm onSubmit={handleLogInSubmit} />} />
-                    <Route path='sign-page' element={<SignupForm onSignUp={handleSignUp}/>} />
+                    <Route path='sign-page' element={<SignupForm onSignUp={handleSignUp} error={error} />} />
                 </Route>
 
-                <Route path="auniverse/:userId/profile" element={<Profile isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+                <Route path="/auniverse/:userId/profile" element={<Profile isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
             </Routes> 
             <Footer>
                 <Logo className={'logo_footer'}>AUNIVERSE</Logo>
