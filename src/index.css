@@ -50,3 +50,11 @@ img{
 ::-webkit-scrollbar-thumb:hover {
   background: #442929;
 }
+
+.Toastify__toast-container {
+  z-index: 111111111 !important;
+}
+
+button, a {
+  cursor: pointer;
+}

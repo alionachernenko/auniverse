@@ -9,38 +9,47 @@ import { Logo } from "./components/Logo/Logo";
 import { RiLoginBoxFill, RiUserFill} from 'react-icons/ri'
 import { BsArrowUp } from 'react-icons/bs'
 import { SearchForm } from "./components/SearchForm/SearchForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Login } from "./pages/Login/Login";
 import { Profile } from "./pages/Profile/Profile";
 import { signUp } from "./services/firebase";
 import { logIn } from "./services/firebase";
 import { addUser } from "./services/firebase";
-import { addToFavsMovs } from "./services/firebase";
-import { removeFromFavsGames } from "./services/firebase";
+import { addGameToFavourite } from "./services/firebase";
+import { removeGameFromFavourite } from "./services/firebase";
 import { LoginForm } from "./components/LoginForm/LoginForm";
 import { SignupForm } from "./components/SignupForm/SignupForm";
+import { toast, ToastContainer } from "react-toastify";
+import { ErrorPage } from "pages/ErrorPage/ErrorPage";
+import 'react-toastify/dist/ReactToastify.css';
 
-function App() {
-    const [page, setPage] = useState(1)
-    const [ordering, setOrdering] = useState('')
-    const [query, setQuery] = useState('')
-    const [genre, setGenre] = useState('')
-    const location = useLocation();
-    const [error, setError] = useState()
-    const navigate = useNavigate()
+export function App() {
+    const [userId, setUserId] = useState(JSON.parse(localStorage.getItem('userId')))
+    const [isLoading, setIsLoading] = useState(false)
     const [isLoggedIn, setIsLoggedIn] = useState(() => {
         if (JSON.parse(localStorage.getItem('isLoggedIn'))) {
             return JSON.parse(localStorage.getItem('isLoggedIn'))
         }
         else return false
     })
-    const [userId, setUserId] = useState(JSON.parse(localStorage.getItem('userId')))
-    const navigation = useNavigate()
 
+    const [query, setQuery] = useState('')
+    const [page, setPage] = useState(1)
+    const [ordering, setOrdering] = useState('added')
+    const [genre, setGenre] = useState('action')
     
+    const navigation = useNavigate()
+    const location = useLocation();
+
+    useEffect(() => {
+         window.scroll({
+            top: 0,
+        })
+    }, [location.pathname])
+
     const handleFormSubmit = (e, value, ordering, genre) => {
-        console.log('submit')
         e.preventDefault()
+
         setQuery(value)
         setOrdering(ordering)
         setGenre(genre)
@@ -51,42 +60,58 @@ function App() {
     const handleLogInSubmit = (e, email, password) => {
         e.preventDefault()
 
+        setIsLoading(true)
         logIn(email, password).then((userCredential) => {
             const user = userCredential.user;
-            setUserId(user.uid)
-            localStorage.setItem('userId', JSON.stringify(user.uid))
+            const {uid} = user
+
+            setUserId(uid)
+            document.cookie = `userId=${uid}`
+
+            localStorage.setItem('userId', JSON.stringify(uid))
+            localStorage.setItem('isLoggedIn', true)
             setIsLoggedIn(true)
-            navigation(`auniverse/${user.uid}/profile`)
+
+            navigation(`auniverse/profile`)
+            setIsLoading(false)
         })
         .catch((error) => {
-            console.log(error.code)
-            setError(error.code)
+            const { code } = error
+            toast.error(`${code.slice(5, code.length).split('-').join(' ')}`, {
+                position: toast.POSITION.TOP_CENTER
+            })
+            setIsLoading(false)
         });
-        localStorage.setItem('isLoggedIn', true)
     }
 
-    const handleSignUp = (e, email, password) => {
-        e.preventDefault()
-            signUp(email, password).then((userCredential) => {
+    const handleSignUp = (e, email, password, username) => {
+        e.preventDefault() 
+
+        setIsLoading(true)
+            signUp(email, password, username).then((userCredential) => {
                 const user = userCredential.user;
-                addUser(user.uid, email, password, [])
-                navigate('/auniverse/login/login-page')
-                
+                const {uid} = user
+
+                addUser(uid, email, password, [], username)
+                navigation(`/auniverse/login/login-page`)
+                setIsLoading(false)
         })
         .catch((error) => {
-            console.log(error.message)
-            setError(error.code)
+            const { code } = error
+            toast.error(`${code.slice(5, code.length).split('-').join(' ')}`, {
+                position: toast.POSITION.TOP_CENTER
+            })
+            setIsLoading(false)
         });
     }
 
     const addToFavs = (slug, gameData) => {
-        addToFavsMovs(userId, slug, gameData)
+        addGameToFavourite(userId, slug, gameData)
     }
 
     const removeFromFavs = (gameSlug) => {
-        removeFromFavsGames(userId, gameSlug)
+        removeGameFromFavourite(userId, gameSlug)
     }
-
 
     return (
         <>
@@ -100,20 +125,21 @@ function App() {
                         </NavigationMenu>
                     </nav>
                 <Options>
-                    {isLoggedIn && <li><Link to={`/auniverse/${userId}/profile`}><RiUserFill/></Link></li>}
+                    {isLoggedIn && <li><Link to={`/auniverse/profile`}><RiUserFill/></Link></li>}
                     {!isLoggedIn && <li><Link to={`/auniverse/login/login-page`}><RiLoginBoxFill/></Link></li>}
                     </Options>
             </Header>
             <Routes>
                 <Route path='/auniverse' element={<Homepage />} />
-                <Route path='/auniverse/catalog' element={<Catalog onSubmit={handleFormSubmit} page={page} query={query} setPage={setPage} setQuery={setQuery} ordering={ordering} genre={genre} />} />
+                <Route path='/auniverse/catalog' element={<Catalog onSubmit={handleFormSubmit} page={page} query={query} setPage={setPage} ordering={ordering} genre={genre} />} />
                 <Route path='/auniverse/catalog/:gameSlug' element={<GameDescription isLoggedIn={isLoggedIn} addToFavs={addToFavs} removeFromFavs={removeFromFavs} userId={userId} />} />
                 <Route path='auniverse/login' element={<Login userId={userId} />} >
-                    <Route path='login-page' element={<LoginForm onSubmit={handleLogInSubmit} />} />
-                    <Route path='sign-page' element={<SignupForm onSignUp={handleSignUp} error={error} />} />
+                    <Route path='login-page' element={<LoginForm onSubmit={handleLogInSubmit} isLoading={isLoading} />} />
+                    <Route path='sign-page' element={<SignupForm onSignUp={handleSignUp} isLoading={isLoading}/>} />
                 </Route>
 
-                <Route path="/auniverse/:userId/profile" element={<Profile isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+                <Route path="/auniverse/profile" element={<Profile isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+                <Route path='*' element={<ErrorPage/>}/>
             </Routes> 
             <Footer>
                 <Logo className={'logo_footer'}>AUNIVERSE</Logo>
@@ -129,11 +155,11 @@ function App() {
                     <a href='mailto:auniverse@gmail.com'>auniverse@gmail.com</a>
                 </address>
             </Footer>
+            <ToastContainer/>
         </>
  )
 }
 
-export default App;
 
 const Header = styled.header`
     display: flex;
@@ -147,6 +173,12 @@ const Header = styled.header`
     top: 0;
     width: 100%;
     z-index: 11111111;
+
+    & svg{
+        display: block;
+        width: 100%;
+        height: 100%
+    }
 `
 
 const NavigationMenu = styled.ul` 

@@ -52,7 +52,7 @@ export const GameDescription = ({isLoggedIn, addToFavs, removeFromFavs}) => {
         <div className={css.section} style={{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
             url(${poster})`
         }}>
-            {isLoading ? <Loader /> :
+            {isLoading ? <Loader className={'loader-game_description'} color={'white'} /> :
                 <><div>
                     <h1 className={css.title}>{title}</h1>
                     {year && <p className={css.year}>{year}</p>}
@@ -87,14 +87,12 @@ export const GameDescription = ({isLoggedIn, addToFavs, removeFromFavs}) => {
                     {showScreenshots &&
                         <Swiper className={css.slider}
                             spaceBetween={0}
-                            slidesPerView={3}
-                            initialSlide={1}
-                            modules={[Navigation]}
-                            navigation
-                            
+                            slidesPerView={'auto'}
+                            initialSlide={0}
+                            loop={true}
                         >
                             {screenshots.map(screenshot => <SwiperSlide className={css.slide}><img className={css.screenshot} src={screenshot.image} alt='fdff' /></SwiperSlide>)}
-                        </Swiper>}</>}
+                        </Swiper>}</>} {/* решить что делать со слайдером */}
                 
         </div>
     )

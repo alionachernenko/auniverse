@@ -1,25 +1,38 @@
-// import { Filter } from "./Filter"
-// import { useState, useEffect } from "react"
-// import { getDataForFilter } from "../api/games-api"
 import css from './SearchForm.module.css'
+import { useEffect, useState } from 'react'
+import { getGameByName } from 'services/games-api'
+import { Link } from 'react-router-dom'
 
-export const SearchForm = ({ onSubmit, render, className }) => {
-    console.log(className)
+export const SearchForm = ({ onSubmit, className }) => {
+    const [value, setValue] = useState('')
+    const [filteredGames, setFilteredGames] = useState()
+
+    useEffect(() => {
+        getGameByName(value).then(res => {
+                    setFilteredGames(res.data.results)
+                })
+     },
+    [value])
+
     return (
         <form className={css[className]} onSubmit={(e) => {
             const { query, ordering, genre } = e.target.elements
             onSubmit(e, query.value, ordering.value, genre.value)
         }   
         }>
-            <input type="text" name='query' />
+            <input value={value} type="text" name='query' onChange={(e) => {
+                setValue(e.target.value)
+                
+            }
+            } />
             <button className={css.button} type="submit">GO</button>
             <div>
                 <div>
-            <label for='order_select'>Order by:</label>
+            <label htmlFor='order_select'>Order by:</label>
             <select name="ordering" id="order_select">
-                <option value="name">Name</option>
-                <option value="released">Released</option>
                 <option value="added">Added</option>
+                <option value="released">Released</option>
+                <option value="name">Name</option>
                 <option value="created">Created</option>
                 <option value="updated">Updated</option>
                 <option value="rating">Rating</option>
@@ -27,8 +40,8 @@ export const SearchForm = ({ onSubmit, render, className }) => {
                     </select>
                 </div>
                 <div>
-                    <label for='genre_select'>Genre:</label>
-                    <select name="genre" id="">
+                    <label htmlFor='genre_select'>Genre:</label>
+                    <select name="genre" id="genre_select">
                         <option value="action">Action</option>
                         <option value="adventure">Adventure</option>
                         <option value="indie">Indie</option>
@@ -39,6 +52,15 @@ export const SearchForm = ({ onSubmit, render, className }) => {
                     </select>
                 </div>
             </div>
+            {(filteredGames && value !== '') &&
+            <ul>
+                {filteredGames.map(game => <li key={game.id}>
+                        <img src={`${game.background_image}`} alt="" />
+                    <Link to={`/auniverse/catalog/${game.slug}`}>
+                        {game.name}
+                    </Link></li>)}
+        </ul>
+                }
         </form>
     )
 }

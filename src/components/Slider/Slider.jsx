@@ -2,20 +2,16 @@
 import { Swiper, SwiperSlide } from "swiper/react"
 import { GameCard } from "../GameCard/GameCard";
 import 'swiper/css';
-import { Pagination } from "swiper";
 import 'swiper/css/pagination'
 
 
 export const Slider = ({games}) => {
-    
-
     return (
         <Swiper style={{marginLeft: 0,
                         paddingLeft: 60}}
             spaceBetween={30}
-            modules={[Pagination]}
-            slidesPerView={4.5}
-            pagination={{ clickable: true}}
+            slidesPerView={'auto'}
+            loop={true}
 
         >
             {games.map((game) => {

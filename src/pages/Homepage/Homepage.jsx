@@ -14,19 +14,21 @@ export const Homepage = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [isError, setIsError] = useState(false)
 
-    window.scroll({
-    top: 0,
-    });
 
     useEffect(() => {
         getNewGames(1).then(res => {
-            console.log(res.data.results)
-            setGames(res.data.results)
+            const { results } = res.data
+            setGames(results)
+
+            setIsLoading(false)
         }).catch(error => {
+
             console.log(error)
             setIsError(true)
+
+            setIsLoading(false)
         }
-        ).finally(setTimeout(() => {setIsLoading(false)}, 500))
+        )
     }, [])
 
 
@@ -49,7 +51,7 @@ export const Homepage = () => {
                     <Span>New 2023</Span>
                    <Div>
                         <h2>What will you choose this time?</h2>
-                        {isLoading ? <Loader page={'homepage'} /> : ( isError ? <p>Check your connection</p> :<Slider games={games}/> )}
+                        {isLoading ? <Loader className={'loader-homepage'} color={'darkblue'} /> : ( isError ? <p>Check your connection</p> :<Slider games={games}/> )}
                         
                 </Div>
                 </div>
@@ -68,7 +70,16 @@ const Hero = styled.section`
     background-size: cover;
     padding: 100px 0;
     position: relative;
-    margin-top: 61px
+    margin-top: 61px;
+     & a{
+        display: block;
+        font-family: 'Nunito', sans-serif;
+        width: fit-content;
+        box-sizing: border-box;
+        padding: 10px 20px;
+        background-color: #080D2B;
+        font-size: 20px;
+     }
 `
 
 const Info = styled.div`
@@ -92,7 +103,7 @@ const Info = styled.div`
 
     & p{
         font-weight: 400;
-        font-size: 15px;
+        font-size: 20px;
         line-height: 140%;
         letter-spacing: 0.05em;
         font-family: 'Nunito', sans-serif;

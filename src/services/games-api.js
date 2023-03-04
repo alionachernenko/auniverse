@@ -14,6 +14,15 @@ export const getGames = async page => {
   return data;
 };
 
+export const getGameByName = async name => {
+  const { BASE_URL, KEY } = base_params;
+
+  const data = await axios.get(
+    `${BASE_URL}games?key=${KEY}&page=${1}&search=${name}`
+  );
+  return data;
+};
+
 export const getNewGames = async page => {
   const { BASE_URL, KEY } = base_params;
 
@@ -27,8 +36,7 @@ export const getGameBySearchQuery = async (
   searchQuery,
   page,
   ordering,
-  genres,
-  platforms
+  genres
 ) => {
   const { BASE_URL, KEY } = base_params;
   const data = await axios.get(

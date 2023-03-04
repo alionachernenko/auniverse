@@ -26,6 +26,10 @@
     margin-bottom: 10px;
 }
 
+.searchform_header input{
+    margin-bottom: 20px;
+}
+
 .searchform_catalog label{
     color: white;
     margin-bottom: 5px;
@@ -49,6 +53,7 @@
     font-family: inherit;
     color: darkblue;
     font-weight: 700;
+    overflow: hidden;
 }
 
 .searchform_catalog button{
@@ -64,8 +69,8 @@
     color: darkblue;
     font-weight: 900;
     cursor: pointer;
-
 }
+
 
 .searchform_header{
     height: 100%;
@@ -81,7 +86,7 @@
 .searchform_header button{
     height: 90%; 
     position: absolute; /**/
-    right: 3px; /**/
+    right: 1px; /**/
     border-radius: 30px;/**/
     border-color: transparent;/**/
     background-color: orange;/**/
@@ -93,3 +98,42 @@
     cursor: pointer;/**/
     transform: translateY(-50%);
 }
+
+.searchform_catalog ul{
+    display: none;
+
+}
+
+.searchform_header ul {
+    position: absolute;
+    background-color: white;
+    width: auto;
+    list-style: none;
+    overflow-y: scroll;
+    max-height: 30vh;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+
+.searchform_header ul li img {
+    width: 90px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.searchform_header ul li{
+    display: flex;
+    align-items: center;
+    font-weight: 900;
+    
+}
+
+.searchform_header ul :not(:last-child) {
+    margin-bottom: 5px;
+}
+
+.searchform_header a{
+    color: darkblue;
+}
+

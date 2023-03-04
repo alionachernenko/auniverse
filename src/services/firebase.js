@@ -33,12 +33,13 @@ export const signOutUser = () => {
   return auth.signOut();
 };
 
-export const addUser = (userId, email, password, favs) => {
+export const addUser = (userId, email, password, favs, username) => {
   const database = getDatabase(app);
   set(ref(database, 'users/' + userId), {
-    email: email,
-    favs: favs,
-    password: password,
+    email,
+    favs,
+    password,
+    username,
   });
 };
 
@@ -46,7 +47,7 @@ export const getUserInfo = userId => {
   return get(ref(database, `users/${userId}`));
 };
 
-export const addToFavsMovs = (userId, gameSlug, gameData) => {
+export const addGameToFavourite = (userId, gameSlug, gameData) => {
   get(ref(database, `users/${userId}/favs`)).then(res => {
     console.log(res.val());
     set(ref(database, 'users/' + userId + '/favs'), {
@@ -56,11 +57,11 @@ export const addToFavsMovs = (userId, gameSlug, gameData) => {
   });
 };
 
-export const removeFromFavsGames = (userId, gameSlug) => {
+export const removeGameFromFavourite = (userId, gameSlug) => {
   remove(ref(database, `users/${userId}/favs/${gameSlug}`));
 };
 
-export const getFavGames = userId => {
+export const getFavouriteGames = userId => {
   console.log(
     `https://auniverse-97d59-default-rtdb.firebaseio.com/users/${userId}/favs`
   );
