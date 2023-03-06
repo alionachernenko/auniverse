@@ -5,8 +5,8 @@ import { Slider } from "../../components/Slider/Slider"
 import styled from "styled-components"
 import background from '../../image/homepage-background.png'
 import { Loader } from "../../components/Loader/Loader"
-
-
+import { SwiperSlide } from "swiper/react"
+import { GameCard } from "components/GameCard/GameCard"
 
 export const Homepage = () => {
 
@@ -14,10 +14,9 @@ export const Homepage = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [isError, setIsError] = useState(false)
 
-
     useEffect(() => {
-        getNewGames(1).then(res => {
-            const { results } = res.data
+        getNewGames(1).then(({data}) => {
+            const { results } = data
             setGames(results)
 
             setIsLoading(false)
@@ -35,14 +34,14 @@ export const Homepage = () => {
     return (
         <Page>
             <Hero>
-            <Info>
-                <h1>Thousands of new videogames</h1>
-                <p>Dive into the universe of unexplored worlds,
-                    bright locations and unique characters
-                </p>
-                <Link to='/auniverse/catalog'>Go to the catalog</Link>
+                <Info>
+                    <h1>Thousands of new videogames</h1>
+                    <p>Dive into the universe of unexplored worlds,
+                        bright locations and unique characters
+                    </p>
+                    <Link to='/auniverse/catalog'>Go to the catalog</Link>
                 </Info>
-        </Hero>
+            </Hero>
             <SliderSection>
                 <div style={{
                     margin: 'auto',
@@ -51,12 +50,22 @@ export const Homepage = () => {
                     <Span>New 2023</Span>
                    <Div>
                         <h2>What will you choose this time?</h2>
-                        {isLoading ? <Loader className={'loader-homepage'} color={'darkblue'} /> : ( isError ? <p>Check your connection</p> :<Slider games={games}/> )}
-                        
-                </Div>
+                        {isLoading ? <Loader className={'loader-homepage'} color={'darkblue'} /> : ( isError ? <p>Something wen wrong</p> : 
+                        <Slider>
+                            {games.map((game) => {
+                                     return <>
+                                         <SwiperSlide style={{
+                                            width: 'fit-content',
+                                            margin: 0,
+                                            }
+                                         } key={game.id}><GameCard data={game} width={255} className={'gamecard_slider'} /></SwiperSlide>
+                                    </>
+                          })}
+                        </Slider>
+                        )}
+                    </Div>
                 </div>
-                
-        </SliderSection>
+            </SliderSection>
         </Page>
     )
 }

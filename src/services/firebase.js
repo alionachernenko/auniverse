@@ -5,6 +5,7 @@ import {
   signInWithEmailAndPassword,
 } from 'firebase/auth';
 import { getDatabase, ref, set, get, remove } from 'firebase/database';
+// const API_KEY = import.meta.env.VITE_FIREBASE_API_KEY;
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDXbzWEO_ow42Ym1GzIz42Gq1t_PLN8Ozk',
@@ -34,7 +35,6 @@ export const signOutUser = () => {
 };
 
 export const addUser = (userId, email, password, favs, username) => {
-  const database = getDatabase(app);
   set(ref(database, 'users/' + userId), {
     email,
     favs,
@@ -49,7 +49,6 @@ export const getUserInfo = userId => {
 
 export const addGameToFavourite = (userId, gameSlug, gameData) => {
   get(ref(database, `users/${userId}/favs`)).then(res => {
-    console.log(res.val());
     set(ref(database, 'users/' + userId + '/favs'), {
       ...res.val(),
       [gameSlug]: gameData,

@@ -18,7 +18,7 @@ export const Profile = ({ isLoggedIn, setIsLoggedIn}) => {
     useEffect(() => {
         if (!isLoggedIn) {
         console.log('no')
-            navigate('/auniverse/login')
+            navigate('/auniverse/login/login-page')
             return
         }
         

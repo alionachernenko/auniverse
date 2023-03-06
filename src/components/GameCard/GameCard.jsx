@@ -19,7 +19,7 @@ export const GameCard = ({ data, width, className }) => {
                 {released && <p className='release_year'>{released.slice(0, 4)}</p>}
                 <ul className='genres'>
                     {genres.slice(0, 3).map((genre => {
-                        return  <li>{genre.name}</li>
+                        return  <li className="genres_item">{genre.name}</li>
                     }))}
                 </ul>
             </div>

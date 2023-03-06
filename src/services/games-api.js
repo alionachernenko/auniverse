@@ -25,9 +25,10 @@ export const getGameByName = async name => {
 
 export const getNewGames = async page => {
   const { BASE_URL, KEY } = base_params;
+  const currentDate = new Date()
 
   const data = await axios.get(
-    `${BASE_URL}games?key=${KEY}&page=${page}&dates=2023-01-01,2023-01-31`
+    `${BASE_URL}games?key=${KEY}&page=${page}&dates=2023-01-01,${currentDate.toISOString().slice(0, 10)}`
   );
   return data;
 };
