@@ -1,21 +1,21 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import {  useParams } from "react-router-dom"
 import { getGameById, getScreenshotsOfGame} from "../../services/games-api"
-import css from './GameDescription.module.css'
-import { SwiperSlide } from 'swiper/react';
 import { StoresList } from "components/StoresList/StoresList";
-import 'swiper/css/bundle'
-import 'swiper/css/navigation';
 import { Loader } from "../../components/Loader/Loader";
-import { Slider } from "components/Slider/Slider";
+import authContext from '../../context/context'
+import styled, {css} from "styled-components";
+import { ToggleFavouriteButton } from "components/ToggleFavouriteButton/ToggleFavouriteButton";
 
-export const GameDescription = ({isLoggedIn, addToFavs, removeFromFavs}) => {
+export const GameDescription = () => {
+    const {isLoggedIn} = useContext(authContext)
+
     const [title, setTitle] = useState('')
     const [poster, setPoster] = useState()
     const [screenshots, setScreenshots] = useState([])
     const [showScreenshots, setShowScreenshots] = useState(false)
-    const [description, setDescription] = useState('')
-    const [stores, setStores] = useState([])
+    const [description, setDescription] = useState()
+    const [stores, setStores] = useState()
     const [year, setYear] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [gameData, setGameData] = useState({})
@@ -54,31 +54,91 @@ export const GameDescription = ({isLoggedIn, addToFavs, removeFromFavs}) => {
     }
 
     return (
-        <div className={css.section} style={{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-            url(${poster})`
-        }}>
-            {isLoading ? <Loader className={'loader-game_description'} color={'white'} /> :
-                <><div>
-                    <h1 className={css.title}>{title}</h1>
-                    {year && <p className={css.year}>{year}</p>}
+        <Page background={poster}>
+            {isLoading ? <Loader color={'white'} /> :
+                <><Meta>
+                    <Title>{title}</Title>
+                    {year && <Year>{year}</Year>}
                     {isLoggedIn &&
-                        (<><button type="button" onClick={() => {
-                        addToFavs(gameData.slug, gameData)
-                        }}>Add</button>
-                        <button type="button" onClick={() => {
-                            removeFromFavs(gameData.slug)
-                        }}>Remove</button></>)
+                        <ToggleFavouriteButton gameData={gameData}/>
                     }
-                </div>
-                    <StoresList stores={stores}/>
-                    <p className={css.description}>{description}</p>
-                    <button type="button" className={css.toggle_button} onClick={toggleShowScreenshots}>{showScreenshots ? 'Hide' : 'Show'} screenshots</button>
+                </Meta>
+                    {stores && <StoresList stores={stores}/>}
+                    {description && <Overview>{description}</Overview>}
+                    <ToggleScreenshotsButton type="button" onClick={toggleShowScreenshots}>
+                        {showScreenshots ? 'Hide' : 'Show'} screenshots</ToggleScreenshotsButton>
                     {showScreenshots &&
-                        <Slider>
-                            {screenshots.map(screenshot => <SwiperSlide className={css.slide}><img className={css.screenshot} src={screenshot.image} alt='fdff' /></SwiperSlide>)}
-                        </Slider>}</>} {/* решить что делать со слайдером */}
+                        <ul>
+                            {screenshots.map(({image}) => 
+                            <li style={{width: 'auto'}}>
+                                <Screenshot src={image} alt='fdff' />
+                            </li>)}
+                        </ul>}</>}
                 
-        </div>
+        </Page>
     )
 }
 
+const Page = styled.div`
+    padding: 20px;
+    margin-top: 61px;
+    height: calc(100vh - 61px);
+    background-size: cover;
+    background-position: top;
+    backdrop-filter: brightness(30%);
+    overflow-y: scroll;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+
+    ${props => css`
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url(${props.background})
+        `
+    }}
+
+    
+`
+const Meta = styled.div`
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+`
+const Title = styled.h1`
+    color: white;
+    font-weight: 700;
+    font-size: 50px;
+    margin-right: 20px;
+`
+const Year = styled.p`
+    color: white;
+    font-weight: 700;
+    font-size: 50px;
+    margin-right: 20px;
+`
+const Overview = styled.p`
+    color: white;
+    background-color: rgba(59, 57, 57, 0.357);
+    width: 50vw;
+    font-size: 20px;
+    padding: 10px 20px;
+    line-height: 35px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+`
+
+const Screenshot = styled.img`
+    height: 400px;
+    width: auto;
+`
+
+const ToggleScreenshotsButton = styled.button`
+    color: white;
+    margin-bottom: 20px;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #080D2B;
+    padding: 8px 16px;
+    border: none;
+    font-family: 'Nunito', sans-serif
+`

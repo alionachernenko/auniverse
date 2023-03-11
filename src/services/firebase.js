@@ -3,12 +3,15 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  setPersistence, 
+  browserSessionPersistence,
+  browserLocalPersistence
 } from 'firebase/auth';
 import { getDatabase, ref, set, get, remove } from 'firebase/database';
-// const API_KEY = import.meta.env.VITE_FIREBASE_API_KEY;
+
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyDXbzWEO_ow42Ym1GzIz42Gq1t_PLN8Ozk',
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: 'auniverse-97d59.firebaseapp.com',
   projectId: 'auniverse-97d59',
   storageBucket: 'auniverse-97d59.appspot.com',
@@ -20,21 +23,22 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
-const auth = getAuth(app);
+export const auth = getAuth(app);
 
-export const signUp = (email, password) => {
+
+export const userSignUp = (email, password) => {
   return createUserWithEmailAndPassword(auth, email, password);
 };
 
-export const logIn = (email, password) => {
-  return signInWithEmailAndPassword(auth, email, password);
+export const userLogIn = (email, password) => {
+    return signInWithEmailAndPassword(auth, email, password);
 };
 
-export const signOutUser = () => {
+export const userSignOut = () => {
   return auth.signOut();
 };
 
-export const addUser = (userId, email, password, favs, username) => {
+export const addNewUser = (userId, email, password, favs, username) => {
   set(ref(database, 'users/' + userId), {
     email,
     favs,

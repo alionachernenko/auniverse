@@ -1,13 +1,22 @@
 import { GameCard } from "../GameCard/GameCard"
-
+import styled from "styled-components"
 export const GameList = ({games}) => {
     return (
-        <ul style={{
-                display: "flex", flexWrap: 'wrap', listStyle: 'none', gap: 30, marginBottom: 20
-        }}>
+        <List>
             {
-                games.map((game) => <li><GameCard data={game} key={game.id} width={500} className={'gamecard_catalog'} /></li>)
+                games.map((game) => 
+                <li key={game.id}>
+                    <GameCard data={game} width={500} className={'gamecard_catalog'}/>
+                </li>)
             }
-        </ul>
+        </List>
     )
 }
+
+const List = styled.ul`
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    gap: 30px;
+    margin-bottom: 20px
+`

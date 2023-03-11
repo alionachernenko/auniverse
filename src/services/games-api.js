@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-//e4eb20c9305d4fc2a030e3d7f630291a
-
 const base_params = {
   BASE_URL: 'https://api.rawg.io/api/',
   KEY: 'a213aea710e046b99316e810f548e9d6',

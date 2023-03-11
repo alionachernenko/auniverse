@@ -3,12 +3,17 @@ import styled from 'styled-components'
 import { Logo } from 'components/Logo/Logo';
 import { SearchForm } from 'components/SearchForm/SearchForm';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import authContext from '../../context/context'
+import { useLocation } from 'react-router-dom';
 
-export const Header = ({isLoggedIn, onSubmit, location}) => {
-    console.log(location)
+export const Header = ({onSubmit}) => {
+    const {isLoggedIn} = useContext(authContext)
+    const location = useLocation();
+
     return (<PageHeader>
                 <Logo className={'logo_header'}>AUNIVERSE</Logo>
-                {location.pathname === '/auniverse' && <SearchForm onSubmit={onSubmit} className={'searchform_header'} />}
+                {location.pathname === '/auniverse' && <SearchForm onSubmit={onSubmit} className={'header'} />}
                     <nav>
                         <NavigationMenu>
                             <li><Link to='/auniverse'>Home</Link></li>

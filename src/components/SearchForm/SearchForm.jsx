@@ -1,68 +1,131 @@
-import css from './SearchForm.module.css'
 import { useEffect, useState } from 'react'
 import { getGameByName } from 'services/games-api'
-import { Link } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+import styled, {css} from 'styled-components'
+import { SearchFilter } from 'components/SearchFilter/SearchFilter'
+import { FilteredList } from 'components/FilteredList/FilteredList'
 
 export const SearchForm = ({ onSubmit, className }) => {
     const [value, setValue] = useState('')
     const [filteredGames, setFilteredGames] = useState()
 
+    const location = useLocation()
+
     useEffect(() => {
-        getGameByName(value).then(res => {
-                    setFilteredGames(res.data.results)
-                })
+        getGameByName(value).then(({data}) => {
+            setFilteredGames(data.results)
+        })
      },
     [value])
 
     return (
-        <form className={css[className]} onSubmit={(e) => {
+        <Form render={className} onSubmit={(e) => {
             const { query, ordering, genre } = e.target.elements
+
             onSubmit(e, query.value, ordering.value, genre.value)
         }   
         }>
-            <input value={value} type="text" name='query' onChange={(e) => {
+            <Input render={className} value={value} type="text" name='query' onChange={(e) => {
                 setValue(e.target.value)
                 
             }
             } />
-            <button className={css.button} type="submit">GO</button>
-            <div>
-                <div>
-            <label htmlFor='order_select'>Order by:</label>
-            <select name="ordering" id="order_select">
-                <option value="added">Added</option>
-                <option value="released">Released</option>
-                <option value="name">Name</option>
-                <option value="created">Created</option>
-                <option value="updated">Updated</option>
-                <option value="rating">Rating</option>
-                <option value="metacritic">Metacritic</option>
-                    </select>
-                </div>
-                <div>
-                    <label htmlFor='genre_select'>Genre:</label>
-                    <select name="genre" id="genre_select">
-                        <option value="action">Action</option>
-                        <option value="adventure">Adventure</option>
-                        <option value="indie">Indie</option>
-                        <option value="rpg">RPG</option>
-                        <option value="strategy">Strategy</option>
-                        <option value="shooter">Shooter</option>
-                        <option value="platformer">Platformer</option>
-                    </select>
-                </div>
-            </div>
-            {(filteredGames && value !== '') &&
-            <ul>
-                {filteredGames.map(game => <li key={game.id}>
-                        <img src={`${game.background_image}`} alt="" />
-                    <Link to={`/auniverse/catalog/${game.slug}`}>
-                        {game.name}
-                    </Link></li>)}
-        </ul>
-                }
-        </form>
+            <Button render={className} type="submit">GO</Button>
+            {location.pathname === '/auniverse/catalog' && <SearchFilter/>}
+            {(filteredGames && value !== '' && location.pathname === '/auniverse') && <FilteredList results={filteredGames}/>}
+        </Form>
     )
 }
 
-    
+//=============STYLES============//
+
+const Form = styled.form`
+    font-family: 'Nunito', sans-serif;
+    position: relative;
+
+    ${(props) => {
+        switch (props.render){
+            case 'catalog': 
+                return css`
+                margin-bottom: 20px;
+                width: 500px;
+                margin-left: auto;
+                margin-right: auto;
+                height: auto;
+
+                `
+            case 'header':
+                return css`
+                    height: 100%;
+                    width: 250px;
+                    margin: 0;
+                `
+            default: 
+            return css`
+                
+            `
+        }
+    }}
+`
+const Input = styled.input`
+    font-family: inherit;
+    width: 100%;
+    border-radius: 30px;
+    margin-right: 5px;
+    border: none;
+    padding-left: 10px;
+    box-sizing: border-box;
+    padding-right: 110px;
+
+${(props) => {
+    switch(props.render) {
+        case 'catalog':
+            return css`
+            height: 40px;
+            margin-bottom: 10px;
+            font-size: 20px;
+
+        `
+        case 'header':
+            return css`
+                height: 100%;
+                margin-bottom: 20px;
+                font-size: 15px;
+            `
+        default: return css` `
+    }
+}}`
+const Button = styled.button`
+    position: absolute;
+    border-radius: 30px;
+    border-color: transparent;
+    background-color: orange;
+    font-family: inherit;
+    color: darkblue;
+    font-weight: 900;
+    cursor: pointer;
+
+    ${props => {
+        switch(props.render){
+            case 'catalog': 
+            return css`
+            height: 36px;
+            top: 2px;
+            right: 3px;
+            font-size: 20px;
+            `
+            case 'header': 
+            return css`
+            height: 90%; 
+            right: 1px;
+            font-size: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            `
+            default: return css``
+        }
+    }}
+`
+
+
+

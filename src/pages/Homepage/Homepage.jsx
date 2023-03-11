@@ -3,7 +3,7 @@ import { getNewGames } from "../../services/games-api"
 import { useState, useEffect } from "react"
 import { Slider } from "../../components/Slider/Slider"
 import styled from "styled-components"
-import background from '../../image/homepage-background.png'
+import background from 'assets/images/homepage-background.png'
 import { Loader } from "../../components/Loader/Loader"
 import { SwiperSlide } from "swiper/react"
 import { GameCard } from "components/GameCard/GameCard"
@@ -30,7 +30,6 @@ export const Homepage = () => {
         )
     }, [])
 
-
     return (
         <Page>
             <Hero>
@@ -52,15 +51,15 @@ export const Homepage = () => {
                         <h2>What will you choose this time?</h2>
                         {isLoading ? <Loader className={'loader-homepage'} color={'darkblue'} /> : ( isError ? <p>Something wen wrong</p> : 
                         <Slider>
-                            {games.map((game) => {
-                                     return <>
+                            {games.map((game => 
+                                     
                                          <SwiperSlide style={{
                                             width: 'fit-content',
                                             margin: 0,
                                             }
-                                         } key={game.id}><GameCard data={game} width={255} className={'gamecard_slider'} /></SwiperSlide>
-                                    </>
-                          })}
+                                         } key={game.id}><GameCard data={game} width={255} className={'gamecard_slider'}/></SwiperSlide>
+                                  
+                          ))}
                         </Slider>
                         )}
                     </Div>

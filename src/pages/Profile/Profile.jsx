@@ -1,23 +1,23 @@
 import './Profile.scss'
-import { useEffect, useState } from "react"
-import { useNavigate} from "react-router-dom"
+import { useContext, useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { getUserInfo } from "../../services/firebase"
-import { getFavouriteGames } from "../../services/firebase"
+import { getFavouriteGames, userSignOut } from "../../services/firebase"
 import { GameCard } from "../../components/GameCard/GameCard"
-import { signOutUser } from "../../services/firebase"
 import { Loader } from 'components/Loader/Loader'
+import authContext from '../../context/context'
 
-export const Profile = ({ isLoggedIn, setIsLoggedIn}) => {
-    const navigate = useNavigate()
-    const userId = JSON.parse(localStorage.getItem('userId'))
+export const Profile = () => {
+    const {userId, isLoggedIn} = useContext(authContext)
+
     const [favouriteGames, setFavouriteGames] = useState([])
     const [username, setUsername] = useState('')
     const [isLoading, setIsLoading] = useState(true)
     
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (!isLoggedIn) {
-        console.log('no')
             navigate('/auniverse/login/login-page')
             return
         }
@@ -40,11 +40,10 @@ export const Profile = ({ isLoggedIn, setIsLoggedIn}) => {
     }, [isLoggedIn, navigate, userId])
 
     const logOut = () => {
-        signOutUser()
+        userSignOut()
             .then(() => {
                 navigate('/auniverse/login/login-page')
-                setIsLoggedIn(false)
-                localStorage.setItem('isLoggedIn', false)}
+            }
         );
     }
     

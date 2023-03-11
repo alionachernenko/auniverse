@@ -1,7 +1,8 @@
 import { Link, useLocation } from "react-router-dom"
 import { BiRightArrow } from 'react-icons/bi'
 import './GameCard.scss'
-import placeholderImage from '../../image/placeholder.png'
+import placeholderImage from 'assets/images/placeholder.png'
+import styled from "styled-components"
 
 export const GameCard = ({ data, width, className }) => {
     const location = useLocation()
@@ -19,14 +20,12 @@ export const GameCard = ({ data, width, className }) => {
                 {released && <p className='release_year'>{released.slice(0, 4)}</p>}
                 <ul className='genres'>
                     {genres.slice(0, 3).map((genre => {
-                        return  <li className="genres_item">{genre.name}</li>
+                        return  <li className="genres_item" key={genre.id}>{genre.name}</li>
                     }))}
                 </ul>
             </div>
             <Link to={`/auniverse/catalog/${slug}`} aria-label={`Read more about ${name}`}>
-                <p>
-                    Read more
-                </p>
+                <p>Read more</p>
                 <BiRightArrow color="green" title="Read more button right arrow"/>
             </Link>
             {location.pathname === '/catalog' && <p className='rating'>{rating}</p>}
