@@ -1,29 +1,33 @@
-import { RiLoginBoxFill, RiUserFill} from 'react-icons/ri'
+// import { RiLoginBoxFill, RiUserFill} from 'react-icons/ri'
 import styled from 'styled-components'
 import { Logo } from 'components/Logo/Logo';
 import { SearchForm } from 'components/SearchForm/SearchForm';
-import { Link } from 'react-router-dom';
-import { useContext } from 'react';
-import authContext from '../../context/context'
+import { useContext, useState} from 'react';
+import breakpointContext from '../../context/contextBr'
 import { useLocation } from 'react-router-dom';
+import { Navigation } from 'components/Navigation/Navigation';
+import { Burger } from 'components/Burger/Burger';
 
 export const Header = ({onSubmit}) => {
-    const {isLoggedIn} = useContext(authContext)
+    const {breakpoint} = useContext(breakpointContext)
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
     const location = useLocation();
+
+    const toggleMenu = () => {
+        setIsMenuOpen(prevState => !prevState)
+    }
+    
+    console.log(breakpoint)
 
     return (<PageHeader>
                 <Logo className={'logo_header'}>AUNIVERSE</Logo>
-                {location.pathname === '/auniverse' && <SearchForm onSubmit={onSubmit} className={'header'} />}
-                    <nav>
-                        <NavigationMenu>
-                            <li><Link to='/auniverse'>Home</Link></li>
-                            <li><Link to='/auniverse/catalog'>Catalog</Link></li>
-                        </NavigationMenu>
-                    </nav>
-                <Options>
-                    {isLoggedIn && <li><Link to={`/auniverse/profile`}><RiUserFill/></Link></li>}
-                    {!isLoggedIn && <li><Link to={`/auniverse/login/login-page`}><RiLoginBoxFill/></Link></li>}
-                    </Options>
+                {breakpoint > 1199 ? (
+                    <>
+                        {location.pathname === '/auniverse' && breakpoint > 1199 && <SearchForm onSubmit={onSubmit} className={'header'} />}
+                        <Navigation/>
+                    </>
+                ) : <Burger onClick={toggleMenu}/>}
+                {isMenuOpen && console.log('gffg')}
             </PageHeader>)
 }
 
@@ -45,28 +49,4 @@ const PageHeader = styled.header`
         width: 100%;
         height: 100%
     }
-`
-
-const NavigationMenu = styled.ul` 
-    padding: 0;
-    margin: 0;
-    display: flex;
-    list-style: none;
-    gap: 53px;
-    text-decoration: none;
-    font-family: 'Nunito', sans-serif;
-
-    & li{
-        font-size: 15px;
-        font-style: normal;
-        letter-spacing: 0.05em;
-        line-height: 140%;
-    }
-`
-
-const Options = styled.ul`
-    padding: 0;
-    margin: 0;
-    display: flex;
-    list-style: none;
 `

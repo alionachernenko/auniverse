@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import authContext from '../../context/context'
-import { removeGameFromFavourite, addGameToFavourite, getFavouriteGames } from "services/firebase"
+import { removeGameFromFavourite, addGameToFavourite, getFavouriteGames } from "utils/firebase"
 import { FaHeart, FaHeartBroken } from "react-icons/fa"
 import styled from "styled-components"
 

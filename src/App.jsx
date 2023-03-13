@@ -13,7 +13,7 @@ import { ErrorPage } from "pages/ErrorPage/ErrorPage";
 import 'react-toastify/dist/ReactToastify.css';
 import { Header } from "components/Header/Header";
 import { Footer } from "components/Footer/Footer";
-import { auth } from "services/firebase";
+import { auth } from "utils/firebase";
 
 export function App() {
     const [searchParams, setSearchParams] = useState({

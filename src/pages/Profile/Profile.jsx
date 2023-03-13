@@ -1,11 +1,12 @@
 import './Profile.scss'
 import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { getUserInfo } from "../../services/firebase"
-import { getFavouriteGames, userSignOut } from "../../services/firebase"
+import { getUserInfo } from "../../utils/firebase"
+import { getFavouriteGames, userSignOut } from "../../utils/firebase"
 import { GameCard } from "../../components/GameCard/GameCard"
 import { Loader } from 'components/Loader/Loader'
 import authContext from '../../context/context'
+import { GameList } from 'components/GameList/GameList'
 
 export const Profile = () => {
     const {userId, isLoggedIn} = useContext(authContext)
@@ -31,6 +32,7 @@ export const Profile = () => {
                 setUsername('User')
             }
                 setFavouriteGames([...Object.values(games.val())])
+                console.log(games.val())
                 setIsLoading(false)
             }).catch((error) => {
                 console.error(error);
@@ -54,11 +56,7 @@ export const Profile = () => {
                     <h1>Hello, {username}</h1>
                     <button type="button" onClick={logOut}>Log out</button>
                 </div> 
-                    <ul style={{
-                        display: 'flex', gap: 30, flexWrap: 'wrap'
-                    }}>
-                        {favouriteGames && favouriteGames.map(game => <GameCard data={game} width={500} className='gamecard_catalog' />)}
-                    </ul></>}
+                    <GameList games={favouriteGames}/></>}
             </div>
         </>
         

@@ -18,8 +18,10 @@ export const Catalog = ({onSubmit, searchParams}) => {
         setIsLoading(true)
         getGameBySearchQuery(value, page, ordering, genre).then(({data}) => {
                 const { results, count } = data
+                console.log(page)
 
                 setGames(results)
+                console.log(results)
                 setTotalPages(count / 20)
 
                 setIsLoading(false)
@@ -37,10 +39,9 @@ export const Catalog = ({onSubmit, searchParams}) => {
             top: 0,
         });
     }
-
     return (
         <div className={css.catalog} style={{marginTop: 61, backgroundColor: 'black', boxSizing: 'border-box',minHeight: 'calc(100vh - 61px)', position: "relative"}}>
-            <SearchForm className={'catalog'} onSubmit={onSubmit} />
+            <SearchForm className={'catalog'} onSubmit={onSubmit} setPage={setPage} />
             {isLoading ? <Loader className={'loader-catalog'} color={'white'} /> :
                 (games.length !== 0 ? <><GameList games={games} />
                         <Pagination totalPages={totalPages <= 500 ? totalPages : 500} changePage={handlePageChange} page={page} />

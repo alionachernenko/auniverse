@@ -6,6 +6,7 @@ export const SearchFilter = () => {
                 <Filter> {/*отдельно */}
                     <Label htmlFor='order_select'>Order by:</Label>
                     <FilterOptions name="ordering" id="order_select">
+                        <option value='' selected>All</option>
                         <option value="added">Added</option>
                         <option value="released">Released</option>
                         <option value="name">Name</option>
@@ -18,6 +19,7 @@ export const SearchFilter = () => {
                 <Filter>
                     <Label htmlFor='genre_select'>Genre:</Label>
                     <FilterOptions name="genre" id="genre_select">
+                        <option value=''  selected>All</option>
                         <option value="action">Action</option>
                         <option value="adventure">Adventure</option>
                         <option value="indie">Indie</option>

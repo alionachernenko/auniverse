@@ -5,29 +5,32 @@ import styled, {css} from 'styled-components'
 import { SearchFilter } from 'components/SearchFilter/SearchFilter'
 import { FilteredList } from 'components/FilteredList/FilteredList'
 
-export const SearchForm = ({ onSubmit, className }) => {
+export const SearchForm = ({ onSubmit, className, setPage}) => {
     const [value, setValue] = useState('')
     const [filteredGames, setFilteredGames] = useState()
 
     const location = useLocation()
 
     useEffect(() => {
-        getGameByName(value).then(({data}) => {
-            setFilteredGames(data.results)
-        })
+        if (location.pathname === '/auniverse') {
+            getGameByName(value).then(({data}) => {
+                setFilteredGames(data.results)
+            })
+        }
+       
      },
-    [value])
+    [location.pathname, value])
 
     return (
         <Form render={className} onSubmit={(e) => {
             const { query, ordering, genre } = e.target.elements
 
             onSubmit(e, query.value, ordering.value, genre.value)
+            setPage(1)
         }   
         }>
             <Input render={className} value={value} type="text" name='query' onChange={(e) => {
                 setValue(e.target.value)
-                
             }
             } />
             <Button render={className} type="submit">GO</Button>

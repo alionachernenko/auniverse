@@ -1,11 +1,9 @@
 import authContext from "./context";
 import { useEffect, useState } from "react";
-import { userSignUp, userLogIn, addNewUser} from "../services/firebase";
+import { userSignUp, userLogIn, addNewUser} from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-// import { setUserDataToLocalStorage, getDataFromLocalStorage } from "utils/localStorage";
-import { browserLocalPersistence, setPersistence } from "firebase/auth";
-import { auth } from "../services/firebase";
+import { auth } from "../utils/firebase";
 
 const AuthProvider = ({children}) => {
     const [isLoggedIn, setIsLoggedIn] = useState()
@@ -28,7 +26,7 @@ const AuthProvider = ({children}) => {
     const handleLogInSubmit = (e, email, password) => {
         e.preventDefault()
         setIsLoading(true)
-        setPersistence(auth, browserLocalPersistence).then(() => {
+        // setPersistence(auth, browserLocalPersistence).then(() => {
             userLogIn(email, password).then(() => {
                 navigation(`auniverse/profile`)
                 setIsLoading(false)
@@ -39,7 +37,7 @@ const AuthProvider = ({children}) => {
                 })
                 setIsLoading(false)
             });
-        })
+        // })
         
     }
 
