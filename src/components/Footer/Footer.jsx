@@ -2,9 +2,12 @@ import { Logo } from "components/Logo/Logo"
 import { BsArrowUp } from "react-icons/bs"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
+import { Container } from "components/Container/Container"
 
 export const Footer = () => {
     return (<PageFooter>
+        <Container>
+            <FooterContainer>
                 <Logo className={'logo_footer'}>AUNIVERSE</Logo>
                 <nav>
                     <ul>
@@ -17,44 +20,54 @@ export const Footer = () => {
                     <a href="tel:+380953596448">+380953596448</a>
                     <a href='mailto:auniverse@gmail.com'>auniverse@gmail.com</a>
                 </address>
+                </FooterContainer>
+                </Container>
         </PageFooter>)
 }
 
 const PageFooter = styled.footer`
-    height: 443.56px;
-    min-height: 20px;
+    height: 100%;
     display: flex;
-    padding-left: 220px;
-    padding-right: 220px;
+    flex-wrap: wrap;
     background-color: #080D2B;
+    justify-content: flex-start;
     align-items: center;
     color: white;
-    width: 100vw;
-
-   
+    margin-left: auto;
+    margin-right: auto;
+    flex: 1;
+    padding: 10px 0;
+    width: 100%;
 
     & ul{
-        list-style: none;
+        display: flex;
+        gap: 20;
 
-        & :not(:last-child){
-            margin-bottom: 20px
+        @media screen and (min-width: 768px){
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 0 100px
         }
+
     }
 
     & nav{
-        margin-right: 388px;
         font-family: 'Nunito', sans-serif;
+        
+
         & + div{
-            margin-right: 96px;
+            // margin-right: 96px;
             height: 100%;
-            min-height: 20;
             background-color: white;
             display: flex;
             vertical-align: middle;
-            display: flex;
             align-items: center;
             width: 65px;
             justify-content: center;
+            position: absolute;
+            right: 500px;
+            top: 0;
+          
         }
     }
 
@@ -63,5 +76,26 @@ const PageFooter = styled.footer`
         flex-direction: column;
         font-style: normal;
         font-family: 'Nunito', sans-serif;
+    }
+
+    @media screen and (min-width: 768px){
+        padding: 0
+    }
+    
+`
+
+const FooterContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    flex-wrap: wrap;
+    position: relative;
+
+    @media screen and (min-width: 768px){
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0 100px
     }
 `

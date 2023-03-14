@@ -56,12 +56,17 @@ const Form = styled.form`
                 margin-right: auto;
                 height: auto;
 
-                `
+                
+            `
             case 'header':
                 return css`
                     height: 100%;
                     width: 250px;
                     margin: 0;
+
+                    @media screen and (max-width: 1440px){
+                        display: none;
+                    }
                 `
             default: 
             return css`
@@ -92,7 +97,6 @@ ${(props) => {
         case 'header':
             return css`
                 height: 100%;
-                margin-bottom: 20px;
                 font-size: 15px;
             `
         default: return css` `

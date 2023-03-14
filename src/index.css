@@ -1,5 +1,11 @@
 @import-normalize; /* bring in normalize.css styles */
 
+/* #root{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+} */
+
 @font-face{
   font-family: 'Nunito';
   src: url('assets/fonts/Nunito-Regular.ttf');

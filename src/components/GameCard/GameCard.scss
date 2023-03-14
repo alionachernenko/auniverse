@@ -15,7 +15,6 @@
 }
 
 .gamecard_catalog{
-    width: calc((100vw - 90px)/4);
     height: 500px;
     color: white;
     background-color: #050B2B;
@@ -24,13 +23,6 @@
     max-width: 500px;
     border-radius: 20px;
 }
-
-@media screen and (max-width: 1199px) {
-    .gamecard_catalog {
-        width: calc((100vw - 60px)/3)
-    }
-}
-
 .gamecard_catalog .poster{
     object-fit: cover;
     height: 70%;

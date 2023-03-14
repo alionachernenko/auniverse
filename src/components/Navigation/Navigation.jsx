@@ -9,12 +9,12 @@ export const Navigation = () => {
 
     return (
         <>
-        <nav>
+        <SiteNav>
             <NavigationMenu>
                 <li><Link to='/auniverse'>Home</Link></li>
                 <li><Link to='/auniverse/catalog'>Catalog</Link></li>
             </NavigationMenu>
-        </nav>
+        </SiteNav>
             <Options>
                 {isLoggedIn && <li><Link to={`/auniverse/profile`}><RiUserFill/></Link></li>}
                 {!isLoggedIn && <li><Link to={`/auniverse/login/login-page`}><RiLoginBoxFill/></Link></li>}
@@ -22,6 +22,12 @@ export const Navigation = () => {
         </>
     )
 }
+
+const SiteNav = styled.nav`
+    @media screen and (max-width: 1440px){
+        display: none;
+    }
+`
 
 const NavigationMenu = styled.ul` 
     padding: 0;
@@ -37,7 +43,8 @@ const NavigationMenu = styled.ul`
         font-style: normal;
         letter-spacing: 0.05em;
         line-height: 140%;
-    }
+    };
+
 `
 
 const Options = styled.ul`
@@ -45,4 +52,8 @@ const Options = styled.ul`
     margin: 0;
     display: flex;
     list-style: none;
+
+    @media screen and (max-width: 1200px){
+        display: none;
+    }
 `

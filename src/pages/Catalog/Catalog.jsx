@@ -40,7 +40,7 @@ export const Catalog = ({onSubmit, searchParams}) => {
         });
     }
     return (
-        <div className={css.catalog} style={{marginTop: 61, backgroundColor: 'black', boxSizing: 'border-box',minHeight: 'calc(100vh - 61px)', position: "relative"}}>
+        <div className={css.catalog} style={{backgroundColor: 'black', boxSizing: 'border-box',minHeight: 'calc(100vh - 61px)', position: "relative"}}>
             <SearchForm className={'catalog'} onSubmit={onSubmit} setPage={setPage} />
             {isLoading ? <Loader className={'loader-catalog'} color={'white'} /> :
                 (games.length !== 0 ? <><GameList games={games} />
