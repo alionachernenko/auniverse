@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { FaUserEdit } from 'react-icons/fa'
 import { Oval } from 'react-loader-spinner'
 import authContext from '../../context/context'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 
 
 const SignupForm = () => {
