@@ -29,14 +29,16 @@ const SignupForm = () => {
     )
 }
 
-const show = keyframes(`
-    0%{
-        opacity: 0;
-    }
-    100%{
-        opacity: 1;
-    }
-`)
+// const show = keyframes`
+//     0%{
+//         opacity: 0;
+//     }
+//     100%{
+//         opacity: 1;
+//     }
+// `
+
+
 
 const Form = styled.form`
     display: flex;
@@ -52,10 +54,6 @@ const Form = styled.form`
     @media screen and (max-width: 1199px) {
         max-width: 100%;
         border-radius: 20px;
-    }
-
-    & *{
-        animation: ${show} 500ms
     }
 `
 

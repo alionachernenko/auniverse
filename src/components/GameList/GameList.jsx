@@ -41,12 +41,9 @@ const Item = styled.li`
         width: calc((100% - 30px)/2);
     }
 
-    @media screen and (min-width: 1200px) {
-        width: calc((100% - 60px)/3);
+    @media screen and (min-width: 1440px) {
+        width: calc((100% - 90px)/4);
     }
 
-    @media screen and (min-width: 1920px){
-    width: calc((100% - 90px)/4);
-}
     
 `

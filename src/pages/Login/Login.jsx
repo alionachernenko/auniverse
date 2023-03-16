@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { Suspense, useContext, useEffect, useState } from "react"
 import { Outlet, useNavigate } from "react-router-dom"
 import { NavLink} from "react-router-dom"
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -8,6 +8,7 @@ import { getGames } from 'services/games-api'
 import 'swiper/css';
 import authContext from '../../context/context'
 import styled from 'styled-components';
+import { LoadingPage } from "components/LoadingPage/LoadingPage";
 
 
 const Login = () => {
@@ -74,7 +75,9 @@ const Login = () => {
                         }
                             )}
                 </Swiper>
+                <Suspense fallback={<LoadingPage/>}>
                 <Outlet/>
+                </Suspense>
             </SliderWrapper>
         </Page>
     )

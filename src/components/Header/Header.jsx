@@ -45,6 +45,8 @@ const PageHeader = styled.header`
     align-items: center;
     background-color: #080D2B;
     width: 100%;
+    position: relative;
+
 
     @media screen and (max-width: 420px){
         padding: 15px 13px;

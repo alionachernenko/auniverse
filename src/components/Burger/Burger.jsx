@@ -18,6 +18,8 @@ export const Burger = () => {
 
 
 const BurgerButton = styled.div`
+
+
     @media screen and (min-width: 1201px){
         display: none;
     }

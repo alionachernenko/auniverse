@@ -122,9 +122,14 @@ const moving = keyframes`
 `
 
 const Picture = styled.img`
+
+@media screen and (max-width: 1700px) {
+    display: none
+}
     height: 600px;
     position: absolute;
     top: 20px;
     right: 50px;
+    // animation-delay: 1000ms;
     animation: ${moving} 500ms ease-in-out
 `

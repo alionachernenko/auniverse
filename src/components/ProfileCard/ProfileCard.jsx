@@ -18,18 +18,25 @@ export const ProfileCard = ({avatar, username, isAvatarLoading, setPhotoPath, se
                     <UploadInput id='upload_file'accept=".png, .jpg, .jpeg, .gif" type='file' name='photo' onChange={
                 (e) => {
                 e.preventDefault()
-                console.log('changed')
-                setIsAvatarLoading(true)
-
-                uploadBytes(sRef(firebaseApps.storage, `/userpics/${e.target.files[0].name}`), e.target.files[0]).then(() => {
-                return getDownloadURL(sRef(firebaseApps.storage, `/userpics/${e.target.files[0].name}`))}).then((url) =>{
-                    console.log(url)
-                    
-                    set(ref(firebaseApps.database, 'users/' + userId + '/photoUrl'), url)
-                    setPhotoPath(url)
-
-                    setIsAvatarLoading(false)
-                })}
+                
+                if(e.target.files[0]){
+                    if(e.target.files[0].size > 2097152){
+                        console.log('noooooJJFJFJJFJFJ')
+                        setIsAvatarLoading(false)
+                        return
+                    }
+                    setIsAvatarLoading(true)
+                    uploadBytes(sRef(firebaseApps.storage, `/userpics/${e.target.files[0].name}`), e.target.files[0]).then(() => {
+                    return getDownloadURL(sRef(firebaseApps.storage, `/userpics/${e.target.files[0].name}`))}).then((url) =>{
+                        console.log(url)
+                        
+                        set(ref(firebaseApps.database, 'users/' + userId + '/photoUrl'), url)
+                        setPhotoPath(url)
+    
+                        setIsAvatarLoading(false)
+                    })
+                }
+                }
             }/>
                     <UploadButton htmlFor="upload_file">
                         <GrFormUpload size={40} color='orange'/>

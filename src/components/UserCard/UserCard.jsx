@@ -31,7 +31,6 @@ export const UserCard = ({id}) => {
 
 const Card = styled.div`
     height: auto;
-    width: calc((100vw - 80px)/5);
     padding: 10px;
     border-radius: 20px;
     background-color: #080D2B;
@@ -41,18 +40,27 @@ const Card = styled.div`
     &:hover{
         transform: scale(0.95)
     }
+
+    @media screen and (min-width: 768px){
+        width: 400px
+    }
     
 `
 const AvatarWrapper = styled.div`
     border-radius: 100px;
-    height: 100px;
-    width: 100px;
+    height: 50px;
+    width: 50px;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
-    background-color: #080D2B
+    background-color: #080D2B;
+
+    @media screen and (min-width: 420px){
+        height: 100px;
+        width: 100px;
+    }
 `
 
 const CardLink = styled(Link)`

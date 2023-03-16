@@ -122,9 +122,12 @@ const Button = styled.button`
             font-size: 20px;
             transform: scale(1);
 
-            &:hover{
-                transform: scale(1.4)
+            @media screen and (min-width: 1200px) {
+                &:hover{
+                    transform: scale(1.4)
+                }
             }
+            
             `
             case 'header': 
             return css`
@@ -134,9 +137,10 @@ const Button = styled.button`
             top: 50%;
             transform: translateY(-50%) scale(1);
 
+            @media screen and (min-width: 1200px) {
             &:hover{
                 transform: translateY(-50%) scale(1.5)
-            }
+                }
             `
             default: return css``
         }

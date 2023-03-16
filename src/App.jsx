@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastify";
 import { Header } from "components/Header/Header";
 import { Footer } from "components/Footer/Footer";
 import { lazy, Suspense } from "react";
+import { LoadingPage } from "components/LoadingPage/LoadingPage";
 
 const Homepage = lazy(() => import('./pages/Homepage/Homepage'))
 const Catalog = lazy(() => import('./pages/Catalog/Catalog'))
@@ -47,7 +48,7 @@ export function App() {
     return (
         <>
             <Header onSubmit={searchFormSubmit}/>
-            <Suspense fallback={<p>Is loading</p>}>
+            <Suspense fallback={<LoadingPage/>}>
             <Routes>
                 <Route path='/auniverse' element={<Homepage />} />
                 <Route path='/auniverse/catalog' element={<Catalog onSubmit={searchFormSubmit} searchParams={searchParams} />} />

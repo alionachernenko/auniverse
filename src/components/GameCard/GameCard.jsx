@@ -14,7 +14,7 @@ export const GameCard = ({ data, width, className }) => {
         <Link to={`/auniverse/catalog/${slug}`} aria-label={`Read more about ${name}`} className='readmore-btn'>
         <div className={`${className}`}>
             {background_image ? <img loading='lazy' src={background_image} className='poster'
-                alt="" width={width}  /> : <img src={placeholderImage} alt='' className='poster'/>}
+                alt="" width='500' height='auto' /> : <img src={placeholderImage} alt='' className='poster'/>}
                 <div className='description'>
                 <p className='title'>
                     {name}
