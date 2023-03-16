@@ -11,6 +11,7 @@ export const Hero = () => {
                     </p>
                     <Link to='/auniverse/catalog'>Go to the catalog</Link>
                     <Picture src={sonic} alt="" />
+                    <link rel="preload" href={`${sonic}`} as="image"></link>
                 </Info>
             </Section>
     )
