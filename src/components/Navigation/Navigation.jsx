@@ -13,6 +13,7 @@ export const Navigation = () => {
             <NavigationMenu>
                 <li><Link to='/auniverse'>Home</Link></li>
                 <li><Link to='/auniverse/catalog'>Catalog</Link></li>
+                <li><Link to='/auniverse/users'>Users</Link></li>
             </NavigationMenu>
         </SiteNav>
             <Options>
@@ -24,7 +25,7 @@ export const Navigation = () => {
 }
 
 const SiteNav = styled.nav`
-    @media screen and (max-width: 1440px){
+    @media screen and (max-width: 1439px){
         display: none;
     }
 `

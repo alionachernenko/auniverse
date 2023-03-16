@@ -4,6 +4,10 @@ import { userSignUp, userLogIn, addNewUser} from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { auth } from "../utils/firebase";
+// import firebaseApps from 'config/firebase'
+// import { ref, uploadBytes } from 'firebase/storage'
+// import { getDownloadURL } from "firebase/storage";
+
 
 const AuthProvider = ({children}) => {
     const [isLoggedIn, setIsLoggedIn] = useState()
@@ -26,7 +30,7 @@ const AuthProvider = ({children}) => {
     const handleLogInSubmit = (e, email, password) => {
         e.preventDefault()
         setIsLoading(true)
-        // setPersistence(auth, browserLocalPersistence).then(() => {
+
             userLogIn(email, password).then(() => {
                 navigation(`auniverse/profile`)
                 setIsLoading(false)
@@ -41,19 +45,20 @@ const AuthProvider = ({children}) => {
         
     }
 
-    const handleSignUp = (e, email, password, username) => {
+    const handleSignUp = (e, email, password, username, photo) => {
         e.preventDefault() 
 
-        setIsLoading(true)
-        userSignUp(email, password, username).then(({user}) => {
-                const {uid} = user
+        setIsLoading(true)      
 
+        userSignUp(email, password, username, photo).then(({user}) => {
+                const {uid} = user
+                
                 addNewUser(uid, email, password, [], username)
-                navigation(`/auniverse/login/login-page`)
                 setIsLoading(false)
         })
-        .catch(({code}) => {
-            toast.error(`${code.slice(5, code.length).split('-').join(' ')}`, {
+        .catch((error) => {
+            console.log(error)
+            toast.error(`${error.code.slice(5, error.code.length).split('-').join(' ')}`, {
                 position: toast.POSITION.TOP_CENTER
             })
             setIsLoading(false)
@@ -61,7 +66,7 @@ const AuthProvider = ({children}) => {
     }
 
     return(
-        <authContext.Provider value={{handleLogInSubmit, isLoading, userId, handleSignUp, isLoggedIn}}>
+        <authContext.Provider value={{handleLogInSubmit, isLoading, userId, handleSignUp, isLoggedIn, setUserId}}>
             {children}
         </authContext.Provider>
     )

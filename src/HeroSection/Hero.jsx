@@ -1,5 +1,6 @@
-import styled from "styled-components"
+import styled, { keyframes } from "styled-components"
 import { Link } from "react-router-dom"
+import sonic from '../assets/images/sonic.png'
 export const Hero = () => {
     return (
         <Section>
@@ -9,18 +10,43 @@ export const Hero = () => {
                         bright locations and unique characters
                     </p>
                     <Link to='/auniverse/catalog'>Go to the catalog</Link>
+                    <Picture src={sonic} alt="" />
                 </Info>
             </Section>
     )
     
 }
 
+const show = keyframes`
+
+from {
+    left: -100%
+}
+
+to {
+    left: 0
+}
+`
+
 const Section = styled.section`
     background-color: transparent;
     background-size: cover;
-    padding: 100px 0;
+    // padding: 100px 0;
     position: relative;
+    align-items: center;
+    display: flex;
+    justify-content: center;
     
+    @media screen and (min-width: 768px){
+        padding: 100px 0;
+    };
+    
+
+    @media screen and (max-width: 767px){
+        height: 100vh;
+    };
+
+   
 
      & a{
         display: block;
@@ -29,8 +55,11 @@ const Section = styled.section`
         box-sizing: border-box;
         padding: 10px 20px;
         background-color: #080D2B;
-        font-size: 20px
+        font-size: 20px;
+        animation: ${show} 800ms ease;
+        position: relative;
      }
+
 `
 
 const Info = styled.div`
@@ -41,7 +70,7 @@ const Info = styled.div`
     gap: 29px;
     padding: 0 5px;
 
-    @media screen and (min-width: 1441px){
+    @media screen and (min-width: 1440px){
         align-items: flex-start;
         padding: 0 20px;
     }
@@ -52,9 +81,16 @@ const Info = styled.div`
     line-height: 140%;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    position: relative;
     text-align: center;
+    animation: ${show} 500ms ease;
 
-    @media screen and (min-width: 1441px){
+    @media screen and (min-width: 768px){
+        font-size: 50px;
+    }
+
+
+    @media screen and (min-width: 1440px){
         font-size: 100px;
         text-align: left
     }
@@ -69,5 +105,25 @@ const Info = styled.div`
         font-family: 'Nunito', sans-serif;
         color: #FFF;
         text-align: center;
+        animation: ${show} 700ms ease;
+        position: relative;
     }
+`
+
+const moving = keyframes`
+    0% {
+        transform: scale(0)
+    }
+
+    100% {
+        transform: scale(1)
+    }
+`
+
+const Picture = styled.img`
+    height: 600px;
+    position: absolute;
+    top: 20px;
+    right: 50px;
+    animation: ${moving} 500ms ease-in-out
 `

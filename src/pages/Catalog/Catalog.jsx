@@ -3,10 +3,10 @@ import { getGameBySearchQuery } from "../../services/games-api"
 import { Pagination } from "../../components/Pagination/Pagination"
 import { SearchForm } from "../../components/SearchForm/SearchForm"
 import { Loader } from "../../components/Loader/Loader"
-import css from './Catalog.module.css'
 import { GameList } from "../../components/GameList/GameList"
+import styled from "styled-components"
 
-export const Catalog = ({onSubmit, searchParams}) => {
+const Catalog = ({onSubmit, searchParams}) => {
     const [games, setGames] = useState([])
     const [totalPages, setTotalPages] = useState(0)
     const [isLoading, setIsLoading] = useState(true)
@@ -18,10 +18,9 @@ export const Catalog = ({onSubmit, searchParams}) => {
         setIsLoading(true)
         getGameBySearchQuery(value, page, ordering, genre).then(({data}) => {
                 const { results, count } = data
-                console.log(page)
+                console.log(data)
 
                 setGames(results)
-                console.log(results)
                 setTotalPages(count / 20)
 
                 setIsLoading(false)
@@ -40,12 +39,27 @@ export const Catalog = ({onSubmit, searchParams}) => {
         });
     }
     return (
-        <div className={css.catalog} style={{backgroundColor: 'black', boxSizing: 'border-box',minHeight: 'calc(100vh - 61px)', position: "relative"}}>
+        <Page style={{backgroundColor: 'black', boxSizing: 'border-box',minHeight: 'calc(100vh - 61px)', position: "relative"}}>
             <SearchForm className={'catalog'} onSubmit={onSubmit} setPage={setPage} />
             {isLoading ? <Loader className={'loader-catalog'} color={'white'} /> :
                 (games.length !== 0 ? <><GameList games={games} />
                         <Pagination totalPages={totalPages <= 500 ? totalPages : 500} changePage={handlePageChange} page={page} />
                     </> : <h1 style={{color: 'white'}}>No matches</h1>)}
-        </div>
+        </Page>
     )
 }
+
+
+const Page = styled.div`
+    padding: 10px 0 40px 0;
+    background-color: black;
+    box-sizing: border-box;
+    min-height: calc(100vh - 61px);
+    position: relative;
+
+    @media screen and (min-width: 1200px){
+        padding: 40px 0;
+    }
+`
+
+export default Catalog

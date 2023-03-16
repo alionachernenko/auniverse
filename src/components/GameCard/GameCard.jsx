@@ -6,13 +6,14 @@ import placeholderImage from 'assets/images/placeholder.png'
 
 export const GameCard = ({ data, width, className }) => {
     const location = useLocation()
-    const {name, released, genres, background_image, slug, rating, developers} = data
+    const {name, released, genres, background_image, slug, rating } = data
     console.log(rating)
     console.log(data)
 
     return (
+        <Link to={`/auniverse/catalog/${slug}`} aria-label={`Read more about ${name}`} className='readmore-btn'>
         <div className={`${className}`}>
-            {background_image ? <img src={background_image} className='poster'
+            {background_image ? <img loading='lazy' src={background_image} className='poster'
                 alt="" width={width}  /> : <img src={placeholderImage} alt='' className='poster'/>}
                 <div className='description'>
                 <p className='title'>
@@ -25,11 +26,22 @@ export const GameCard = ({ data, width, className }) => {
                     }))}
                 </ul>}
             </div>
-            <Link to={`/auniverse/catalog/${slug}`} aria-label={`Read more about ${name}`}>
+            <div className="desc">
+                {name && <h1>{name}</h1>}
+                {released && <p>{released.slice(0, 4)}</p>}
+                {genres && <ul className='genres'>
+                    {data.genres.map((genre => {
+                        return  <li className="genres_item" key={genre.id}>{genre.name}</li>
+                    }))}
+                </ul>}
+            </div>
+            <div className='readmore-btn'>
                 <p>Read more</p>
                 <BiRightArrow color="green" title="Read more button right arrow"/>
-            </Link>
+            </div>
+            
             {location.pathname === '/catalog' && <p className='rating'>{rating}</p>}
         </div>
+        </Link>
     )
 }

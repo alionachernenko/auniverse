@@ -4,26 +4,27 @@ import { NavLink} from "react-router-dom"
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper'
 import { EffectCreative } from 'swiper'
-import { getNewGames } from 'services/games-api'
+import { getGames } from 'services/games-api'
 import 'swiper/css';
 import authContext from '../../context/context'
 import styled from 'styled-components';
 
-export const Login = () => {
+
+const Login = () => {
     const {isLoggedIn} = useContext(authContext)
     
     const navigate = useNavigate()
     const [games, setGames] = useState([])
-    
 
     useEffect(() => {
-        getNewGames(1).then((res) => {
+        getGames(1).then((res) => {
+            console.log(res)
             setGames(res.data.results.slice(0, 5))
         })
     }, [])
     useEffect(() => {
         if (isLoggedIn === true) {
-            navigate(`/auniverse/profile`)
+           navigate(`/auniverse/profile`)
         }
     }, [isLoggedIn, navigate])
     
@@ -34,7 +35,7 @@ export const Login = () => {
                 <Tab to='sign-page'>Sign Up</Tab>
             </Tabs>
             <SliderWrapper>
-                <Swiper style={{
+                <Swiper className="slider" style={{
                     height: '100%',
                     width: 500,
                     borderRadius: '20px 0 0 20px'
@@ -62,6 +63,7 @@ export const Login = () => {
                     >
                         {games.map(game => {
                             return (<SwiperSlide key={game.id} style={{width: '100%', overflow: 'hidden'}}><img
+                            
                             style={{
                                 width: '100%',
                                 height: '100%',
@@ -84,7 +86,6 @@ export const Login = () => {
 
 const Page = styled.div`
     height: 100vh;
-    margin-top: 61px;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -126,10 +127,24 @@ const Tab = styled(NavLink)`
 `
 
 const SliderWrapper = styled.div`
+    & .slider{
+        @media screen and (max-width: 1199px){
+            display: none;
+        }
+    }
+
+    @media screen and (max-width: 1199px){
+        max-width: 100%;
+    }
+    
     display: flex;
     align-items: center;
     justify-content: center;
     height: 80vh;
     width: auto;
     border-radius: 20px;
+
+
 `
+
+export default Login

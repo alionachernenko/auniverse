@@ -23,7 +23,8 @@ export const SearchForm = ({ onSubmit, className, setPage}) => {
 
     return (
         <Form render={className} onSubmit={(e) => {
-            const { query, ordering, genre } = e.target.elements
+            e.preventDefault()
+            const { query, ordering = '', genre = ''} = e.target.elements
 
             onSubmit(e, query.value, ordering.value, genre.value)
             setPage(1)
@@ -51,12 +52,10 @@ const Form = styled.form`
             case 'catalog': 
                 return css`
                 margin-bottom: 20px;
-                width: 500px;
+                max-width: 500px;
                 margin-left: auto;
                 margin-right: auto;
                 height: auto;
-
-                
             `
             case 'header':
                 return css`
@@ -111,6 +110,7 @@ const Button = styled.button`
     color: darkblue;
     font-weight: 900;
     cursor: pointer;
+    transition: 250ms transform ease;
 
     ${props => {
         switch(props.render){
@@ -120,6 +120,11 @@ const Button = styled.button`
             top: 2px;
             right: 3px;
             font-size: 20px;
+            transform: scale(1);
+
+            &:hover{
+                transform: scale(1.4)
+            }
             `
             case 'header': 
             return css`
@@ -127,11 +132,17 @@ const Button = styled.button`
             right: 1px;
             font-size: 10px;
             top: 50%;
-            transform: translateY(-50%);
+            transform: translateY(-50%) scale(1);
+
+            &:hover{
+                transform: translateY(-50%) scale(1.5)
+            }
             `
             default: return css``
         }
     }}
+
+   
 `
 
 

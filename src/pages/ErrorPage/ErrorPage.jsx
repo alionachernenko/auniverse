@@ -1,12 +1,40 @@
 import { Link } from "react-router-dom"
-export const ErrorPage = () => {
+import { Game } from "components/game/Game"
+import styled from "styled-components"
+
+const ErrorPage = () => {
     return (
-        <div style={{
-            height: '100vh', marginTop: 61, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}>
-            <h1>404</h1>
-            <p>Oops... page not found</p>
+        <Page>
+            <Wrapper>
+            <Error>404</Error>
+            <Description>This page doesn't exist</Description>
+            </Wrapper>
             <Link to='/auniverse' style={{
                 color: 'black'}}>Back to homepage</Link>
-        </div>
+            <Game/>
+            
+        </Page>
     )
 }
+
+const Page = styled.div`
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column
+`
+
+const Error = styled.h1`
+    font-size: 400px;
+    background-color
+`
+const Description = styled.p`
+    font-size: 150px;
+`
+
+const Wrapper = styled.div`
+    height: fit-content;
+    align-items: center;
+    display: flex;
+`
+
+export default ErrorPage

@@ -2,11 +2,12 @@ import { useContext } from 'react'
 import { FaUserEdit } from 'react-icons/fa'
 import { Oval } from 'react-loader-spinner'
 import authContext from '../../context/context'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
-export const SignupForm = () => {
+
+const SignupForm = () => {
     const { handleSignUp, isLoading} = useContext(authContext)
-    
+
 
     return (
         <Form onSubmit={(e) => {
@@ -22,11 +23,20 @@ export const SignupForm = () => {
             <Input type="text" name="username" placeholder="username" />
             <Input type="email" name="email" id="" placeholder="email"/>
             <Input type="password" name="password" placeholder="password" />
-               
+            {/* <Input type='file' name='photo'/> */}
             <Button type="submit">Sign Up</Button>
         </Form>
     )
 }
+
+const show = keyframes(`
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+`)
 
 const Form = styled.form`
     display: flex;
@@ -38,6 +48,15 @@ const Form = styled.form`
     position: relative;
     justify-content: center;
     box-sizing: border-box;
+
+    @media screen and (max-width: 1199px) {
+        max-width: 100%;
+        border-radius: 20px;
+    }
+
+    & *{
+        animation: ${show} 500ms
+    }
 `
 
 const Input = styled.input`
@@ -55,6 +74,10 @@ const Input = styled.input`
     
     &::placeholder{
         font-size: 20px;
+    }
+
+    @media screen and (max-width: 1199px){
+        width: 100%
     }
 `
 
@@ -89,3 +112,5 @@ const Icon = styled.div`
     justify-content: center;
     border: 1px solid orange;
 `
+
+export default SignupForm

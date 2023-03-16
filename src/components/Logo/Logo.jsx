@@ -7,3 +7,4 @@ export const Logo = ({ className }) => {
         </div>
     )
 }
+

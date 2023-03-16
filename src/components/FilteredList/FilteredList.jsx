@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom"
 import styled from "styled-components"
+// import placeholder from '../../assets/images/placeholder'
 
 export const FilteredList = ({results}) => {
     return (
         <FilteredResults>
                 {results.map(({id, background_image, slug, name}) => 
                 <li key={id}>
-                    <img src={`${background_image}`} alt="" />
+                    <img src={`${background_image}`} loading='lazy' alt="" />
                     <Link to={`/auniverse/catalog/${slug}`}>
                         {name}
                     </Link>

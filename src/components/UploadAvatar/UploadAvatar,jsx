@@ -1,0 +1,59 @@
+
+// export const UploadForm = () => {
+//     return (
+//         <UploadBlock>
+//                     <UploadInput id='upload_file'accept=".png, .jpg, .jpeg, .gif" type='file' name='photo' onChange={
+//             (e) => {
+//                 e.preventDefault()
+//                 setIsAvatarLoading(true)
+//                 setShowAvatarForm(false)
+                
+//                 uploadBytes(sRef(firebaseApps.storage, `/userpics/${e.target.elements.photo.files[0].name}`), e.target.elements.photo.files[0]).then(() => {
+//                 return getDownloadURL(sRef(firebaseApps.storage, `/userpics/${e.target.elements.photo.files[0].name}`))}).then((url) =>{
+//                     console.log(url)
+                    
+//                     set(ref(firebaseApps.database, 'users/' + userId + '/photoUrl'), url)
+//                     setPhotoPath(url)
+
+//                     setIsAvatarLoading(false)
+//                 })}
+//             }/>
+//                     <UploadButton htmlFor="upload_file">
+//                         <GrFormUpload size={40} color='orange'/>
+//                     </UploadButton>
+//                         </UploadBlock>
+//     )
+// }
+
+// const UploadBlock = styled.div`
+//     position: absolute;
+//     bottom: 0;
+//     opacity: 0;
+//     width: 100%;
+//     height: 100%;
+//     background-color: rgba(8, 13, 43, .8);
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     transition: 250ms all ease;
+
+//     ${AvatarWrapper}:hover &{
+//         opacity: 1
+//     }
+// `
+// const UploadButton = styled.label`
+//     border: none;
+//     background-color: transparent;
+//     width: auto;
+//     height: auto;
+//     cursor: pointer
+// `
+
+// const UploadInput = styled.input`
+//     width: 0.1px;
+//     height: 0.1px;
+//     opacity: 0;
+//     overflow: hidden;
+//     position: absolute;
+//     z-index: -1;
+// `

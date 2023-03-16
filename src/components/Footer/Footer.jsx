@@ -41,14 +41,12 @@ const PageFooter = styled.footer`
 
     & ul{
         display: flex;
-        gap: 20;
+        gap: 20px;
 
         @media screen and (min-width: 768px){
-            flex-direction: row;
+            flex-direction: column;
             justify-content: space-between;
-            padding: 0 100px
         }
-
     }
 
     & nav{
@@ -76,6 +74,7 @@ const PageFooter = styled.footer`
         flex-direction: column;
         font-style: normal;
         font-family: 'Nunito', sans-serif;
+        gap: 20px
     }
 
     @media screen and (min-width: 768px){
@@ -92,6 +91,7 @@ const FooterContainer = styled.div`
     margin-right: auto;
     flex-wrap: wrap;
     position: relative;
+    gap: 20px;
 
     @media screen and (min-width: 768px){
         flex-direction: row;

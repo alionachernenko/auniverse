@@ -3,17 +3,21 @@ import { Loader } from "components/Loader/Loader";
 import { SwiperSlide } from "swiper/react"
 import { GameCard } from "components/GameCard/GameCard"
 import { Slider } from "../../components/Slider/Slider"
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getNewGames } from "services/games-api";
+import breakpointContext from '../../context/contextBr'
+import { Game } from "components/game/Game";
 
-export const NewGames = () => {
+const NewGames = () => {
     
+    const {breakpoint} = useContext(breakpointContext)
     const [games, setGames] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [isError, setIsError] = useState(false)
 
     useEffect(() => {
-        getNewGames(1).then(({data}) => {
+        if(breakpoint >= 1440) {
+             getNewGames(1).then(({data}) => {
             const { results } = data
             setGames(results)
 
@@ -26,7 +30,9 @@ export const NewGames = () => {
             setIsLoading(false)
         }
         )
-    }, [])
+    }
+       
+    }, [breakpoint])
 
     return (
         <Section>
@@ -37,7 +43,9 @@ export const NewGames = () => {
                     <Span>New 2023</Span>
                    <Div>
                         <h2>What will you choose this time?</h2>
-                        {isLoading ? <Loader className={'loader-homepage'} color={'darkblue'} /> : ( isError ? <p>Something wen wrong</p> : 
+                        {isLoading ? <Loader className={'loader-homepage'} color={'darkblue'} /> : ( isError ? 
+                        <><p>Something went wrong. You can play the game below not to get bored</p>
+                        <Game/></> : 
                         <Slider>
                             {games.map((game => 
                                      
@@ -99,3 +107,5 @@ const Span = styled.div`
     letter-spacing: 0.05em;
     text-transform: uppercase;
 `
+
+export default NewGames

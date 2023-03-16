@@ -7,7 +7,7 @@ import authContext from '../../context/context'
 import styled, {css} from "styled-components";
 import { ToggleFavouriteButton } from "components/ToggleFavouriteButton/ToggleFavouriteButton";
 
-export const GameDescription = () => {
+const GameDescription = () => {
     const {isLoggedIn} = useContext(authContext)
 
     const [title, setTitle] = useState('')
@@ -65,8 +65,8 @@ export const GameDescription = () => {
                 </Meta>
                     {stores && <StoresList stores={stores}/>}
                     {description && <Overview>{description}</Overview>}
-                    <ToggleScreenshotsButton type="button" onClick={toggleShowScreenshots}>
-                        {showScreenshots ? 'Hide' : 'Show'} screenshots</ToggleScreenshotsButton>
+                    {screenshots.length !== 0 && <ToggleScreenshotsButton type="button" onClick={toggleShowScreenshots}>
+                        {showScreenshots ? 'Hide' : 'Show'} screenshots</ToggleScreenshotsButton>}
                     {showScreenshots &&
                         <ul>
                             {screenshots.map(({image}) => 
@@ -81,11 +81,10 @@ export const GameDescription = () => {
 
 const Page = styled.div`
     padding: 20px;
-    margin-top: 61px;
     height: calc(100vh - 61px);
     background-size: cover;
     background-position: top;
-    backdrop-filter: brightness(30%);
+    // backdrop-filter: brightness(30%);
     overflow-y: scroll;
     align-items: center;
     display: flex;
@@ -101,25 +100,43 @@ const Page = styled.div`
 `
 const Meta = styled.div`
     display: flex;
+    flex-direction: column;
     align-items: center;
     margin-bottom: 20px;
+    gap: 10px;
+
+    @media screen and (min-width: 1200px) {
+        flex-direction: row;
+        gap: 20px;
+    }
 `
 const Title = styled.h1`
     color: white;
     font-weight: 700;
-    font-size: 50px;
-    margin-right: 20px;
+    text-align: center;
+    font-size: 35px;
+
+    
+    @media screen and (min-width: 1200px) {
+        font-size: 50px;
+        border-right: 1px solid orange;
+        padding-right: 20px
+    }
 `
 const Year = styled.p`
     color: white;
     font-weight: 700;
-    font-size: 50px;
-    margin-right: 20px;
+    text-align: center;
+    font-size: 30px;
+
+    @media screen and (min-width: 1200px) {
+        font-size: 50px;
+    }
 `
 const Overview = styled.p`
     color: white;
     background-color: rgba(59, 57, 57, 0.357);
-    width: 50vw;
+    max-width: 80vw;
     font-size: 20px;
     padding: 10px 20px;
     line-height: 35px;
@@ -128,8 +145,9 @@ const Overview = styled.p`
 `
 
 const Screenshot = styled.img`
-    height: 400px;
-    width: auto;
+    height: auto;
+    width: 100%;
+    max-width: 1000px;
 `
 
 const ToggleScreenshotsButton = styled.button`
@@ -142,3 +160,5 @@ const ToggleScreenshotsButton = styled.button`
     border: none;
     font-family: 'Nunito', sans-serif
 `
+
+export default GameDescription

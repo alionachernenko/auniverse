@@ -17,24 +17,36 @@ export const GameList = ({games}) => {
 }
 
 const List = styled.ul`
-    // display: flex;
-    // flex-wrap: wrap;
-    // list-style: none;
-    // gap: 30px;
-    // margin-bottom: 20px
+    // margin-bottom: 20px;
+    // align-items: center;
+    // justify-content: center;
+    // display: grid;
+    // grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    // grid-gap: 1em;
+    // margin-top: 0;
+    // margin-bottom: 0;
+    // padding: 0;
 
-    align-items: center;
-    display: grid;
-    max-width: 100%;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    grid-gap: 1em;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: 0;
-
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 0 20px;
+}
 `
 
 const Item = styled.li`
-    display: flex;
-    justify-content: center
+    width: 100%;
+
+    @media screen and (min-width: 768px) {
+        width: calc((100% - 30px)/2);
+    }
+
+    @media screen and (min-width: 1200px) {
+        width: calc((100% - 60px)/3);
+    }
+
+    @media screen and (min-width: 1920px){
+    width: calc((100% - 90px)/4);
+}
+    
 `

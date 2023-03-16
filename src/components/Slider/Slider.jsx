@@ -2,7 +2,7 @@
 import { Swiper } from "swiper/react"
 import 'swiper/css';
 import 'swiper/css/pagination'
-import { Autoplay, Navigation, Pagination } from "swiper";
+import { Autoplay, Pagination } from "swiper";
 
 
 export const Slider = ({children}) => {
@@ -15,7 +15,8 @@ export const Slider = ({children}) => {
             loop={true}
             autoplay={{
                 delay: 1000,
-                pauseOnMouseEnter: true
+                pauseOnMouseEnter: true,
+                disableOnInteraction: false
             }}
             modules={[Autoplay, Pagination]}
         > 

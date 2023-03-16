@@ -4,7 +4,7 @@ import { Oval } from 'react-loader-spinner'
 import authContext from '../../context/context' 
 import styled from 'styled-components'
 
-export const LoginForm = () => {
+const LoginForm = () => {
     const { handleLogInSubmit, isLoading } = useContext(authContext)
     
     return (
@@ -33,6 +33,11 @@ const Form = styled.form`
     position: relative;
     justify-content: center;
     box-sizing: border-box;
+
+    @media screen and (max-width: 1199px) {
+        max-width: 100%;
+        border-radius: 20px;
+    }
 `
 
 const Input = styled.input`
@@ -50,6 +55,10 @@ const Input = styled.input`
 
     &::placeholder{
         font-size: 20px;
+    }
+
+    @media screen and (max-width: 1199px){
+        width: 100%
     }
 `
 
@@ -84,3 +93,5 @@ const Icon = styled.div`
     justify-content: center;
     border: 1px solid orange;
 `
+
+export default LoginForm

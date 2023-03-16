@@ -1,19 +1,23 @@
 import "./App.css";
-import { Homepage } from "./pages/Homepage/Homepage";
-import { Catalog } from "./pages/Catalog/Catalog";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import { GameDescription } from "./pages/GameDescription/GameDescription";
-import { useEffect, useState } from "react";
-import { Login } from "./pages/Login/Login";
-import { Profile } from "./pages/Profile/Profile";
-import { LoginForm } from "./components/LoginForm/LoginForm";
-import { SignupForm } from "./components/SignupForm/SignupForm";
-import { ToastContainer } from "react-toastify";
-import { ErrorPage } from "pages/ErrorPage/ErrorPage";
 import 'react-toastify/dist/ReactToastify.css';
+
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
 import { Header } from "components/Header/Header";
 import { Footer } from "components/Footer/Footer";
-import { auth } from "utils/firebase";
+import { lazy, Suspense } from "react";
+
+const Homepage = lazy(() => import('./pages/Homepage/Homepage'))
+const Catalog = lazy(() => import('./pages/Catalog/Catalog'))
+const GameDescription = lazy(() => import('./pages/GameDescription/GameDescription'))
+const Login = lazy(() => import('./pages/Login/Login'))
+const Profile = lazy(() => import('./pages/Profile/Profile'))
+const ErrorPage = lazy(() => import('./pages/ErrorPage/ErrorPage'))
+const LoginForm = lazy(() => import('./components/LoginForm/LoginForm'))
+const SignupForm = lazy(() => import('./components/SignupForm/SignupForm'))
+const User = lazy(() => import('./components/User/User'))
+const Users = lazy(() => import('./pages/Users/Users'))
 
 export function App() {
     const [searchParams, setSearchParams] = useState({
@@ -30,8 +34,6 @@ export function App() {
     }, [location.pathname])
 
     
-    
-
     const searchFormSubmit = (e, value, ordering, genre) => {
         e.preventDefault()
 
@@ -45,6 +47,7 @@ export function App() {
     return (
         <>
             <Header onSubmit={searchFormSubmit}/>
+            <Suspense fallback={<p>Is loading</p>}>
             <Routes>
                 <Route path='/auniverse' element={<Homepage />} />
                 <Route path='/auniverse/catalog' element={<Catalog onSubmit={searchFormSubmit} searchParams={searchParams} />} />
@@ -53,10 +56,12 @@ export function App() {
                     <Route path='login-page' element={<LoginForm/>} />
                     <Route path='sign-page' element={<SignupForm/>} />
                 </Route>
-
+                <Route path ='/auniverse/users' element={<Users/>}/>
+                <Route path='/auniverse/users/:id' element={<User/>}/>
                 <Route path="/auniverse/profile" element={<Profile/>} />
                 <Route path='*' element={<ErrorPage/>}/>
             </Routes> 
+            </Suspense>
             <Footer/>
             <ToastContainer/>
         </>

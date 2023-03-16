@@ -1,5 +1,6 @@
 import axios from 'axios';
 import baseParams from 'config/rawg-api';
+//везде try catch
 
 const {KEY, BASE_URL} = baseParams
 
@@ -27,8 +28,8 @@ export const getNewGames = async page => {
 export const getGameBySearchQuery = async (
   searchQuery,
   page,
-  ordering,
-  genres
+  ordering = '',
+  genres = ''
 ) => {
 
 const filters = {
