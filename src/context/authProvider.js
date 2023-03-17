@@ -32,7 +32,7 @@ const AuthProvider = ({children}) => {
         setIsLoading(true)
 
             userLogIn(email, password).then(() => {
-                navigation(`auniverse/profile`)
+                navigation(`/profile`)
                 setIsLoading(false)
             })
             .catch(({code}) => {
