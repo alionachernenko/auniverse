@@ -5,7 +5,7 @@ import styled from "styled-components"
 export const LoadingPage = () => {
     const location = useLocation()
     console.log(location.pathname)
-    const backgroundColor = location.pathname === '/auniverse/catalog' ? 'black' : 'white'
+    const backgroundColor = location.pathname === '/catalog' ? 'black' : 'white'
     console.log(backgroundColor)
     return(
         <Page backgroundColor={backgroundColor}>

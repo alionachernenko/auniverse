@@ -23,7 +23,7 @@ const Profile = () => {
 
     useEffect(() => {
         if (!isLoggedIn) {
-            navigate('/auniverse/login/login-page')
+            navigate('/login/login-page')
             return
         }
 
