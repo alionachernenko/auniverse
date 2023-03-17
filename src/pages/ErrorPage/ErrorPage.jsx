@@ -9,7 +9,7 @@ const ErrorPage = () => {
             <Error>404</Error>
             <Description>This page doesn't exist</Description>
             </Wrapper>
-            <Link to='/auniverse' style={{
+            <Link to='/' style={{
                 color: 'black'}}>Back to homepage</Link>
             <Game/>
             

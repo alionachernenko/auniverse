@@ -50,16 +50,16 @@ export function App() {
             <Header onSubmit={searchFormSubmit}/>
             <Suspense fallback={<LoadingPage/>}>
             <Routes>
-                <Route path='/auniverse' element={<Homepage />} />
-                <Route path='/auniverse/catalog' element={<Catalog onSubmit={searchFormSubmit} searchParams={searchParams} />} />
-                <Route path='/auniverse/catalog/:gameSlug' element={<GameDescription/>} />
-                <Route path='auniverse/login' element={<Login />} >
+                <Route path='/' element={<Homepage />} />
+                <Route path='/catalog' element={<Catalog onSubmit={searchFormSubmit} searchParams={searchParams} />} />
+                <Route path='/catalog/:gameSlug' element={<GameDescription/>} />
+                <Route path='/login' element={<Login />} >
                     <Route path='login-page' element={<LoginForm/>} />
                     <Route path='sign-page' element={<SignupForm/>} />
                 </Route>
-                <Route path ='/auniverse/users' element={<Users/>}/>
-                <Route path='/auniverse/users/:id' element={<User/>}/>
-                <Route path="/auniverse/profile" element={<Profile/>} />
+                <Route path ='/users' element={<Users/>}/>
+                <Route path='/users/:id' element={<User/>}/>
+                <Route path="/profile" element={<Profile/>} />
                 <Route path='*' element={<ErrorPage/>}/>
             </Routes> 
             </Suspense>

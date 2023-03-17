@@ -8,10 +8,10 @@ export const BurgerMenu = ({onClick}) => {
     return createPortal(<Menu>
             <CloseButton  onClick={() => onClick()}><MdClose color='orange' size={30}/></CloseButton>
             <ul>
-                <li><Link onClick={() => onClick()} to={'/auniverse'}>Home</Link></li>
-                <li><Link onClick={() => onClick()} to={'/auniverse/catalog'}>Catalog</Link></li>
-                <li><Link onClick={() => onClick()} to={'/auniverse/users'}>Users</Link></li>
-                <li><Link onClick={() => onClick()} to={'/auniverse/profile'}>Profile</Link></li>
+                <li><Link onClick={() => onClick()} to={'/'}>Home</Link></li>
+                <li><Link onClick={() => onClick()} to={'/catalog'}>Catalog</Link></li>
+                <li><Link onClick={() => onClick()} to={'/users'}>Users</Link></li>
+                <li><Link onClick={() => onClick()} to={'/profile'}>Profile</Link></li>
 
             </ul>
         </Menu>, document.querySelector('#burger-menu-root'))

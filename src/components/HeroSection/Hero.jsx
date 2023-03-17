@@ -1,6 +1,7 @@
 import styled, { keyframes } from "styled-components"
 import { Link } from "react-router-dom"
-import sonic from '../assets/images/sonic.png'
+import sonic from '../../assets/images/sonic.png'
+
 export const Hero = () => {
     return (
         <Section>
@@ -9,9 +10,9 @@ export const Hero = () => {
                     <p>Dive into the universe of unexplored worlds,
                         bright locations and unique characters
                     </p>
-                    <Link to='/auniverse/catalog'>Go to the catalog</Link>
+                    <Link to='/catalog'>Go to the catalog</Link>
                     <Picture src={sonic} alt="" />
-                    <link rel="preload" href={`${sonic}`} as="image"></link>
+                    {/* <link rel="preload" href={`${sonic}`} as="image"></link> */}
                 </Info>
             </Section>
     )

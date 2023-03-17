@@ -11,7 +11,7 @@ export const GameCard = ({ data, width, className }) => {
     console.log(data)
 
     return (
-        <Link to={`/auniverse/catalog/${slug}`} aria-label={`Read more about ${name}`} className='readmore-btn'>
+        <Link to={`/catalog/${slug}`} aria-label={`Read more about ${name}`} className='readmore-btn'>
         <div className={`${className}`}>
             {background_image ? <img loading='lazy' src={background_image} className='poster'
                 alt="" width='500' height='auto' /> : <img src={placeholderImage} alt='' className='poster'/>}
@@ -21,7 +21,7 @@ export const GameCard = ({ data, width, className }) => {
                 </p>
                 {released && <p className='release_year'>{released.slice(0, 4)}</p>}
                 {genres && <ul className='genres'>
-                    {data.genres.map((genre => {
+                    {genres.map((genre => {
                         return  <li className="genres_item" key={genre.id}>{genre.name}</li>
                     }))}
                 </ul>}
@@ -30,7 +30,7 @@ export const GameCard = ({ data, width, className }) => {
                 {name && <h1>{name}</h1>}
                 {released && <p>{released.slice(0, 4)}</p>}
                 {genres && <ul className='genres'>
-                    {data.genres.map((genre => {
+                    {genres.map((genre => {
                         return  <li className="genres_item" key={genre.id}>{genre.name}</li>
                     }))}
                 </ul>}

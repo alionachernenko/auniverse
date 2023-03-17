@@ -32,8 +32,7 @@ export const SearchForm = ({ onSubmit, className, setPage}) => {
         }>
             <Input render={className} value={value} type="text" name='query' onChange={(e) => {
                 setValue(e.target.value)
-            }
-            } />
+            }} />
             <Button render={className} type="submit">GO</Button>
             {location.pathname === '/auniverse/catalog' && <SearchFilter/>}
             {(filteredGames && value !== '' && location.pathname === '/auniverse') && <FilteredList results={filteredGames}/>}

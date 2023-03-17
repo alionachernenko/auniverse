@@ -11,14 +11,14 @@ export const Navigation = () => {
         <>
         <SiteNav>
             <NavigationMenu>
-                <li><Link to='/auniverse'>Home</Link></li>
-                <li><Link to='/auniverse/catalog'>Catalog</Link></li>
-                <li><Link to='/auniverse/users'>Users</Link></li>
+                <li><Link to='/'>Home</Link></li>
+                <li><Link to='/catalog'>Catalog</Link></li>
+                <li><Link to='/users'>Users</Link></li>
             </NavigationMenu>
         </SiteNav>
             <Options>
-                {isLoggedIn && <li><Link to={`/auniverse/profile`}><RiUserFill/></Link></li>}
-                {!isLoggedIn && <li><Link to={`/auniverse/login/login-page`}><RiLoginBoxFill/></Link></li>}
+                {isLoggedIn && <li><Link to={`/profile`}><RiUserFill/></Link></li>}
+                {!isLoggedIn && <li><Link to={`/login/login-page`}><RiLoginBoxFill/></Link></li>}
             </Options>
         </>
     )

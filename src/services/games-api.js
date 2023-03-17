@@ -1,6 +1,5 @@
 import axios from 'axios';
 import baseParams from 'config/rawg-api';
-//везде try catch
 
 const {KEY, BASE_URL} = baseParams
 
@@ -44,16 +43,16 @@ const queryString = Object.entries(filters)
 
   console.log(queryString)
 
-return await axios.get(
+  return await axios.get(
       `${BASE_URL}games?key=${KEY}&page=${page}&search=${searchQuery}&${queryString}`)
-  }
+}
 
 export const getGameById = async id => {
   const data = await axios.get(`${BASE_URL}games/${id}?key=${KEY}`);
   return data;
 };
 
-export const getScreenshotsOfGame = async id => {
+export const getScreenshots = async id => {
   const data = await axios.get(`${BASE_URL}games/${id}/screenshots?key=${KEY}`);
   return data;
 };

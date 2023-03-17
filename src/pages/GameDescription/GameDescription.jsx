@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import {  useParams } from "react-router-dom"
-import { getGameById, getScreenshotsOfGame} from "../../services/games-api"
+import { getGameById, getScreenshots} from "../../services/games-api"
 import { StoresList } from "components/StoresList/StoresList";
 import { Loader } from "../../components/Loader/Loader";
 import authContext from '../../context/context'
@@ -27,7 +27,7 @@ const GameDescription = () => {
     });
 
     useEffect(() => {
-        Promise.all([getGameById(gameSlug), getScreenshotsOfGame(gameSlug)]).then(res => {
+        Promise.all([getGameById(gameSlug), getScreenshots(gameSlug)]).then(res => {
             const [game, screenshots] = res
             const {data} = game
             const {name, background_image, description_raw, stores, released} = data

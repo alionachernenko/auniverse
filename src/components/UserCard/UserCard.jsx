@@ -18,7 +18,7 @@ export const UserCard = ({id}) => {
 
     return(
         <Card>     
-            <CardLink style={{color: 'black'}} to={`/auniverse/users/${id}`}>
+            <CardLink style={{color: 'black'}} to={`/users/${id}`}>
                 <AvatarWrapper>
                 {avatar && <img style={{objectFit: 'cover', width: 100, height: '100%'}} width={200} src={`${avatar}`} alt={`${name}'s avatar`}></img>}
             </AvatarWrapper>

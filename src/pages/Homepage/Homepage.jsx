@@ -1,4 +1,4 @@
-import { Hero } from "HeroSection/Hero"
+import { Hero } from "components/HeroSection/Hero"
 import styled from "styled-components"
 import background from 'assets/images/homepage-background.jpg'
 import { lazy, Suspense } from "react"

@@ -11,8 +11,8 @@ export const Footer = () => {
                 <Logo className={'logo_footer'}>AUNIVERSE</Logo>
                 <nav>
                     <ul>
-                        <li><Link to='/auniverse'>Home</Link></li>
-                        <li><Link to='/auniverse/catalog'>Catalog</Link></li>
+                        <li><Link to='/'>Home</Link></li>
+                        <li><Link to='/catalog'>Catalog</Link></li>
                     </ul>
                 </nav>
                 <div><BsArrowUp fill="black" size='30'/></div>
