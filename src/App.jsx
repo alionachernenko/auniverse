@@ -42,7 +42,7 @@ export function App() {
             {value, ordering, genre}
         )
         
-        navigation('/auniverse/catalog')
+        navigation('/catalog')
     }
 
     return (

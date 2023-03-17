@@ -26,7 +26,7 @@ export const Header = ({onSubmit}) => {
                 <HeaderContainer>
                 <Logo className={'logo_header'}>AUNIVERSE</Logo>
                     <>
-                        {location.pathname === '/auniverse/' && <SearchForm onSubmit={onSubmit} className={'header'} />}
+                        {location.pathname === '/' && <SearchForm onSubmit={onSubmit} className={'header'} />}
                         <Navigation/>
                         <Burger/>
                     </>

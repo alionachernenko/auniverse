@@ -25,7 +25,7 @@ const Login = () => {
     }, [])
     useEffect(() => {
         if (isLoggedIn === true) {
-           navigate(`/auniverse/profile`)
+           navigate(`/profile`)
         }
     }, [isLoggedIn, navigate])
     

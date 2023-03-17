@@ -52,7 +52,7 @@ const Profile = () => {
     const logOut = () => {
         userSignOut()
             .then(() => {
-                navigate('/auniverse/login/login-page')
+                navigate('/login/login-page')
                 setUserId('')
             }
         );

@@ -14,7 +14,7 @@ export const ProfileCard = ({avatar, username, isAvatarLoading, setPhotoPath, se
     return(
         <Info>
             <AvatarWrapper>
-                {location.pathname === '/auniverse/profile' && <UploadBlock>
+                {location.pathname === '/profile' && <UploadBlock>
                     <UploadInput id='upload_file'accept=".png, .jpg, .jpeg, .gif" type='file' name='photo' onChange={
                 (e) => {
                 e.preventDefault()

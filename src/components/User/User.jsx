@@ -14,7 +14,7 @@ const User = () => {
     const {userId} = useContext(authContext)
     const navigate = useNavigate()
 
-    if(userId === id) navigate('/auniverse/profile')
+    if(userId === id) navigate('/profile')
 
     useEffect(() => {
         getUserInfo(id).then((res) => {
