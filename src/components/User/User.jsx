@@ -5,6 +5,7 @@ import { GameList } from "components/GameList/GameList"
 import authContext from '../../context/context'
 import styled from "styled-components"
 import { ProfileCard } from "components/ProfileCard/ProfileCard"
+import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
 
 const User = () => {
     const {id} = useParams()
@@ -20,11 +21,10 @@ const User = () => {
         getUserInfo(id).then((res) => {
             console.log(res.val())
             const {username, favs, photoUrl} = res.val() 
-            console.log(photoUrl)
-            console.log(favs)
             setName(username)
             if(favs) setFavs(Object.values(favs))
-            setPhoto(photoUrl)
+            if(photoUrl){ setPhoto(photoUrl)}
+            else(setPhoto(avatarPlaceholder))
         })
     }, [id])
    

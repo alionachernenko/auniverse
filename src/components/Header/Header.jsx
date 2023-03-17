@@ -49,15 +49,15 @@ const PageHeader = styled.header`
 
 
     @media screen and (max-width: 420px){
-        padding: 15px 13px;
+        padding: 0 13px;
     }
 
     @media screen and (min-width: 421px) and (max-width: 768px){
-        padding: 20px 16px;
+        padding: 0 16px;
     }
 
     @media screen and (min-width: 769px) {
-        padding: 20px 70px;
+        padding: 0 70px;
     }
 `
 

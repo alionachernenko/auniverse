@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { getUserInfo } from "utils/firebase"
-// import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
+import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
 import styled from "styled-components"
 
 export const UserCard = ({id}) => {
@@ -12,7 +12,8 @@ export const UserCard = ({id}) => {
         getUserInfo(id).then(res => {
             console.log(res.val())
             setName(res.val().username)
-            setAvatar(res.val().photoUrl)
+            if(res.val().photoUrl) {setAvatar(res.val().photoUrl)}
+            else {setAvatar(avatarPlaceholder)}
         })
     }, [id])
 
@@ -20,7 +21,7 @@ export const UserCard = ({id}) => {
         <Card>     
             <CardLink style={{color: 'black'}} to={`/users/${id}`}>
                 <AvatarWrapper>
-                {avatar && <img style={{objectFit: 'cover', width: 100, height: '100%'}} width={200} src={`${avatar}`} alt={`${name}'s avatar`}></img>}
+                <img style={{objectFit: 'cover', width: 100, height: '100%'}} width={200} src={`${avatar}`} alt={`${name}'s avatar`}></img>
             </AvatarWrapper>
             <Username>{name}</Username>
             </CardLink>

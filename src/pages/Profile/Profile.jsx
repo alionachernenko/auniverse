@@ -1,15 +1,13 @@
-import './Profile.scss'
 import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { getUserInfo } from "../../utils/firebase"
-import { getFavouriteGames, userSignOut } from "../../utils/firebase"
-import { Loader } from 'components/Loader/Loader'
 import authContext from '../../context/context'
+import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
+import { getFavouriteGames, userSignOut, getUserInfo } from "../../utils/firebase"
+import { Loader } from 'components/Loader/Loader'
 import { GameList } from 'components/GameList/GameList'
-// import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
-import styled from 'styled-components'
 import { ProfileCard } from 'components/ProfileCard/ProfileCard'
 
+import styled from 'styled-components'
 
 const Profile = () => {
     const {userId, isLoggedIn, setUserId} = useContext(authContext)
@@ -27,19 +25,23 @@ const Profile = () => {
             return
         }
 
-        
         Promise.all([getUserInfo(userId), getFavouriteGames(userId)])
             .then(res => {
                 const [snapshot, games] = res
             if (snapshot.exists()) {
-                setUsername(snapshot.val().username)
-                if(snapshot.val().photoUrl) setPhotoPath(snapshot.val().photoUrl)
+                const {username, photoUrl} = snapshot.val()
+                setUsername(username)
+                if(photoUrl) {
+                    setPhotoPath(photoUrl)
+                }
+                else {
+                    setPhotoPath(avatarPlaceholder)
+                }
             } else {
                 setUsername('User')
             }
 
                 if(games.val()) setFavouriteGames([...Object.values(games.val())])
-                console.log(games.val())
                 setIsLoading(false)
                
             }).catch((error) => {
@@ -62,8 +64,7 @@ const Profile = () => {
         <>
             <Page>
                {isLoading ? <Loader className={'loader-profile'} color={'darkblue'} /> : <><Page className='top'>
-                    <ProfileCard setPhotoPath={setPhotoPath} avatar={photoPath} username={username} isAvatarLoading={isAvatarLoading} setIsAvatarLoading={setIsAvatarLoading}/>
-                    
+                    <ProfileCard setPhotoPath={setPhotoPath} avatar={photoPath} username={username} isAvatarLoading={isAvatarLoading} setIsAvatarLoading={setIsAvatarLoading} setUsername={setUsername}/>
                     <LogOut type="button" onClick={logOut}>Log out</LogOut>
                     <h2 >Your favourite games:</h2>
                     <GameList games={favouriteGames}/>

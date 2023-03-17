@@ -37,7 +37,6 @@ const NewGames = () => {
     return (
         <Section>
         <div style={{
-                    margin: 'auto',
                     display: 'flex',
                 }}>
                     <Span>New 2023</Span>

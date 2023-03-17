@@ -11,9 +11,10 @@ export const Hero = () => {
                         bright locations and unique characters
                     </p>
                     <Link to='/catalog'>Go to the catalog</Link>
-                    <Picture src={sonic} alt="" />
+                    
                     {/* <link rel="preload" href={`${sonic}`} as="image"></link> */}
                 </Info>
+                <Picture src={sonic} alt="" />
             </Section>
     )
     

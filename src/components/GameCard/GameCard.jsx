@@ -28,7 +28,6 @@ export const GameCard = ({ data, width, className }) => {
             </div>
             <div className="desc">
                 {name && <h1>{name}</h1>}
-                {released && <p>{released.slice(0, 4)}</p>}
                 {genres && <ul className='genres'>
                     {genres.map((genre => {
                         return  <li className="genres_item" key={genre.id}>{genre.name}</li>

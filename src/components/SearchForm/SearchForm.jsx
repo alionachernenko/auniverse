@@ -12,21 +12,21 @@ export const SearchForm = ({ onSubmit, className, setPage}) => {
     const location = useLocation()
 
     useEffect(() => {
-        if (location.pathname === '/auniverse') {
-            getGameByName(value).then(({data}) => {
-                setFilteredGames(data.results)
-            })
-        }
-       
+        if (location.pathname === '/') {
+                getGameByName(value).then(({data}) => {
+                    setFilteredGames(data.results)
+                })
+            }
      },
     [location.pathname, value])
 
     return (
         <Form render={className} onSubmit={(e) => {
             e.preventDefault()
-            const { query, ordering = '', genre = ''} = e.target.elements
+            const { query, ordering, genre} = e.target.elements
 
-            onSubmit(e, query.value, ordering.value, genre.value)
+            
+            onSubmit(e, query.value === '' ? null : query.value, ordering.value === '' ? null : ordering.value, genre.value === '' ? null : genre.value) //выгалядит ужасно но работает
             setPage(1)
         }   
         }>
@@ -123,7 +123,7 @@ const Button = styled.button`
 
             @media screen and (min-width: 1200px) {
                 &:hover{
-                    transform: scale(1.4)
+                    transform: scale(1.1)
                 }
             }
             
@@ -138,7 +138,7 @@ const Button = styled.button`
 
             @media screen and (min-width: 1200px) {
             &:hover{
-                transform: translateY(-50%) scale(1.5)
+                transform: translateY(-50%) scale(1.1)
                 }
             `
             default: return css``

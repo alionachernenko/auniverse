@@ -20,41 +20,33 @@ const SignupForm = () => {
                 <FaUserEdit className='icon' fill='orange' size='30px'/> } 
             </Icon>
             <Title>Sign up</Title>
-            <Input type="text" name="username" placeholder="username" />
-            <Input type="email" name="email" id="" placeholder="email"/>
-            <Input type="password" name="password" placeholder="password" />
-            {/* <Input type='file' name='photo'/> */}
+            
+            <Input type="email" name="email" placeholder="email" autocomplete="off" required/>
+            <Input type="password" name="password" placeholder="password" autocomplete="off" required/>
+            <Input type="text" name="username" placeholder="username" autocomplete="off" required/>
             <Button type="submit">Sign Up</Button>
         </Form>
     )
 }
 
-// const show = keyframes`
-//     0%{
-//         opacity: 0;
-//     }
-//     100%{
-//         opacity: 1;
-//     }
-// `
-
-
 
 const Form = styled.form`
-    display: flex;
-    height: 100%;
-    flex-direction: column; 
-    background-color: #070D34;
-    padding: 35px 20px 20px 20px;
-    align-items: center;
-    position: relative;
-    justify-content: center;
-    box-sizing: border-box;
+display: flex;
+height: 100%;
+flex-direction: column; 
+background-color: #070D34;
+padding: 35px 20px 20px 20px;
+align-items: center;
+position: relative;
+justify-content: center;
+box-sizing: border-box;
 
-    @media screen and (max-width: 1199px) {
-        max-width: 100%;
-        border-radius: 20px;
-    }
+@media screen and (max-width: 1199px) {
+    max-width: 100%;
+    border-radius: 20px;
+    height: auto;
+    padding: 40px 20px;
+}
 `
 
 const Input = styled.input`

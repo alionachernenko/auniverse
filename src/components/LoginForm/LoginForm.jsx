@@ -15,8 +15,8 @@ const LoginForm = () => {
             </Icon>
             
             <Title>Sign in</Title>
-            <Input type="email" name="email" placeholder='email' required/>
-            <Input type="password" name="password" placeholder="password" required/>
+            <Input type="email" name="email" placeholder='email' required autocomplete="off"/>
+            <Input type="password" name="password" placeholder="password" required autocomplete="off"/>
                 
             <Button type="submit">Log In</Button>
         </Form>
@@ -37,6 +37,8 @@ const Form = styled.form`
     @media screen and (max-width: 1199px) {
         max-width: 100%;
         border-radius: 20px;
+        height: auto;
+        padding: 40px 20px;
     }
 `
 

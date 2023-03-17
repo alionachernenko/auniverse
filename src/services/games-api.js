@@ -27,24 +27,17 @@ export const getNewGames = async page => {
 export const getGameBySearchQuery = async (
   searchQuery,
   page,
-  ordering = '',
-  genres = ''
-) => {
-
-const filters = {
   ordering,
   genres
-};
+) => {
 
-const queryString = Object.entries(filters)
-  .filter(([key, value]) => value !== '')
-  .map(([key, value]) => `${key}=${value}`)
-  .join('&');
 
-  console.log(queryString)
+const params = {
+  ordering, genres, page, key: KEY, search: searchQuery
+}
 
   return await axios.get(
-      `${BASE_URL}games?key=${KEY}&page=${page}&search=${searchQuery}&${queryString}`)
+      `${BASE_URL}games`, {params})
 }
 
 export const getGameById = async id => {

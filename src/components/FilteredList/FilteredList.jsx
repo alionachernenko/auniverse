@@ -26,6 +26,7 @@ const FilteredResults = styled.ul`
     max-height: 30vh;
     padding: 10px;
     border-radius: 20px;
+    z-index: 3;
 
     & img{
         width: 90px;

@@ -93,6 +93,8 @@ const Page = styled.div`
     align-items: center;
     flex-direction: column;
     padding: 20px 0;
+    background: rgb(15,14,15);
+    background: linear-gradient(59deg, rgba(15,14,15,1) 18%, rgba(0,0,175,1) 100%);
 `
 const Tabs = styled.div`
     margin-bottom: 5vh;
@@ -112,6 +114,7 @@ const Tab = styled(NavLink)`
     font-family: 'Nunito', sans-serif;
     font-size: 20px;
     cursor: pointer;
+    color: white;
     border: none;
     position: relative;
     display: block;

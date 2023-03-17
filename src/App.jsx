@@ -22,7 +22,7 @@ const Users = lazy(() => import('./pages/Users/Users'))
 
 export function App() {
     const [searchParams, setSearchParams] = useState({
-        value: '', ordering: 'added', genre: 'action'
+        value: '', ordering: null, genre: null
     })
 
     const navigation = useNavigate()
@@ -37,6 +37,7 @@ export function App() {
     
     const searchFormSubmit = (e, value, ordering, genre) => {
         e.preventDefault()
+        console.log(genre)
 
         setSearchParams(
             {value, ordering, genre}
