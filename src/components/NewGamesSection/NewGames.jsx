@@ -7,6 +7,7 @@ import { useState, useEffect, useContext } from "react";
 import { getNewGames } from "services/games-api";
 import breakpointContext from '../../context/contextBr'
 import { Game } from "components/game/Game";
+import { GameList } from "components/GameList/GameList";
 
 const NewGames = () => {
     const {breakpoint} = useContext(breakpointContext)
@@ -31,18 +32,17 @@ const NewGames = () => {
     }, [breakpoint])
 
     return (//отменить первый рендер
-    
+
+
         <Section>
-        <div style={{
-                    display: 'flex',
-                }}>
+        <div>
                     <Span>New 2023</Span>
                    <Div>
                         <h2>What will you choose this time?</h2>
                         {isLoading ? <Loader className={'loader-homepage'} color={'darkblue'} /> : ( isError ? 
                         <><p>Something went wrong. You can play the game below not to get bored</p>
                         <Game/></> : 
-                        <Slider>
+                        breakpoint >= 1200 ? <Slider>
                             {games.map((game => 
                                      
                                          <SwiperSlide style={{
@@ -52,7 +52,7 @@ const NewGames = () => {
                                          } key={game.id}><GameCard data={game} width={255} className={'gamecard_slider'}/></SwiperSlide>
                                   
                           ))}
-                        </Slider>
+                        </Slider> : <GameList games={games}/>
                         )}
                     </Div>
                 </div>
@@ -63,16 +63,27 @@ const NewGames = () => {
 
 
     const Section = styled.section`
-    display: flex;
     gap: 30px;
+    padding-top: 20px;
     overflow: hidden;
     background-color: #ffffff;
+
+    @media screen and (min-width: 1200px) {
+        display: flex;
+        padding-top: 0
+    }
 
     & h2{
         margin-bottom: 60px;
         font-size: 40px;
+        
+   
         line-height: 34px;
-        margin-left: 60px
+        margin-left: 60px;
+
+        @media screen and (max-width: 1199px){
+            display: none
+        }
     }
     
     & span {
@@ -81,27 +92,43 @@ const NewGames = () => {
         width: 90px;
     }
 
-    @media screen and (max-width: 1439px){
-        display: none
+    & :first-child{
+        @media screen and (min-width: 1200px) {
+            display: flex
+        }
     }
 `
 
 
 const Div = styled.div`
-    padding: 100px 0;
+padding: 40px 0;
+
+    @media screen and (min-width: 1200px) {
+        padding: 100px 0;
+    }
 `
 
 const Span = styled.div`
-    writing-mode: vertical-rl;
     background-color: #00021A;
-    // margin-left: 123px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: #ffffff;
     font-weight: 900;
-    font-size: 72px;
+    font-size: 50px;
     line-height: 91px;
     text-align: center;
     letter-spacing: 0.05em;
     text-transform: uppercase;
+
+    @media screen and (min-width: 420px) {
+        font-size: 72px
+    }
+
+    @media screen and (min-width: 1200px) {
+        writing-mode: vertical-rl;
+
+    }
 `
 
 export default NewGames
