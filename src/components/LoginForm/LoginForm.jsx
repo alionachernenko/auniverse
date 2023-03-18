@@ -27,7 +27,7 @@ const Form = styled.form`
     display: flex;
     height: 100%;
     flex-direction: column; 
-    background-color: #070D34;
+    background-color: #00021A;
     padding: 35px 20px 20px 20px;
     align-items: center;
     position: relative;
@@ -52,7 +52,7 @@ const Input = styled.input`
     margin-bottom: 30px;
     background: transparent !important;
     border-bottom: 1px solid white;
-    -webkit-box-shadow: inset 0 0 0 50px #070D34;
+    -webkit-box-shadow: inset 0 0 0 50px #00021A;
     -webkit-text-fill-color: #ffffff;
 
     &::placeholder{

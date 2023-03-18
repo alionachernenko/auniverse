@@ -4,7 +4,7 @@ import { getGameById, getScreenshots} from "../../services/games-api"
 import { StoresList } from "components/StoresList/StoresList";
 import { Loader } from "../../components/Loader/Loader";
 import authContext from '../../context/context'
-import styled, {css} from "styled-components";
+import styled from "styled-components";
 import { ToggleFavouriteButton } from "components/ToggleFavouriteButton/ToggleFavouriteButton";
 
 const GameDescription = () => {
@@ -13,7 +13,6 @@ const GameDescription = () => {
     const [title, setTitle] = useState('')
     const [poster, setPoster] = useState()
     const [screenshots, setScreenshots] = useState([])
-    const [showScreenshots, setShowScreenshots] = useState(false)
     const [description, setDescription] = useState()
     const [stores, setStores] = useState()
     const [year, setYear] = useState(null)
@@ -49,31 +48,39 @@ const GameDescription = () => {
         
     }, [gameSlug])
 
-    const toggleShowScreenshots = () => {
-        setShowScreenshots(prevState => !prevState)
-    }
+    // const toggleShowScreenshots = () => {
+    //     setShowScreenshots(prevState => !prevState)
+    // }
 
     return (
         <Page background={poster}>
             {isLoading ? <Loader color={'white'} /> :
-                <><Meta>
-                    <Title>{title}</Title>
-                    {year && <Year>{year}</Year>}
-                    {isLoggedIn &&
-                        <ToggleFavouriteButton gameData={gameData}/>
-                    }
-                </Meta>
-                    {stores && <StoresList stores={stores}/>}
+            <>
+            <div style={{display: 'flex'}}>
+                <Info>
+                    <div >
+                        <Meta>
+
+                            <Title>{title}</Title>
+                            {year && <Year>{year}</Year>}
+                            {isLoggedIn &&
+                                <ToggleFavouriteButton gameData={gameData}/>
+                            }
+                        </Meta>
+                
                     {description && <Overview>{description}</Overview>}
-                    {screenshots.length !== 0 && <ToggleScreenshotsButton type="button" onClick={toggleShowScreenshots}>
-                        {showScreenshots ? 'Hide' : 'Show'} screenshots</ToggleScreenshotsButton>}
-                    {showScreenshots &&
-                        <ul>
-                            {screenshots.map(({image}) => 
-                            <li style={{width: 'auto'}}>
-                                <Screenshot src={image} alt='fdff' />
-                            </li>)}
-                        </ul>}</>}
+                    </div>
+                    {stores && <StoresList stores={stores}/>}
+                        </Info>
+                        </div >
+                        {screenshots &&
+                            <Screenshots>
+                                {screenshots.map(({image}) => 
+                                <li>
+                                    <Screenshot src={image} alt='fdff' loading="lazy"/>
+                                </li>)}
+                            </Screenshots>}</>
+                        }
                 
         </Page>
     )
@@ -81,23 +88,33 @@ const GameDescription = () => {
 
 const Page = styled.div`
     padding: 20px;
+
     height: calc(100vh - 61px);
     background-size: cover;
     background-position: top;
-    // backdrop-filter: brightness(30%);
     overflow-y: scroll;
-    align-items: center;
+    // align-items: center;
     display: flex;
     flex-direction: column;
-
-    ${props => css`
-        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url(${props.background})
-        `
-    }}
-
-    
+    background-color: #00021A;    
 `
+
+const Info = styled.div`
+overflow-y: scroll;
+display: flex;
+gap: 40px;
+clip-path: polygon(3% 0, 100% 0, 100% 10%, 100% 92%, 97% 100%, 0 100%, 0 71%, 0 9%);
+background-color: transparent;
+backdrop-filter: blur(10px);
+// clip-path: polygon(11% 0, 70% 0%, 100% 0, 100% 88%, 88% 100%, 0 100%, 0 70%, 0 11%);
+height: auto;
+// background-color: #080D2B;
+padding: 40px;
+box-sizing: border-box;
+margin-bottom: 20px;
+width: 60vw
+`
+
 const Meta = styled.div`
     display: flex;
     flex-direction: column;
@@ -128,6 +145,7 @@ const Year = styled.p`
     font-weight: 700;
     text-align: center;
     font-size: 30px;
+    margin-right: auto;
 
     @media screen and (min-width: 1200px) {
         font-size: 50px;
@@ -135,30 +153,36 @@ const Year = styled.p`
 `
 const Overview = styled.p`
     color: white;
-    background-color: rgba(59, 57, 57, 0.357);
     max-width: 80vw;
     font-size: 20px;
-    padding: 10px 20px;
     line-height: 35px;
-    margin-bottom: 20px;
-    border-radius: 20px;
+    max-height: 200px;
+    overflow-y: scroll
+`
+
+const Screenshots = styled.ul`
+    display: flex;
+    height: auto;
+    gap: 10px;
+    padding: 40px;
+    flex-wrap: wrap;
+    backdrop-filter: blur(10px);
+    width: 90vw
 `
 
 const Screenshot = styled.img`
-    height: auto;
-    width: 100%;
+    height: 200px;
+    width: calc((90vw - 40px)/5);
     max-width: 1000px;
-`
+    clip-path: polygon(5% 0, 100% 0, 100% 10%, 100% 91%, 95% 100%, 0 100%, 0 71%, 0 10%);
+    object-fit: cover;
+    transition: 250ms all ease;
+    cursor: zoom-in;
 
-const ToggleScreenshotsButton = styled.button`
-    color: white;
-    margin-bottom: 20px;
-    font-size: 20px;
-    cursor: pointer;
-    background-color: #080D2B;
-    padding: 8px 16px;
-    border: none;
-    font-family: 'Nunito', sans-serif
+    &:hover {
+        transform: scale(0.9);
+        clip-path:none
+    }
 `
 
 export default GameDescription

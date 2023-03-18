@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import authContext from '../../context/context'
 import { removeGameFromFavourite, addGameToFavourite, getFavouriteGames } from "utils/firebase"
-import { FaHeart, FaHeartBroken } from "react-icons/fa"
+import {BsBookmark, BsFillBookmarkFill} from 'react-icons/bs'
 import styled from "styled-components"
 
 export const ToggleFavouriteButton = ({gameData}) => {
@@ -18,20 +18,25 @@ export const ToggleFavouriteButton = ({gameData}) => {
             <>{isFavourite ? <Button type="button" onClick={() => {
                 removeGameFromFavourite(userId, gameData.slug)
                 setIsFavourite(false)
-            }}><FaHeartBroken size='30px' fill="orange"/></Button> :
+            }}>Bookmark <BsFillBookmarkFill size='20px'/></Button> :
             <Button type="button" onClick={() => {
                 addGameToFavourite(userId, gameData.slug, gameData)
                 setIsFavourite(true)
-            }}><FaHeart size='30px' fill="orange"/></Button>}</>
+            }}>Bookmark <BsBookmark size='20px'/></Button>}</>
         )
     }
 
 const Button = styled.button`
-    background-color: white;
+    background-color: rgba(84, 84, 84, 0.5);
+    color: white;
     height: auto;
-    width: auto;
+    padding: 10px 20px;
+    font-size: 17px;
+    display: flex;
+    gap: 10px;
     border: none;
-    border-radius: 3px;
+    border-radius: 10px;
+    font-family: 'Nunito', sans-serif;
     display: flex;
     align-items: center;
     justify-content: center

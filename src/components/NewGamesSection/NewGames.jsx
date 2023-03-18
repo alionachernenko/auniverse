@@ -9,14 +9,12 @@ import breakpointContext from '../../context/contextBr'
 import { Game } from "components/game/Game";
 
 const NewGames = () => {
-    
     const {breakpoint} = useContext(breakpointContext)
     const [games, setGames] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [isError, setIsError] = useState(false)
 
     useEffect(() => {
-        if(breakpoint >= 1440) {
              getNewGames(1).then(({data}) => {
             const { results } = data
             setGames(results)
@@ -30,11 +28,10 @@ const NewGames = () => {
             setIsLoading(false)
         }
         )
-    }
-       
     }, [breakpoint])
 
-    return (
+    return (//отменить первый рендер
+    
         <Section>
         <div style={{
                     display: 'flex',
@@ -96,7 +93,7 @@ const Div = styled.div`
 
 const Span = styled.div`
     writing-mode: vertical-rl;
-    background-color: #080D2B;
+    background-color: #00021A;
     // margin-left: 123px;
     color: #ffffff;
     font-weight: 900;

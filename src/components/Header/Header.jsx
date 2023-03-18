@@ -43,7 +43,7 @@ const PageHeader = styled.header`
     margin-right: auto;
     justify-content: space-between;
     align-items: center;
-    background-color: #080D2B;
+    background-color: #00021A;
     width: 100%;
     position: relative;
 

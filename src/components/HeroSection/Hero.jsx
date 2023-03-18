@@ -11,8 +11,6 @@ export const Hero = () => {
                         bright locations and unique characters
                     </p>
                     <Link to='/catalog'>Go to the catalog</Link>
-                    
-                    {/* <link rel="preload" href={`${sonic}`} as="image"></link> */}
                 </Info>
                 <Picture src={sonic} alt="" />
             </Section>
@@ -61,8 +59,26 @@ const Section = styled.section`
         font-size: 20px;
         animation: ${show} 800ms ease;
         position: relative;
+        background-color: orange;
+        border: 1px solid red;
+        clip-path: polygon(5% 0, 100% 0, 100% 10%, 100% 91%, 95% 100%, 0 100%, 0 71%, 0 10%);
      }
 
+`
+
+const titleAnim = keyframes`
+     0% {
+        text-shadow: red 2px 5px;
+     }
+
+     50%{
+        text-shadow: red 3px 6px;
+     }
+
+     100% {
+        text-shadow: red 2px 5px;
+
+     }
 `
 
 const Info = styled.div`
@@ -86,7 +102,7 @@ const Info = styled.div`
     letter-spacing: 0.05em;
     position: relative;
     text-align: center;
-    animation: ${show} 500ms ease;
+    animation: ${show} 500ms ease, ${titleAnim} 3000ms ease infinite;
 
     @media screen and (min-width: 768px){
         font-size: 50px;

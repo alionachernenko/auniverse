@@ -75,9 +75,7 @@ const Login = () => {
                         }
                             )}
                 </Swiper>
-                <Suspense fallback={<LoadingPage/>}>
                 <Outlet/>
-                </Suspense>
             </SliderWrapper>
         </Page>
     )

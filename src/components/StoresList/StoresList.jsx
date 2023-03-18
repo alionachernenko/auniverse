@@ -29,12 +29,9 @@ export const StoresList = ({stores}) => {
 const List =  styled.ul`
     list-style: none;
     display: flex;
-    margin-bottom: 20px;
-
-    & :not(:last-child) {
-        margin-right: 20px;
-    }
-
+    flex-direction: column;
+    gap: 10px;
+    
     & svg {
         width: 30px;
         height: 30px;

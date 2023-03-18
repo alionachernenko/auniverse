@@ -23,7 +23,8 @@ export const SearchForm = ({ onSubmit, className, setPage}) => {
     return (
         <Form render={className} onSubmit={(e) => {
             e.preventDefault()
-            const { query, ordering, genre} = e.target.elements
+            const { query, ordering = '', genre = ''} = e.target.elements
+            console.log(query, ordering, genre)
 
             
             onSubmit(e, query.value === '' ? null : query.value, ordering.value === '' ? null : ordering.value, genre.value === '' ? null : genre.value) //выгалядит ужасно но работает

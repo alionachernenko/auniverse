@@ -29,7 +29,7 @@ const PageFooter = styled.footer`
     height: 100%;
     display: flex;
     flex-wrap: wrap;
-    background-color: #080D2B;
+    background-color:  #00021A;
     justify-content: flex-start;
     align-items: center;
     color: white;
