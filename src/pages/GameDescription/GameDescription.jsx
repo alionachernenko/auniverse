@@ -48,10 +48,6 @@ const GameDescription = () => {
         
     }, [gameSlug])
 
-    // const toggleShowScreenshots = () => {
-    //     setShowScreenshots(prevState => !prevState)
-    // }
-
     return (
         <Page background={poster}>
             {isLoading ? <Loader color={'white'} /> :
@@ -100,19 +96,19 @@ const Page = styled.div`
 `
 
 const Info = styled.div`
-overflow-y: scroll;
-display: flex;
-gap: 40px;
-clip-path: polygon(3% 0, 100% 0, 100% 10%, 100% 92%, 97% 100%, 0 100%, 0 71%, 0 9%);
-background-color: transparent;
-backdrop-filter: blur(10px);
-// clip-path: polygon(11% 0, 70% 0%, 100% 0, 100% 88%, 88% 100%, 0 100%, 0 70%, 0 11%);
-height: auto;
-// background-color: #080D2B;
-padding: 40px;
-box-sizing: border-box;
-margin-bottom: 20px;
-width: 60vw
+    overflow-y: scroll;
+    display: flex;
+    gap: 40px;
+    clip-path: polygon(3% 0, 100% 0, 100% 10%, 100% 92%, 97% 100%, 0 100%, 0 71%, 0 9%);
+    background-color: transparent;
+    backdrop-filter: blur(10px);
+    // clip-path: polygon(11% 0, 70% 0%, 100% 0, 100% 88%, 88% 100%, 0 100%, 0 70%, 0 11%);
+    height: auto;
+    // background-color: #080D2B;
+    padding: 40px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    width: 60vw
 `
 
 const Meta = styled.div`
