@@ -21,8 +21,9 @@
     background-color: #00021A;
     overflow: hidden;
     position: relative;
-    // border-radius: 20px;
     clip-path: polygon(11% 0, 70% 0%, 100% 0, 100% 88%, 88% 100%, 0 100%, 0 67%, 0 11%);
+    transform: scale(1);
+    transition: 250ms transform ease;
 
     @media screen and (max-width: 767px) {
         height: auto;
@@ -37,7 +38,7 @@
 }
 
 .gamecard_slider{
-    // background-color: #050B2B;
+    
     height: 350px;
     overflow: hidden;
     position: relative;
@@ -59,15 +60,14 @@
 }
 
 
-.gamecard_slider .desc {
+.gamecard_slider .description {
     position: absolute;
     width: 50%;
     right: 100%;
     transition: 250ms right ease;
     top: 0;
     height: 100%;
-    // background-color: #050B2B;
-    background-color: rgba(5, 11, 43, 0.87);
+    background-color: #00021A;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -84,7 +84,7 @@
     }
 }
 
-.gamecard_slider:hover .desc{
+.gamecard_slider:hover .description{
     right: 50%;
 }
 
@@ -117,15 +117,18 @@
 .gamecard_catalog .desc{
     display: none;
 }
-.gamecard_catalog:hover .rating {
-    top: -100%
+.gamecard_catalog:hover {
+    transform: scale(1.05);
 }
 
-.gamecard_catalog:hover .poster {
-    height: 100%;
-    filter: blur(5px);
-} 
+// .gamecard_catalog:hover .poster {
+//     height: 100%;
+//     filter: blur(5px);
+// } 
 
+.gamecard_slider .rating, .gamecard_slider .release_year, .gamecard_slider .readmore-btn{
+    display: none;
+}
 .title {
     color: white;
     font-weight: 700;
@@ -136,9 +139,9 @@
     word-break: break-word;
 }
 
-.gamecard_catalog:hover .readmore-btn {
-    bottom: 50%
-}
+// .gamecard_catalog:hover .readmore-btn {
+//     bottom: 50%
+// }
 
 .gamecard_catalog .readmore-btn {
     padding: 10px 20px;

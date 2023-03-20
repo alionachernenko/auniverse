@@ -2,11 +2,11 @@ import "./App.css";
 import 'react-toastify/dist/ReactToastify.css';
 
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { ToastContainer } from "react-toastify";
+
 import { Header } from "components/Header/Header";
 import { Footer } from "components/Footer/Footer";
-import { lazy, Suspense } from "react";
 import { LoadingPage } from "components/LoadingPage/LoadingPage";
 
 const Homepage = lazy(() => import('./pages/Homepage/Homepage'))
@@ -17,7 +17,7 @@ const Profile = lazy(() => import('./pages/Profile/Profile'))
 const ErrorPage = lazy(() => import('./pages/ErrorPage/ErrorPage'))
 const LoginForm = lazy(() => import('./components/LoginForm/LoginForm'))
 const SignupForm = lazy(() => import('./components/SignupForm/SignupForm'))
-const User = lazy(() => import('./components/User/User'))
+const User = lazy(() => import('./pages/User/User'))
 const Users = lazy(() => import('./pages/Users/Users'))
 
 export function App() {
@@ -25,7 +25,7 @@ export function App() {
         value: '', ordering: null, genre: null
     })
 
-    const navigation = useNavigate()
+    const navigate = useNavigate()
     const location = useLocation();
 
     useEffect(() => {
@@ -37,13 +37,12 @@ export function App() {
     
     const searchFormSubmit = (e, value, ordering, genre) => {
         e.preventDefault()
-        console.log(genre)
 
         setSearchParams(
             {value, ordering, genre}
         )
         
-        navigation('/catalog')
+        navigate('/catalog')
     }
 
     return (

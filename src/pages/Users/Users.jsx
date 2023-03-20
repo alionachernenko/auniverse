@@ -1,35 +1,35 @@
-
-import { useContext, useEffect, useState } from "react"
-import { getUsers } from "utils/firebase"
+import { useContext, useEffect, useState } from 'react'
+import { getUsers } from 'utils/firebase'
 import { Loader } from 'components/Loader/Loader'
 import authContext from '../../context/context'
 
-import { UserCard } from "components/UserCard/UserCard"
-import styled from "styled-components"
+import { UserCard } from 'components/UserCard/UserCard'
+import styled from 'styled-components'
+import { Container } from 'components/Container/Container'
+
 const Users = () => {
-    const [users, setUsers] = useState([])
+    const [userIDs, setUserIDs] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const {userId} = useContext(authContext)
 
 
     useEffect(() => {
-
         getUsers().then(res => {
-            setUsers(Object.keys(res.val()))
+            const IDs = res.val()
+
+            setUserIDs(Object.keys(IDs).filter(ID => ID !== userId))
             setIsLoading(false)
         })
-    }, [])
+    }, [userId])
 
     return(
         <Page>
+            <Container>
             {isLoading ? <Loader className={'loader-profile'} color={'darkblue'} /> : 
             <UsersList>
-                {users.map(user => 
-                // eslint-disable-next-line array-callback-return
-                {if(user === userId) return
-                return <li><UserCard id={user}/></li>}
-                )}
-            </UsersList>}
+                {userIDs.map(userID => <UserCard id={userID}/>)}
+                    </UsersList>}
+                </Container>
         </Page>
     )
 }

@@ -1,22 +1,19 @@
-import { Hero } from "components/HeroSection/Hero"
-import styled from "styled-components"
 import { lazy, Suspense } from "react"
+
+import { Hero } from "components/HeroSection/Hero"
+import { LoadingPage } from "components/LoadingPage/LoadingPage"
 
 const NewGames = lazy(() => import('../../components/NewGamesSection/NewGames'))
 
 const Homepage = () => {
     return (
-        <Page>
+        <div>
             <Hero/>
-            <Suspense fallback={<p>Loading</p>}>
+            <Suspense fallback={<LoadingPage/>}>
                 <NewGames/>
             </Suspense>
-        </Page>
+        </div>
     )
 }
-const Page = styled.div`
-    background-color:  #00021A;
-    background-size: cover;
-    background-attachment: fixed;
-`
+
 export default Homepage

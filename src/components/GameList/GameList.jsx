@@ -17,21 +17,11 @@ export const GameList = ({games}) => {
 }
 
 const List = styled.ul`
-    // margin-bottom: 20px;
-    // align-items: center;
-    // justify-content: center;
-    // display: grid;
-    // grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    // grid-gap: 1em;
-    // margin-top: 0;
-    // margin-bottom: 0;
-    // padding: 0;
-
     display: flex;
     flex-wrap: wrap;
     gap: 30px;
     padding: 0 20px;
-}
+
 `
 
 const Item = styled.li`
@@ -41,9 +31,11 @@ const Item = styled.li`
         width: calc((100% - 30px)/2);
     }
 
+    @media screen and (min-width: 1200px) {
+        width: calc((100% - 60px)/3);
+    }
+
     @media screen and (min-width: 1440px) {
         width: calc((100% - 90px)/4);
     }
-
-    
 `

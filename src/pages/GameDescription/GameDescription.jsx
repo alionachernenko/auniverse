@@ -6,6 +6,7 @@ import { Loader } from "../../components/Loader/Loader";
 import authContext from '../../context/context'
 import styled from "styled-components";
 import { ToggleFavouriteButton } from "components/ToggleFavouriteButton/ToggleFavouriteButton";
+import { Container } from "components/Container/Container";
 
 const GameDescription = () => {
     const {isLoggedIn} = useContext(authContext)
@@ -49,12 +50,14 @@ const GameDescription = () => {
     }, [gameSlug])
 
     return (
+        
         <Page background={poster}>
+            <Container>
             {isLoading ? <Loader color={'white'} /> :
             <>
             <div style={{display: 'flex'}}>
                 <Info>
-                    <div >
+                    <div>
                         <Meta>
 
                             <Title>{title}</Title>
@@ -72,18 +75,19 @@ const GameDescription = () => {
                         {screenshots &&
                             <Screenshots>
                                 {screenshots.map(({image}) => 
-                                <li>
+                                <ScreenshotWrapper>
                                     <Screenshot src={image} alt='fdff' loading="lazy"/>
-                                </li>)}
+                                </ScreenshotWrapper>)}
                             </Screenshots>}</>
                         }
-                
-        </Page>
+                </Container>
+            </Page>
+            
     )
 }
 
 const Page = styled.div`
-    padding: 20px;
+    padding: 30px;
 
     height: calc(100vh - 61px);
     background-size: cover;
@@ -92,45 +96,58 @@ const Page = styled.div`
     // align-items: center;
     display: flex;
     flex-direction: column;
-    background-color: #00021A;    
+    background-color: #00021A;  
+    
+    @media screen and (min-width: 768px) {
+        padding: 60px;
+    }
 `
 
 const Info = styled.div`
-    overflow-y: scroll;
     display: flex;
     gap: 40px;
-    clip-path: polygon(3% 0, 100% 0, 100% 10%, 100% 92%, 97% 100%, 0 100%, 0 71%, 0 9%);
-    background-color: transparent;
-    backdrop-filter: blur(10px);
-    // clip-path: polygon(11% 0, 70% 0%, 100% 0, 100% 88%, 88% 100%, 0 100%, 0 70%, 0 11%);
     height: auto;
-    // background-color: #080D2B;
-    padding: 40px;
     box-sizing: border-box;
-    margin-bottom: 20px;
-    width: 60vw
+    margin-bottom: 60px;
+    width: 100%;
+
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+        margin-bottom: 30px;
+    }
+
+    @media screen and (min-width: 1200px) {
+        width: 1130px;
+    }
 `
 
 const Meta = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
+    align-items: flex-start;
+    margin-bottom: 10px;
     gap: 10px;
+
 
     @media screen and (min-width: 1200px) {
         flex-direction: row;
+        align-items: center;
         gap: 20px;
+        margin-bottom: 20px;
+
     }
 `
 const Title = styled.h1`
     color: white;
     font-weight: 700;
-    text-align: center;
+    text-align: left;
     font-size: 35px;
-
+    border-bottom: 1px solid orange;
+    padding: 10px 0;
     
     @media screen and (min-width: 1200px) {
+        border-bottom: 0;
+        padding: 0;
         font-size: 50px;
         border-right: 1px solid orange;
         padding-right: 20px
@@ -141,7 +158,9 @@ const Year = styled.p`
     font-weight: 700;
     text-align: center;
     font-size: 30px;
-    margin-right: auto;
+    @media screen and (min-width: 768px) and (max-width: 1199px) {
+        margin-right: 0;
+    }
 
     @media screen and (min-width: 1200px) {
         font-size: 50px;
@@ -160,24 +179,38 @@ const Screenshots = styled.ul`
     display: flex;
     height: auto;
     gap: 10px;
-    padding: 40px;
     flex-wrap: wrap;
     backdrop-filter: blur(10px);
-    width: 90vw
-`
+    width: 100%;
+    `
 
 const Screenshot = styled.img`
-    height: 200px;
-    width: calc((90vw - 40px)/5);
-    max-width: 1000px;
-    clip-path: polygon(5% 0, 100% 0, 100% 10%, 100% 91%, 95% 100%, 0 100%, 0 71%, 0 10%);
     object-fit: cover;
+    height: 100%;
+    width: 100%;
+`
+
+const ScreenshotWrapper = styled.li`
+    clip-path: polygon(5% 0, 100% 0, 100% 10%, 100% 91%, 95% 100%, 0 100%, 0 71%, 0 10%);
     transition: 250ms all ease;
     cursor: zoom-in;
-
     &:hover {
         transform: scale(0.9);
         clip-path:none
+    }
+
+    width: 100%;
+
+    @media screen and (min-width: 768px) {
+        width: calc((100% - 10px)/2);
+    }
+
+    @media screen and (min-width: 1200px) {
+        width: calc((100% - 20px)/3);
+    }
+
+    @media screen and (min-width: 1440px) {
+        width: calc((100% - 30px)/4);
     }
 `
 

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import baseParams from 'config/rawg-api';
 
-const {KEY, BASE_URL} = baseParams
+const { KEY, BASE_URL } = baseParams;
 
 export const getGames = async page => {
   const data = await axios.get(`${BASE_URL}games?key=${KEY}&page=${page}`);
@@ -16,10 +16,12 @@ export const getGameByName = async name => {
 };
 
 export const getNewGames = async page => {
-  const currentDate = new Date()
+  const currentDate = new Date();
 
   const data = await axios.get(
-    `${BASE_URL}games?key=${KEY}&page=${page}&dates=2023-01-01,${currentDate.toISOString().slice(0, 10)}`
+    `${BASE_URL}games?key=${KEY}&page=${page}&dates=2023-01-01,${currentDate
+      .toISOString()
+      .slice(0, 10)}`
   );
   return data;
 };
@@ -30,15 +32,16 @@ export const getGameBySearchQuery = async (
   ordering,
   genres
 ) => {
+  const params = {
+    ordering: ordering !== null ? `-${ordering}` : ordering,
+    genres,
+    page,
+    key: KEY,
+    search: searchQuery,
+  };
 
-
-const params = {
-  ordering, genres, page, key: KEY, search: searchQuery
-}
-
-  return await axios.get(
-      `${BASE_URL}games`, {params})
-}
+  return await axios.get(`${BASE_URL}games`, { params });
+};
 
 export const getGameById = async id => {
   const data = await axios.get(`${BASE_URL}games/${id}?key=${KEY}`);

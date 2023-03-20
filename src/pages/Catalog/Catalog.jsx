@@ -54,7 +54,7 @@ const Page = styled.div`
     box-sizing: border-box;
     min-height: calc(100vh - 61px);
     position: relative;
-    background: linear-gradient(85deg, rgba(13,14,25,1) 8%, rgba(0,0,106,1) 100%);
+    background-color: black;
 
     @media screen and (min-width: 1200px){
         padding: 40px 0;

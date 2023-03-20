@@ -21,9 +21,9 @@ const SignupForm = () => {
             </Icon>
             <Title>Sign up</Title>
             
-            <Input type="email" name="email" placeholder="username" autocomplete="off" required/>
+            <Input type="email" name="email" placeholder="email" autocomplete="off" required/>
             <Input type="password" name="password" placeholder="password" autocomplete="off" required/>
-            <Input type="text" name="username" placeholder="email" autocomplete="off" required/>
+            <Input type="text" name="username" placeholder="username" autocomplete="off" required/>
             <Button type="submit">Sign Up</Button>
         </Form>
     )

@@ -1,40 +1,47 @@
-import { useEffect, useState } from 'react'
-import { getGameByName } from 'services/games-api'
-import { useLocation } from 'react-router-dom'
 import styled, {css} from 'styled-components'
+
+import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
+
+import { getGameByName } from 'services/games-api'
 import { SearchFilter } from 'components/SearchFilter/SearchFilter'
 import { FilteredList } from 'components/FilteredList/FilteredList'
 
-export const SearchForm = ({ onSubmit, className, setPage}) => {
+export const SearchForm = ({ onSubmit, className, setPage }) => {
     const [value, setValue] = useState('')
     const [filteredGames, setFilteredGames] = useState()
 
     const location = useLocation()
 
     useEffect(() => {
-        if (location.pathname === '/') {
-                getGameByName(value).then(({data}) => {
-                    setFilteredGames(data.results)
+        if (location.pathname === '/' && value !== '') {
+                getGameByName(value).then(({data: {results}}) => {
+                    setFilteredGames(results)
                 })
             }
      },
     [location.pathname, value])
 
-    return (
-        <Form render={className} onSubmit={(e) => {
-            e.preventDefault()
-            const { query, ordering = '', genre = ''} = e.target.elements
-            console.log(query, ordering, genre)
+    const onFormSubmit = (e) => {
+        e.preventDefault()
+        const {query, ordering = null, genre = null} = e.target.elements
 
-            
-            onSubmit(e, query.value === '' ? null : query.value, ordering.value === '' ? null : ordering.value, genre.value === '' ? null : genre.value) //выгалядит ужасно но работает
-            setPage(1)
-        }   
-        }>
-            <Input render={className} value={value} type="text" name='query' onChange={(e) => {
-                setValue(e.target.value)
-            }} />
-            <Button render={className} type="submit">GO</Button>
+        onSubmit(e, 
+        query.value === '' ? null : query.value, 
+        ordering.value === '' ? null : ordering.value, 
+        genre.value === '' ? null : genre.value)
+        
+        if (location.pathname === '/catalog') setPage(1)
+    }   
+
+    const onInputChange = (e) => {
+        setValue(e.target.value)
+    }
+
+    return (
+        <Form onSubmit={onFormSubmit} class={className}>
+            <Input  value={value} type='text' name='query' onChange={onInputChange} class={className}/>
+            <Button  type='submit' class={className}>GO</Button>
             {location.pathname === '/catalog' && <SearchFilter/>}
             {(filteredGames && value !== '' && location.pathname === '/') && <FilteredList results={filteredGames}/>}
         </Form>
@@ -48,7 +55,7 @@ const Form = styled.form`
     position: relative;
 
     ${(props) => {
-        switch (props.render){
+        switch (props.class){
             case 'catalog': 
                 return css`
                 margin-bottom: 20px;
@@ -63,7 +70,7 @@ const Form = styled.form`
                     width: 250px;
                     margin: 0;
 
-                    @media screen and (max-width: 1440px){
+                    @media screen and (max-width: 1199px){
                         display: none;
                     }
                 `
@@ -85,7 +92,7 @@ const Input = styled.input`
     padding-right: 110px;
 
 ${(props) => {
-    switch(props.render) {
+    switch(props.class) {
         case 'catalog':
             return css`
             height: 40px;
@@ -113,7 +120,7 @@ const Button = styled.button`
     transition: 250ms transform ease;
 
     ${props => {
-        switch(props.render){
+        switch(props.class){
             case 'catalog': 
             return css`
             height: 36px;

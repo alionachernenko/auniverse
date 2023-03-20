@@ -6,6 +6,7 @@ import authContext from '../../context/context'
 import styled from "styled-components"
 import { ProfileCard } from "components/ProfileCard/ProfileCard"
 import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
+import { Container } from "components/Container/Container"
 
 const User = () => {
     const {id} = useParams()
@@ -31,8 +32,11 @@ const User = () => {
 
     return(
         <Page>
-            <ProfileCard avatar={photo} username={name}/>
-            {favouriteGames && <GameList games={favouriteGames}/>}
+            <Container>
+                <ProfileCard avatar={photo} username={name} />
+                <h2>{name}'s bookmarks</h2>
+                {favouriteGames && <GameList games={favouriteGames}/>}
+            </Container>
         </Page>
     )
 }

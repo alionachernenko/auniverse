@@ -1,20 +1,30 @@
-import { useState } from 'react'
-import breakpointContext from './contextBr'
+import { useEffect, useState } from 'react';
+import breakpointContext from './contextBr';
 
-const BreakpointProvider = ({children}) => {
-    const [breakpoint, setBreakpoint] = useState(document.documentElement.clientWidth)
+const BreakpointProvider = ({ children }) => {
+  const [breakpoint, setBreakpoint] = useState();
+
+  useEffect(() => {
+    if (window.innerWidth >= 1200) setBreakpoint('desktop');
+    else if (window.innerWidth >= 768 && window.innerWidth < 1200)
+      setBreakpoint('tablet');
+    else if (window.innerWidth <= 420) setBreakpoint('mobile');
 
     const onResize = () => {
-        setBreakpoint(document.documentElement.clientWidth)    
-    }
+      if (window.innerWidth >= 1200) setBreakpoint('desktop');
+      else if (window.innerWidth >= 768 && window.innerWidth < 1200)
+        setBreakpoint('tablet');
+      else if (window.innerWidth <= 420) setBreakpoint('mobile');
+    };
 
-    window.addEventListener('resize', onResize)
+    window.addEventListener('resize', onResize);
+  }, []);
 
-    return(
-        <breakpointContext.Provider value={{breakpoint}}>
-            {children}
-        </breakpointContext.Provider>
-        )
-}
+  return (
+    <breakpointContext.Provider value={{ breakpoint }}>
+      {children}
+    </breakpointContext.Provider>
+  );
+};
 
-export default BreakpointProvider
+export default BreakpointProvider;

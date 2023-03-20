@@ -30,7 +30,15 @@ const List =  styled.ul`
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+     gap: 10px;
+     flex-wrap: wrap;
+   
+
+    @media screen and (max-width: 768px) {
+        flex-direction: row;
+        justify-content: center;
+        gap: 20px;
+    }
     
     & svg {
         width: 30px;

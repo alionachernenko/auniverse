@@ -6,7 +6,6 @@ import { Slider } from "../../components/Slider/Slider"
 import { useState, useEffect, useContext } from "react";
 import { getNewGames } from "services/games-api";
 import breakpointContext from '../../context/contextBr'
-import { Game } from "components/game/Game";
 import { GameList } from "components/GameList/GameList";
 
 const NewGames = () => {
@@ -14,6 +13,8 @@ const NewGames = () => {
     const [games, setGames] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [isError, setIsError] = useState(false)
+
+    console.log(breakpoint)
 
     useEffect(() => {
              getNewGames(1).then(({data}) => {
@@ -25,13 +26,12 @@ const NewGames = () => {
 
             console.log(error)
             setIsError(true)
-
             setIsLoading(false)
         }
         )
     }, [breakpoint])
 
-    return (//отменить первый рендер
+    return (
 
 
         <Section>
@@ -40,9 +40,8 @@ const NewGames = () => {
                    <Div>
                         <h2>What will you choose this time?</h2>
                         {isLoading ? <Loader className={'loader-homepage'} color={'darkblue'} /> : ( isError ? 
-                        <><p>Something went wrong. You can play the game below not to get bored</p>
-                        <Game/></> : 
-                        breakpoint >= 1200 ? <Slider>
+                        <><p>Something went wrong</p></> : 
+                        breakpoint === 'desktop' ? <Slider>
                             {games.map((game => 
                                      
                                          <SwiperSlide style={{

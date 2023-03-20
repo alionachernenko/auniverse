@@ -8,6 +8,7 @@ import { GameList } from 'components/GameList/GameList'
 import { ProfileCard } from 'components/ProfileCard/ProfileCard'
 
 import styled from 'styled-components'
+import { Container } from "components/Container/Container"
 
 const Profile = () => {
     const {userId, isLoggedIn, setUserId} = useContext(authContext)
@@ -63,13 +64,15 @@ const Profile = () => {
     return (
         <>
             <Page>
+                <Container>
                {isLoading ? <Loader className={'loader-profile'} color={'darkblue'} /> : <><Page className='top'>
                     <ProfileCard setPhotoPath={setPhotoPath} avatar={photoPath} username={username} isAvatarLoading={isAvatarLoading} setIsAvatarLoading={setIsAvatarLoading} setUsername={setUsername}/>
                     <LogOut type="button" onClick={logOut}>Log out</LogOut>
-                    <h2 >Your favourite games:</h2>
+                    <h2 >Your bookmarks:</h2>
                     <GameList games={favouriteGames}/>
                     </Page> 
-                </>}
+                    </>}
+                    </Container>
             </Page>
         </>
         

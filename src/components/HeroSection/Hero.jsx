@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components"
 import { Link } from "react-router-dom"
-import sonic from '../../assets/images/sonic.png'
+// import sonic from '../../assets/images/sonic.png'
 
 export const Hero = () => {
     return (
@@ -12,7 +12,7 @@ export const Hero = () => {
                     </p>
                     <Link to='/catalog'>Go to the catalog</Link>
                 </Info>
-                <Picture src={sonic} alt="" />
+                {/* <Picture src={sonic} alt="" /> */}
             </Section>
     )
     
@@ -30,13 +30,11 @@ to {
 `
 
 const Section = styled.section`
-    background-color: transparent;
-    background-size: cover;
-    // padding: 100px 0;
     position: relative;
     align-items: center;
     display: flex;
     justify-content: center;
+    background-color:  #00021A;
     
     @media screen and (min-width: 768px){
         padding: 100px 0;
@@ -44,7 +42,8 @@ const Section = styled.section`
     
 
     @media screen and (max-width: 767px){
-        height: 100vh;
+        padding: 100px 15px;
+        
     };
 
    
@@ -60,8 +59,57 @@ const Section = styled.section`
         animation: ${show} 800ms ease;
         position: relative;
         background-color: orange;
-        border: 1px solid red;
-        clip-path: polygon(5% 0, 100% 0, 100% 10%, 100% 91%, 95% 100%, 0 100%, 0 71%, 0 10%);
+        box-shadow: red 2px 3px;
+        transition: 100ms all linear;
+        position: relative;
+
+        &:hover {
+            box-shadow: red 4px 5px;
+            transform: scale(1.05);
+            background-color: white;
+            color: orange
+        }
+
+       
+
+        &::before {
+            content: '';
+            position: absolute;
+            height: 20px;
+            background-color: transparent;
+            border-top: 2px solid orange;
+            border-right: 2px solid orange;
+            
+            top: 0px;
+            right: 0px;
+            width: 20px;
+            transition: 100ms all linear;
+        }
+
+        &::after{
+            content: '';
+            position: absolute;
+            height: 20px;
+            background-color: transparent;
+            border-bottom: 2px solid orange;
+            border-left: 2px solid orange;
+            bottom: 0px;
+            left: 0px;
+            width: 20px;
+            transition: 100ms all linear;
+
+        }
+
+        &:hover::after{
+            bottom: -15px;
+            left: -13px;
+        }
+
+        &:hover::before {
+            top: -13px;
+            right: -15px;
+        }
+
      }
 
 `
@@ -89,14 +137,14 @@ const Info = styled.div`
     gap: 29px;
     padding: 0 5px;
 
-    @media screen and (min-width: 1440px){
+    @media screen and (min-width: 1200px){
         align-items: flex-start;
         padding: 0 20px;
     }
     
     & h1{
     font-weight: 900;
-    font-size: 35px;
+    font-size: 40px;
     line-height: 140%;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -104,12 +152,17 @@ const Info = styled.div`
     text-align: center;
     animation: ${show} 500ms ease, ${titleAnim} 3000ms ease infinite;
 
-    @media screen and (min-width: 768px){
+
+      @media screen and (min-width: 420px){
         font-size: 50px;
     }
 
 
-    @media screen and (min-width: 1440px){
+    @media screen and (min-width: 768px){
+        font-size: 70px;
+    }
+
+    @media screen and (min-width: 1200px){
         font-size: 100px;
         text-align: left
     }
@@ -129,25 +182,25 @@ const Info = styled.div`
     }
 `
 
-const moving = keyframes`
-    0% {
-        transform: scale(0)
-    }
+// const moving = keyframes`
+//     0% {
+//         transform: scale(0)
+//     }
 
-    100% {
-        transform: scale(1)
-    }
-`
+//     100% {
+//         transform: scale(1)
+//     }
+// `
 
-const Picture = styled.img`
+// const Picture = styled.img`
 
-@media screen and (max-width: 1700px) {
-    display: none
-}
-    height: 600px;
-    position: absolute;
-    top: 20px;
-    right: 50px;
-    // animation-delay: 1000ms;
-    animation: ${moving} 500ms ease-in-out
-`
+// @media screen and (max-width: 1700px) {
+//     display: none
+// }
+//     height: 600px;
+//     position: absolute;
+//     top: 20px;
+//     right: 50px;
+//     // animation-delay: 1000ms;
+//     animation: ${moving} 500ms ease-in-out
+// `

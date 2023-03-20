@@ -1,29 +1,18 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect } from "react"
 import { Outlet, useNavigate } from "react-router-dom"
 import { NavLink} from "react-router-dom"
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay } from 'swiper'
-import { EffectCreative } from 'swiper'
-import { getGames } from 'services/games-api'
 import 'swiper/css';
 import authContext from '../../context/context'
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 
 const Login = () => {
     const {isLoggedIn} = useContext(authContext)
     
     const navigate = useNavigate()
-    const [games, setGames] = useState([])
 
     useEffect(() => {
-        getGames(1).then((res) => {
-            console.log(res)
-            setGames(res.data.results.slice(0, 5))
-        })
-    }, [])
-    useEffect(() => {
         if (isLoggedIn === true) {
-           navigate(`/profile`)
+           navigate(`/profile`, {replace: true})
         }
     }, [isLoggedIn, navigate])
     
@@ -33,48 +22,12 @@ const Login = () => {
                 <Tab to='login-page'>Log In</Tab>
                 <Tab to='sign-page'>Sign Up</Tab>
             </Tabs>
-            <SliderWrapper>
-                <Swiper className="slider" style={{
-                    height: '100%',
-                    width: 500,
-                    borderRadius: '20px 0 0 20px'
-                }}
-                modules={[Autoplay, EffectCreative]}
-                effect={'creative'}
-                creativeEffect={ {
-                    prev: {
-                        shadow: true,
-                        translate: ["-20%", 0, -50],
-                      },
-                      next: {
-                        translate: ["100%", 0, 0],
-                      },
-                }  
-                }
-                    loop={true}
-                    autoplay={{
-                        delay: 5000,
-                        disableOnInteraction: false
-                    }}
-                    speed={1000}
-                    spaceBetween={0}
-                    slidesPerView={1}
-                    >
-                        {games.map(game => {
-                            return (<SwiperSlide key={game.id} style={{width: '100%', overflow: 'hidden'}}><img
-                            
-                            style={{
-                                width: '100%',
-                                height: '100%',
-                                objectFit: 'cover',
-                                objectPosition: '50% 0'
-                            }}
-                             src={game.background_image} alt="" /></SwiperSlide>)
-                        }
-                            )}
-                </Swiper>
+            <FormWrapper>
+                <InfoBlock>
+                    <p>Join the community of gamers</p>
+                </InfoBlock>
                 <Outlet/>
-            </SliderWrapper>
+            </FormWrapper>
         </Page>
     )
 }
@@ -82,7 +35,51 @@ const Login = () => {
 
 //==============STYLES==============//
 
+const titleAnim = keyframes`
+     0% {
+        text-shadow: #FF6600 2px 5px;
+     }
 
+     25% {
+        text-shadow: red 2.5px 5.5px;
+     }
+
+     50%{
+        text-shadow: #FF6600 3px 6px;
+     }
+
+     75% {
+        text-shadow: purple 2.5px 5.5px;
+     }
+
+     100% {
+        text-shadow: #FF6600 2px 5px;
+     }
+`
+
+const InfoBlock = styled.div`
+width: 428px;
+background-color: #00021A;
+height: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+
+& p {
+    color: white;
+    font-size: 60px;
+    line-height: 100px;
+    text-shadow: purple 2px 5px;
+    font-weight: 900;
+    text-align: center;
+    animation: ${titleAnim} 3000ms ease infinite;
+    text-transform: uppercase
+}
+
+@media screen and (max-width: 1199px) {
+    display: none
+}
+`
 const Page = styled.div`
     height: 100vh;
     display: flex;
@@ -128,7 +125,7 @@ const Tab = styled(NavLink)`
     }
 `
 
-const SliderWrapper = styled.div`
+const FormWrapper = styled.div`
     & .slider{
         @media screen and (max-width: 1199px){
             display: none;

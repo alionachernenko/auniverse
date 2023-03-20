@@ -7,7 +7,7 @@ export const FilteredList = ({results}) => {
         <FilteredResults>
                 {results.map(({id, background_image, slug, name}) => 
                 <li key={id}>
-                    <img src={`${background_image}`} loading='lazy' alt="" />
+                        <img src={`${background_image}`} loading='lazy' alt={`${name} poster`} />
                     <Link to={`/catalog/${slug}`}>
                         {name}
                     </Link>

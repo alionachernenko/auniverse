@@ -1,11 +1,7 @@
-import { useContext } from "react"
-import authContext from '../../context/context'
-import { Link, NavLink } from "react-router-dom"
-import {RiUserFill, RiLoginBoxFill} from 'react-icons/ri'
 import styled from "styled-components"
+import { NavLink } from "react-router-dom"
 
 export const Navigation = () => {
-    const {isLoggedIn} = useContext(authContext)
 
     return (
         <>
@@ -16,16 +12,12 @@ export const Navigation = () => {
                 <li><Tab to='/users'>Users</Tab></li>
             </NavigationMenu>
         </SiteNav>
-            <Options>
-                {isLoggedIn && <li><Link to={`/profile`}><RiUserFill/></Link></li>}
-                {!isLoggedIn && <li><Link to={`/login/login-page`}><RiLoginBoxFill/></Link></li>}
-            </Options>
         </>
     )
 }
 
 const SiteNav = styled.nav`
-    @media screen and (max-width: 1439px){
+    @media screen and (max-width: 1199px){
         display: none;
     }
 `
@@ -67,15 +59,4 @@ const Tab = styled(NavLink)`
     content: '';
     background-color: #FF6600;
 }
-`
-
-const Options = styled.ul`
-    padding: 0;
-    margin: 0;
-    display: flex;
-    list-style: none;
-
-    @media screen and (max-width: 1200px){
-        display: none;
-    }
 `

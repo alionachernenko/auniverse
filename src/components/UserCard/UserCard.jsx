@@ -30,11 +30,11 @@ export const UserCard = ({id}) => {
     )
 }
 
-const Card = styled.div`
+const Card = styled.li`
     height: auto;
     padding: 10px;
     border-radius: 20px;
-    background-color: #080D2B;
+    background-color: #00021A;
     transform: scale(1);
     transition: 200ms all ease;
 
