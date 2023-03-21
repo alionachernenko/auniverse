@@ -7,7 +7,7 @@ import { authContext } from "context/context"
 
 
 
-export const UserCard = ({id, isPending, setPending}) => {
+export const UserCard = ({id, isPending, setPending, setFriends}) => {
     const [name, setName] = useState('')
     const [avatar, setAvatar] = useState()
     const { userId } = useContext(authContext)
@@ -32,7 +32,8 @@ export const UserCard = ({id, isPending, setPending}) => {
             </CardLink>
             {isPending && <button onClick={() =>
                 acceptInvitationAndAddUser(id, userId).then(() =>
-                        setPending(prev => prev.filter(friend => friend !== id))
+                    setPending(prev => prev.filter(friend => friend !== id)),
+                    setFriends(prev => [...prev, id])
                 )}>
                 Accept invitation</button>}
         </Card>
@@ -46,20 +47,20 @@ const Card = styled.li`
     background-color: #00021A;
     transform: scale(1);
     transition: 200ms all ease;
-
+width: auto;
     &:hover{
         transform: scale(0.95)
     }
 
-    @media screen and (min-width: 768px){
+    @media screen and (min-width: 1200px){
         width: 400px
     }
     
 `
 const AvatarWrapper = styled.div`
     border-radius: 100px;
-    height: 50px;
-    width: 50px;
+    height: 90px;
+    width: 90px;
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -67,7 +68,7 @@ const AvatarWrapper = styled.div`
     position: relative;
     background-color: #080D2B;
 
-    @media screen and (min-width: 420px){
+    @media screen and (min-width: 320px){
         height: 100px;
         width: 100px;
     }
@@ -78,10 +79,17 @@ display: flex;
 align-items: center;
 gap: 10px;
 justify-content: flex-start;
+
 `
 
 const Username = styled.p`
     color: white;
     font-size: 25px;
-    font-weight: 500
+    font-weight: 500;
+
+@media screen and (max-width: 1199px){
+        display: none
+    }
+        
+    
 `

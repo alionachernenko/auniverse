@@ -8,7 +8,7 @@ import { auth } from '../../utils/firebase';
 const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const [userId, setUserId] = useState();
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     auth.onAuthStateChanged(user => {
@@ -61,6 +61,8 @@ const AuthProvider = ({ children }) => {
         setIsLoading(false);
       });
   };
+
+  console.log(userId);
 
   return (
     <authContext.Provider

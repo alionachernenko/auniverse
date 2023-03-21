@@ -76,21 +76,45 @@ export const addUserToFriensInvitationsList = (id, userId) => {
   });
 };
 
-export const acceptInvitationAndAddUser = async (id, userId) => {
-  await set(ref(database, 'users/' + userId + '/friends'), {
-    [id]: id,
-  });
-  return await remove(
-    ref(database, 'users/' + userId + '/friendsInvites/' + id)
-  );
+export const acceptInvitationAndAddUser = (id, userId) => {
+  return Promise.all([
+    get(ref(database, `users/${userId}/friends`)),
+    get(ref(database, `users/${id}/friends`)),
+  ])
+    .then(res => {
+      const [myFriends, usersFriends] = res;
+
+      set(ref(database, 'users/' + userId + '/friends'), {
+        ...myFriends.val(),
+        [id]: id,
+      });
+
+      set(ref(database, 'users/' + id + '/friends'), {
+        ...usersFriends.val(),
+        [userId]: userId,
+      });
+    })
+    .then(() => {
+      remove(ref(database, 'users/' + userId + '/friendsInvites/' + id));
+      remove(ref(database, 'users/' + id + '/friendsInvites/' + userId));
+    });
 };
 
 export const getFavouriteGames = userId => {
   return get(ref(database, `users/${userId}/favs`));
 };
 
-export const getFriendList = userId => {
+export const getFriendsInvitationsList = userId => {
+  return get(ref(database, `users/${userId}/friendsInvites`));
+};
+
+export const getFriendsList = userId => {
   return get(ref(database, `users/${userId}/friends`));
+};
+
+export const removeFriend = (id, userId) => {
+  remove(ref(database, 'users/' + id + '/friends/' + userId));
+  remove(ref(database, 'users/' + userId + '/friends/' + id));
 };
 
 export { auth };

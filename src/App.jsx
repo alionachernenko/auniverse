@@ -8,6 +8,8 @@ import { ToastContainer } from "react-toastify";
 import { Header } from "components/Header/Header";
 import { Footer } from "components/Footer/Footer";
 import { LoadingPage } from "components/LoadingPage/LoadingPage";
+import { Bookmarks } from "components/Bookmarks/Bookmarks";
+import { FriendsList } from "components/FriendsList/FriendsList";
 
 const Homepage = lazy(() => import('./pages/Homepage/Homepage'))
 const Catalog = lazy(() => import('./pages/Catalog/Catalog'))
@@ -58,8 +60,15 @@ export function App() {
                     <Route path='sign-page' element={<SignupForm/>} />
                 </Route>
                 <Route path ='/users' element={<Users/>}/>
-                <Route path='/users/:id' element={<UserProfile/>}/>
-                <Route path="/profile" element={<AccountPage/>} />
+                    <Route path='/users/:id' element={<UserProfile />}>
+                        <Route path='friends' element={<FriendsList />}/>
+                        <Route path='bookmarks' element={<Bookmarks/>}/>
+                    </Route>
+                    
+                    <Route path="/profile" element={<AccountPage />}>
+                        <Route path='friends' element={<FriendsList />}/>
+                        <Route path='bookmarks' element={<Bookmarks/>}/>
+                    </Route>
                 <Route path='*' element={<ErrorPage/>}/>
             </Routes> 
             </Suspense>

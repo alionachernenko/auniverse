@@ -1,7 +1,8 @@
 import { GameCard } from "../GameCard/GameCard"
 import styled from "styled-components"
 import { Container } from "components/Container/Container"
-export const GameList = ({games}) => {
+export const GameList = ({ games }) => {
+    console.log(games)
     return (
         <Container>
             <List>

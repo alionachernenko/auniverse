@@ -8,13 +8,13 @@ import BreakpointProvider from 'context/providers/breakpointProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <BrowserRouter basename="/auniverse">
-      <AuthProvider>
-        <BreakpointProvider>
-          <App />
-        </BreakpointProvider>
-      </AuthProvider>
-    </BrowserRouter>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <BrowserRouter basename="/auniverse">
+    <AuthProvider>
+      <BreakpointProvider>
+        <App />
+      </BreakpointProvider>
+    </AuthProvider>
+  </BrowserRouter>
+  // </React.StrictMode>
 );

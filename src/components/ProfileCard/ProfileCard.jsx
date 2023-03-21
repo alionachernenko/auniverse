@@ -6,14 +6,20 @@ import { useContext, useState } from "react"
 import { uploadBytes, getDownloadURL, ref as sRef } from 'firebase/storage'
 import {set, ref} from 'firebase/database'
 import firebaseApps from 'config/firebase'
-import { useLocation } from "react-router-dom"
-import {BsPenFill} from 'react-icons/bs'
-import {MdDone} from 'react-icons/md'
-export const ProfileCard = ({avatar, username, isAvatarLoading, setPhotoPath, setIsAvatarLoading, setUsername}) => {
+import { useLocation, useParams } from "react-router-dom"
+import { BsPenFill } from 'react-icons/bs'
+import {FiUserPlus, FiUserX} from 'react-icons/fi'
+import { MdDone } from 'react-icons/md'
+import { addUserToFriensInvitationsList, removeFriend } from "utils/firebase"
+export const ProfileCard = ({avatar, username, isAvatarLoading, setPhotoPath, setIsAvatarLoading, setUsername, isPendingFriend, isFriend, setIsPendingFriend, setIsFriend}) => {
 
-    const {userId} = useContext(authContext)
+    const { userId } = useContext(authContext)
+    const { id } = useParams()
+    
     const location = useLocation()
     const [showChangeUsernameFrom, setShowChangeUsernameForm] = useState(false)
+
+    console.log(isPendingFriend)
     
     const uploadAvatar = (e) => {
         e.preventDefault()
@@ -35,18 +41,24 @@ export const ProfileCard = ({avatar, username, isAvatarLoading, setPhotoPath, se
     return(
         <Info>
             <AvatarWrapper>
-                {location.pathname === '/profile' &&
+                {location.pathname.includes('profile') ?
                     <><UploadInput id='upload_file'accept=".png, .jpg, .jpeg, .gif" type='file' name='photo' onChange={(e) => uploadAvatar(e)}/>
                     <UploadButton htmlFor="upload_file">
                         <RxUpload size='100%' fill='orange' color="orange" stroke="orange"/>
-                    </UploadButton></>
+                        </UploadButton></> : !isPendingFriend && !isFriend ? <ChangeFriendStatusButton type='button' onClick={() => {
+                            addUserToFriensInvitationsList(id, userId)
+                            setIsPendingFriend(true)
+                    }}><FiUserPlus/></ChangeFriendStatusButton> : isPendingFriend ? <FriendStatus>You sent an invitation</FriendStatus> : <ChangeFriendStatusButton onClick={() => {
+                            removeFriend(id, userId)
+                            setIsFriend(false)
+                    }}><FiUserX/></ChangeFriendStatusButton>
                         }
                         {isAvatarLoading ? <Spinner><Oval color='#FF6600' secondaryColor='orange' width={'100%'} height={'100%'}/></Spinner> : 
                         <Avatar style={{objectFit: 'cover',width: 200, height: '100%'}} src={`${avatar}`} alt=""/>}
                     </AvatarWrapper>
                     <div style={{display: 'flex', gap: 5, alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap'}}>
-                {!showChangeUsernameFrom && <h1>{username}</h1>}
-                {location.pathname === '/profile' && !showChangeUsernameFrom && <ChangeUsernameButton onClick={() => setShowChangeUsernameForm(true)}><BsPenFill/></ChangeUsernameButton>}</div>
+                {!showChangeUsernameFrom && <Username>{username}</Username>}
+                {location.pathname.includes('profile') && !showChangeUsernameFrom && <ChangeUsernameButton onClick={() => setShowChangeUsernameForm(true)}><BsPenFill color="white"/></ChangeUsernameButton>}</div>
                 {showChangeUsernameFrom && <ChangeUsernameForm action="" onSubmit={
                     (e) => {
                         e.preventDefault()
@@ -66,8 +78,13 @@ const Info = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 10px;
     margin-bottom: 20px
+`
+
+const Username = styled.h1`
+    text-align: center
 `
 const Spinner = styled.div`
     text-align: center;
@@ -85,6 +102,17 @@ const AvatarWrapper = styled.div`
     position: relative;
     background-color: transparent;
 
+`
+
+const FriendStatus = styled.p`
+    position: absolute;
+    opacity: 0;
+    z-index: 1111;
+    transition: 250ms opacity ease;
+
+    ${AvatarWrapper}:hover &{
+        opacity: 1
+    }
 `
 
 const Avatar = styled.img`
@@ -152,5 +180,23 @@ const ChangeUsernameForm = styled.form`
         display: flex;
         align-items: center;
         justify-content: center
+    }
+`
+
+const ChangeFriendStatusButton = styled.button`
+    border: none;
+    position: absolute;
+    opacity: 0;
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    padding: 5px;
+    border-radius: 100px;
+    cursor: pointer;
+    z-index: 1111;
+    transition: 250ms all ease;
+
+    ${AvatarWrapper}:hover &{
+        opacity: 1
     }
 `

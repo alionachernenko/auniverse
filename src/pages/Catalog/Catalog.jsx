@@ -1,20 +1,44 @@
 import { useEffect, useState } from "react"
-import { getGameBySearchQuery } from "../../services/games-api"
+import { getGameBySearchQuery, getGames } from "../../services/games-api"
 import { Pagination } from "../../components/Pagination/Pagination"
 import { SearchForm } from "../../components/SearchForm/SearchForm"
 import { Loader } from "../../components/Loader/Loader"
 import { GameList } from "../../components/GameList/GameList"
 import styled from "styled-components"
 
+
 const Catalog = ({onSubmit, searchParams}) => {
     const [games, setGames] = useState([])
     const [totalPages, setTotalPages] = useState(0)
     const [isLoading, setIsLoading] = useState(true)
     const [page, setPage] = useState(1)
-    const {ordering, value, genre} = searchParams
+    const { ordering, value, genre } = searchParams
+    
     
     useEffect(() => {
         setIsLoading(true)
+
+        if (value !== '') {
+            getGameBySearchQuery(value, page, ordering, genre).then(({data}) => {
+                const { results, count } = data
+
+                setGames(results.filter(game => game.slug !== 'atomic-heart'))
+                setTotalPages(count / 20)
+
+                setIsLoading(false)
+            }).catch(error => {
+                console.log(error)
+
+                setIsLoading(false)
+            })
+        }
+        else {
+            getGames(1).then(({data}) => {
+            setGames(data.results)
+            setTotalPages(data.count / 20)
+        })
+        }
+
         getGameBySearchQuery(value, page, ordering, genre).then(({data}) => {
                 const { results, count } = data
 
