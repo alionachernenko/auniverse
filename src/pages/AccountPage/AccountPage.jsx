@@ -1,24 +1,28 @@
 import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import authContext from '../../context/context'
+import {authContext} from '../../context/context'
 import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
-import { getFavouriteGames, userSignOut, getUserInfo } from "../../utils/firebase"
+import { getFavouriteGames, userSignOut, getUserInfo, getFriendList } from "../../utils/firebase"
 import { Loader } from 'components/Loader/Loader'
 import { GameList } from 'components/GameList/GameList'
 import { ProfileCard } from 'components/ProfileCard/ProfileCard'
+import { UserCard } from "components/UserCard/UserCard"
+
 
 import styled from 'styled-components'
 import { Container } from "components/Container/Container"
 
-const Profile = () => {
+const AccountPage = () => {
     const {userId, isLoggedIn, setUserId} = useContext(authContext)
 
     const [favouriteGames, setFavouriteGames] = useState([])
     const [username, setUsername] = useState('')
+    const [friendPending, setFriendsPending] = useState()
     const [photoPath, setPhotoPath] = useState()
     const [isLoading, setIsLoading] = useState(true)
     const [isAvatarLoading, setIsAvatarLoading] = useState(false)
     const navigate = useNavigate()
+
 
     useEffect(() => {
         if (!isLoggedIn) {
@@ -26,6 +30,12 @@ const Profile = () => {
             return
         }
 
+    const showFriends = () => {
+        getFriendList(userId).then((res) => {
+            if(res.val()) setFriendsPending(Object.values(res.val()))
+        }
+        )
+    }
         Promise.all([getUserInfo(userId), getFavouriteGames(userId)])
             .then(res => {
                 const [snapshot, games] = res
@@ -48,7 +58,9 @@ const Profile = () => {
             }).catch((error) => {
                 console.error(error);
                 setIsLoading(false)
-    })
+            })
+        
+        showFriends()
     
     }, [isLoggedIn, navigate, userId])
 
@@ -65,10 +77,13 @@ const Profile = () => {
         <>
             <Page>
                 <Container>
-               {isLoading ? <Loader className={'loader-profile'} color={'darkblue'} /> : <><Page className='top'>
+               {isLoading ? <Loader className={'loader-profile'} color={'#00021A'} /> : <><Page className='top'>
                     <ProfileCard setPhotoPath={setPhotoPath} avatar={photoPath} username={username} isAvatarLoading={isAvatarLoading} setIsAvatarLoading={setIsAvatarLoading} setUsername={setUsername}/>
                     <LogOut type="button" onClick={logOut}>Log out</LogOut>
-                    <h2 >Your bookmarks:</h2>
+                        <BookmarksTitle>Your bookmarks:</BookmarksTitle>
+                        <ul>
+                            {friendPending && friendPending.map(friend => <UserCard id={friend} isPending={true} setPending={setFriendsPending} />)}
+                        </ul>
                     <GameList games={favouriteGames}/>
                     </Page> 
                     </>}
@@ -90,6 +105,10 @@ const Page = styled.div`
     width: 100%;
 `
 
+const BookmarksTitle = styled.h2`
+
+`
+
 const LogOut = styled.button`
     color: white;
     background-color: orange;
@@ -100,4 +119,4 @@ const LogOut = styled.button`
     border-radius: 10px;
 `
 
-export default Profile
+export default AccountPage

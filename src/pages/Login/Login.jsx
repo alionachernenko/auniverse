@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react"
 import { Outlet, useNavigate } from "react-router-dom"
 import { NavLink} from "react-router-dom"
 import 'swiper/css';
-import authContext from '../../context/context'
+import {authContext} from '../../context/context'
 import styled, {keyframes} from 'styled-components';
 
 const Login = () => {

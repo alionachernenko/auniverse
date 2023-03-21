@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom'
 
 import { getGameByName } from 'services/games-api'
 import { SearchFilter } from 'components/SearchFilter/SearchFilter'
-import { FilteredList } from 'components/FilteredList/FilteredList'
+import { FilteredSearchList } from 'components/FilteredSearchList/FilteredSearchList'
 
 export const SearchForm = ({ onSubmit, className, setPage }) => {
     const [value, setValue] = useState('')
@@ -40,10 +40,12 @@ export const SearchForm = ({ onSubmit, className, setPage }) => {
 
     return (
         <Form onSubmit={onFormSubmit} class={className}>
-            <Input  value={value} type='text' name='query' onChange={onInputChange} class={className}/>
+            <label style={{
+                display: 'none'}} htmlFor='search-input'>Search games</label>
+            <Input id='search-input'  value={value} type='text' name='query' onChange={onInputChange} class={className}/>
             <Button  type='submit' class={className}>GO</Button>
             {location.pathname === '/catalog' && <SearchFilter/>}
-            {(filteredGames && value !== '' && location.pathname === '/') && <FilteredList results={filteredGames}/>}
+            {(filteredGames && value !== '' && location.pathname === '/') && <FilteredSearchList results={filteredGames}/>}
         </Form>
     )
 }
@@ -58,11 +60,11 @@ const Form = styled.form`
         switch (props.class){
             case 'catalog': 
                 return css`
-                margin-bottom: 20px;
                 max-width: 500px;
                 margin-left: auto;
                 margin-right: auto;
                 height: auto;
+                padding: 0 10px;
             `
             case 'header':
                 return css`
@@ -125,7 +127,7 @@ const Button = styled.button`
             return css`
             height: 36px;
             top: 2px;
-            right: 3px;
+            right: 13px;
             font-size: 20px;
             transform: scale(1);
 

@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom"
-import { Game } from "components/game/Game"
 import styled from "styled-components"
 
 const ErrorPage = () => {
@@ -10,9 +9,7 @@ const ErrorPage = () => {
             <Description>This page doesn't exist</Description>
             </Wrapper>
             <Link to='/' style={{
-                color: 'black'}}>Back to homepage</Link>
-            <Game/>
-            
+                color: 'black'}}>Back to homepage</Link>            
         </Page>
     )
 }

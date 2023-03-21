@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { getUsers } from 'utils/firebase'
 import { Loader } from 'components/Loader/Loader'
-import authContext from '../../context/context'
+import {authContext} from '../../context/context'
 
 import { UserCard } from 'components/UserCard/UserCard'
 import styled from 'styled-components'
@@ -25,7 +25,7 @@ const Users = () => {
     return(
         <Page>
             <Container>
-            {isLoading ? <Loader className={'loader-profile'} color={'darkblue'} /> : 
+            {isLoading ? <Loader className={'loader-profile'} color={'#00021A'} /> : 
             <UsersList>
                 {userIDs.map(userID => <UserCard id={userID}/>)}
                     </UsersList>}

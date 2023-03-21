@@ -1,5 +1,4 @@
 import { Logo } from "components/Logo/Logo"
-import { BsArrowUp } from "react-icons/bs"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 import { Container } from "components/Container/Container"
@@ -15,7 +14,6 @@ export const Footer = () => {
                         <li><Link to='/catalog'>Catalog</Link></li>
                     </ul>
                 </nav>
-                <div><BsArrowUp fill="black" size='30'/></div>
                 <address>
                     <a href="tel:+380953596448">+380953596448</a>
                     <a href='mailto:auniverse@gmail.com'>auniverse@gmail.com</a>

@@ -9,7 +9,7 @@ export const Navigation = () => {
             <NavigationMenu>
                 <li><Tab to='/'>Home</Tab></li>
                 <li><Tab to='/catalog'>Catalog</Tab></li>
-                <li><Tab to='/users'>Users</Tab></li>
+                <li><Tab to='/users'>Community</Tab></li>
             </NavigationMenu>
         </SiteNav>
         </>

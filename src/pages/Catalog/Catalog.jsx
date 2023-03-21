@@ -17,9 +17,8 @@ const Catalog = ({onSubmit, searchParams}) => {
         setIsLoading(true)
         getGameBySearchQuery(value, page, ordering, genre).then(({data}) => {
                 const { results, count } = data
-                console.log(data)
-                console.log(genre)
-                setGames(results)
+
+                setGames(results.filter(game => game.slug !== 'atomic-heart'))
                 setTotalPages(count / 20)
 
                 setIsLoading(false)
@@ -55,6 +54,10 @@ const Page = styled.div`
     min-height: calc(100vh - 61px);
     position: relative;
     background-color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: space-between;
+    gap: 20px;
 
     @media screen and (min-width: 1200px){
         padding: 40px 0;

@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { getUserInfo } from "utils/firebase"
+import { addUserToFriensInvitationsList, getUserInfo } from "utils/firebase"
 import { GameList } from "components/GameList/GameList"
-import authContext from '../../context/context'
+import {authContext} from '../../context/context'
 import styled from "styled-components"
 import { ProfileCard } from "components/ProfileCard/ProfileCard"
 import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
@@ -28,13 +28,13 @@ const User = () => {
             else(setPhoto(avatarPlaceholder))
         })
     }, [id])
-   
 
     return(
         <Page>
             <Container>
                 <ProfileCard avatar={photo} username={name} />
                 <h2>{name}'s bookmarks</h2>
+                <button type='button' onClick={() => addUserToFriensInvitationsList(id, userId)}>Add to friends</button>
                 {favouriteGames && <GameList games={favouriteGames}/>}
             </Container>
         </Page>

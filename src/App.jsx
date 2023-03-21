@@ -13,11 +13,11 @@ const Homepage = lazy(() => import('./pages/Homepage/Homepage'))
 const Catalog = lazy(() => import('./pages/Catalog/Catalog'))
 const GameDescription = lazy(() => import('./pages/GameDescription/GameDescription'))
 const Login = lazy(() => import('./pages/Login/Login'))
-const Profile = lazy(() => import('./pages/Profile/Profile'))
+const AccountPage = lazy(() => import('./pages/AccountPage/AccountPage'))
 const ErrorPage = lazy(() => import('./pages/ErrorPage/ErrorPage'))
 const LoginForm = lazy(() => import('./components/LoginForm/LoginForm'))
 const SignupForm = lazy(() => import('./components/SignupForm/SignupForm'))
-const User = lazy(() => import('./pages/User/User'))
+const UserProfile = lazy(() => import('./pages/UserProfile/UserProfile'))
 const Users = lazy(() => import('./pages/Users/Users'))
 
 export function App() {
@@ -58,8 +58,8 @@ export function App() {
                     <Route path='sign-page' element={<SignupForm/>} />
                 </Route>
                 <Route path ='/users' element={<Users/>}/>
-                <Route path='/users/:id' element={<User/>}/>
-                <Route path="/profile" element={<Profile/>} />
+                <Route path='/users/:id' element={<UserProfile/>}/>
+                <Route path="/profile" element={<AccountPage/>} />
                 <Route path='*' element={<ErrorPage/>}/>
             </Routes> 
             </Suspense>

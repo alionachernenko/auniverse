@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { GiHamburgerMenu} from 'react-icons/gi'
-import { BurgerMenu } from 'components/DropdownMenu/DropdownMenu'
+import { DropdownMenu } from 'components/DropdownMenu/DropdownMenu'
 import styled from 'styled-components'
 
 export const MenuButton = () => {
@@ -8,17 +8,16 @@ export const MenuButton = () => {
     
     return (
         <>
-            
-            <BurgerButton onClick={() => setIsMenuOpen(true)}>
+            <Button onClick={() => setIsMenuOpen(true)}>
                 <GiHamburgerMenu color='white'/>
-            </BurgerButton>
-            {isMenuOpen && <BurgerMenu onClick={() => setIsMenuOpen(false)}/>}
+            </Button>
+            {isMenuOpen && <DropdownMenu onClick={() => setIsMenuOpen(false)}/>}
         </>
     )
 }
 
 
-const BurgerButton = styled.button`
+const Button = styled.button`
     border: none;
     background-color: transparent;
     padding: 0;

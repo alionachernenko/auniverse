@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { RiUserFill, RiLoginBoxFill } from 'react-icons/ri'
 
-import authContext from '../../context/context'
+import {authContext} from '../../context/context'
 
 import { useContext } from "react"
 import { Link } from "react-router-dom"

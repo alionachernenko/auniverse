@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { FaUserEdit } from 'react-icons/fa'
 import { Oval } from 'react-loader-spinner'
-import authContext from '../../context/context'
+import {authContext} from '../../context/context'
 import styled from 'styled-components'
 
 

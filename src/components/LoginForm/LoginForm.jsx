@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { IoMdLogIn } from 'react-icons/io'
 import { Oval } from 'react-loader-spinner'
-import authContext from '../../context/context' 
+import {authContext} from '../../context/context' 
 import styled from 'styled-components'
 
 const LoginForm = () => {

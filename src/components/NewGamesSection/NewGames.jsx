@@ -5,7 +5,7 @@ import { GameCard } from "components/GameCard/GameCard"
 import { Slider } from "../../components/Slider/Slider"
 import { useState, useEffect, useContext } from "react";
 import { getNewGames } from "services/games-api";
-import breakpointContext from '../../context/contextBr'
+import {breakpointContext} from '../../context/context'
 import { GameList } from "components/GameList/GameList";
 
 const NewGames = () => {
@@ -17,9 +17,10 @@ const NewGames = () => {
     console.log(breakpoint)
 
     useEffect(() => {
-             getNewGames(1).then(({data}) => {
+            getNewGames(1).then(({data}) => {
             const { results } = data
-            setGames(results)
+            console.log(results)
+            setGames(results.filter(game => game.slug !== 'atomic-heart'))
 
             setIsLoading(false)
         }).catch(error => {

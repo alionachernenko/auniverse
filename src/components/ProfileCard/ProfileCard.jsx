@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { RxUpload } from "react-icons/rx"
 import { Oval } from "react-loader-spinner"
-import authContext from '../../context/context'
+import {authContext} from '../../context/context'
 import { useContext, useState } from "react"
 import { uploadBytes, getDownloadURL, ref as sRef } from 'firebase/storage'
 import {set, ref} from 'firebase/database'
@@ -15,33 +15,28 @@ export const ProfileCard = ({avatar, username, isAvatarLoading, setPhotoPath, se
     const location = useLocation()
     const [showChangeUsernameFrom, setShowChangeUsernameForm] = useState(false)
     
+    const uploadAvatar = (e) => {
+        e.preventDefault()
+        if(e.target.files[0]){
+            if(e.target.files[0].size > 2097152){
+                console.log('noooooJJFJFJJFJFJ')
+                setIsAvatarLoading(false)
+                return
+            }
+            setIsAvatarLoading(true)
+            uploadBytes(sRef(firebaseApps.storage, `/userpics/${e.target.files[0].name}`), e.target.files[0]).then(() => {
+            return getDownloadURL(sRef(firebaseApps.storage, `/userpics/${e.target.files[0].name}`))}).then((url) =>{
+                set(ref(firebaseApps.database, 'users/' + userId + '/photoUrl'), url)
+                        setPhotoPath(url)
+                        setIsAvatarLoading(false)
+                    })
+                }
+    }
     return(
         <Info>
             <AvatarWrapper>
                 {location.pathname === '/profile' &&
-                    <><UploadInput id='upload_file'accept=".png, .jpg, .jpeg, .gif" type='file' name='photo' onChange={
-                (e) => {
-                e.preventDefault()
-                
-                if(e.target.files[0]){
-                    if(e.target.files[0].size > 2097152){
-                        console.log('noooooJJFJFJJFJFJ')
-                        setIsAvatarLoading(false)
-                        return
-                    }
-                    setIsAvatarLoading(true)
-                    uploadBytes(sRef(firebaseApps.storage, `/userpics/${e.target.files[0].name}`), e.target.files[0]).then(() => {
-                    return getDownloadURL(sRef(firebaseApps.storage, `/userpics/${e.target.files[0].name}`))}).then((url) =>{
-                        console.log(url)
-                        
-                        set(ref(firebaseApps.database, 'users/' + userId + '/photoUrl'), url)
-                        setPhotoPath(url)
-    
-                        setIsAvatarLoading(false)
-                    })
-                }
-                }
-            }/>
+                    <><UploadInput id='upload_file'accept=".png, .jpg, .jpeg, .gif" type='file' name='photo' onChange={(e) => uploadAvatar(e)}/>
                     <UploadButton htmlFor="upload_file">
                         <RxUpload size='100%' fill='orange' color="orange" stroke="orange"/>
                     </UploadButton></>

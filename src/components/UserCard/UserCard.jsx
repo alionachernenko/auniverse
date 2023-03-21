@@ -1,12 +1,16 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { getUserInfo } from "utils/firebase"
+import { getUserInfo, acceptInvitationAndAddUser } from "utils/firebase"
 import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
 import styled from "styled-components"
+import { authContext } from "context/context"
 
-export const UserCard = ({id}) => {
+
+
+export const UserCard = ({id, isPending, setPending}) => {
     const [name, setName] = useState('')
     const [avatar, setAvatar] = useState()
+    const { userId } = useContext(authContext)
 
     useEffect(() => {
         getUserInfo(id).then(res => {
@@ -23,9 +27,14 @@ export const UserCard = ({id}) => {
                 <AvatarWrapper>
                 <img style={{objectFit: 'cover', width: 100, height: '100%'}} width={200} src={`${avatar}`} alt={`${name}'s avatar`}></img>
             </AvatarWrapper>
-            <Username>{name}</Username>
+                <Username>{name}</Username>
+              
             </CardLink>
-           
+            {isPending && <button onClick={() =>
+                acceptInvitationAndAddUser(id, userId).then(() =>
+                        setPending(prev => prev.filter(friend => friend !== id))
+                )}>
+                Accept invitation</button>}
         </Card>
     )
 }

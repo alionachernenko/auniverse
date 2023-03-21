@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react"
-import authContext from '../../context/context'
+import {authContext} from '../../context/context'
 import { removeGameFromFavourite, addGameToFavourite, getFavouriteGames } from "utils/firebase"
 import {BsBookmark, BsFillBookmarkFill} from 'react-icons/bs'
 import styled from "styled-components"
 
-export const ToggleFavouriteButton = ({gameData}) => {
+export const BookmarkButton = ({gameData}) => {
     const {userId} = useContext(authContext)
     const [isFavourite, setIsFavourite] = useState()
 

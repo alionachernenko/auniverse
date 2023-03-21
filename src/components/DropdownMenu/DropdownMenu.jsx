@@ -8,8 +8,7 @@ import styled, { keyframes } from "styled-components"
 import { NavLink } from "react-router-dom"
 
 
-export const BurgerMenu = ({ onClick }) => {
-    
+export const DropdownMenu = ({ onClick }) => {
     return createPortal(
         <Backdrop onClick={(e) => {
             if(e.target === e.currentTarget) onClick()
@@ -27,13 +26,23 @@ export const BurgerMenu = ({ onClick }) => {
         </Backdrop>, document.querySelector('#burger-menu-root'))
 }
 
-const show = keyframes`
+const menuShow = keyframes`
     0% {
-        height: 0
+        right: -100%
     }
 
     100% {
-        height: auto
+        right: 0
+    }
+`
+
+const backdropShow = keyframes`
+    0% {
+        opacity: 0
+    }
+
+    100% {
+        opacity: 1
     }
 `
 
@@ -44,6 +53,8 @@ const Backdrop = styled.div`
     position: fixed;
     box-sizing: border-box;
     z-index: 1;
+    // opacity: 0$
+    animation: ${backdropShow} 200ms ease;
     
     padding: 20px
    
@@ -56,7 +67,7 @@ const Menu = styled.div`
     right: 20px;
     height: auto;
     border-radius: 20px;
-    animation: ${show} 300ms ease;
+    animation: ${menuShow} 100ms ease;
 
     & ul {
         display: flex;

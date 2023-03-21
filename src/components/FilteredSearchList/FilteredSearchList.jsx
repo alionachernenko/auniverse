@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom"
 import styled from "styled-components"
-// import placeholder from '../../assets/images/placeholder'
 
-export const FilteredList = ({results}) => {
+export const FilteredSearchList = ({results}) => {
     return (
         <FilteredResults>
                 {results.map(({id, background_image, slug, name}) => 

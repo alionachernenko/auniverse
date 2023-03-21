@@ -8,7 +8,7 @@ export const Container = ({children}) => {
 }
 
 const Wrapper = styled.div`
-    width: 100vw;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
 

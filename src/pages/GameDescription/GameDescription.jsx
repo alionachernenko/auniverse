@@ -3,9 +3,9 @@ import {  useParams } from "react-router-dom"
 import { getGameById, getScreenshots} from "../../services/games-api"
 import { StoresList } from "components/StoresList/StoresList";
 import { Loader } from "../../components/Loader/Loader";
-import authContext from '../../context/context'
+import {authContext} from '../../context/context'
 import styled from "styled-components";
-import { ToggleFavouriteButton } from "components/ToggleFavouriteButton/ToggleFavouriteButton";
+import { BookmarkButton } from "components/BookmarkButton/BookmarkButton";
 import { Container } from "components/Container/Container";
 
 const GameDescription = () => {
@@ -63,7 +63,7 @@ const GameDescription = () => {
                             <Title>{title}</Title>
                             {year && <Year>{year}</Year>}
                             {isLoggedIn &&
-                                <ToggleFavouriteButton gameData={gameData}/>
+                                <BookmarkButton gameData={gameData}/>
                             }
                         </Meta>
                 
