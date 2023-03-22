@@ -5,6 +5,7 @@ import { SearchForm } from "../../components/SearchForm/SearchForm"
 import { Loader } from "../../components/Loader/Loader"
 import { GameList } from "../../components/GameList/GameList"
 import styled from "styled-components"
+import { ErrorComponent } from "components/ErrorComponent/ErrorComponent"
 
 
 const Catalog = ({onSubmit, searchParams}) => {
@@ -12,9 +13,9 @@ const Catalog = ({onSubmit, searchParams}) => {
     const [totalPages, setTotalPages] = useState(0)
     const [isLoading, setIsLoading] = useState(true)
     const [page, setPage] = useState(1)
+    const [isError, setIsError] = useState(false)
 
     const { ordering, value, genre } = searchParams
-    
     
     useEffect(() => {
         setIsLoading(true)
@@ -29,7 +30,7 @@ const Catalog = ({onSubmit, searchParams}) => {
                 setIsLoading(false)
             }).catch(error => {
                 console.log(error)
-
+                setIsError(true)
                 setIsLoading(false)
             })
         }
@@ -37,7 +38,11 @@ const Catalog = ({onSubmit, searchParams}) => {
                 getGames(1).then(({data}) => {
                     setGames(data.results)
                     setTotalPages(data.count / 20)
-                })
+                }).catch(error => {
+                console.log(error)
+                setIsError(true)
+                setIsLoading(false)
+            })
             }
 
         getGameBySearchQuery(value, page, ordering, genre).then(({data}) => {
@@ -49,7 +54,7 @@ const Catalog = ({onSubmit, searchParams}) => {
                 setIsLoading(false)
             }).catch(error => {
                 console.log(error)
-
+                setIsError(true)
                 setIsLoading(false)
             })
     }, [page, value, ordering, genre])
@@ -63,16 +68,20 @@ const Catalog = ({onSubmit, searchParams}) => {
     }
     return (
         <Page>
-            <SearchForm className={'catalog'} onSubmit={onSubmit} setPage={setPage} />
-            {isLoading ? <Loader className={'loader-catalog'} color={'white'} /> :
-                (games.length !== 0 ?
-                    <>
-                        <GameList games={games} />
-                        <Pagination totalPages={totalPages <= 500 ? totalPages : 500} changePage={handlePageChange} page={page} />
-                    </> :
-                    <h1 style={{ color: 'white' }}>No matches</h1>
-                )
-            }
+            {isError ? <ErrorComponent /> :
+            <>
+                <SearchForm className={'catalog'} onSubmit={onSubmit} setPage={setPage} />
+                    {isLoading ? <Loader className={'loader-catalog'} color={'white'} /> :
+                        (games.length !== 0 ?
+                            <>
+                                <GameList games={games} />
+                                <Pagination totalPages={totalPages <= 500 ? totalPages : 500} changePage={handlePageChange} page={page} />
+                            </> :
+                            <h1 style={{ color: 'white' }}>No matches</h1>
+                        )
+                    }
+                </>
+        }
         </Page>
     )
 }

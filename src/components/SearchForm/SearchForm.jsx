@@ -17,7 +17,7 @@ export const SearchForm = ({ onSubmit, className, setPage }) => {
         if (location.pathname === '/' && value !== '') {
                 getGameByName(value).then(({data: {results}}) => {
                     setFilteredGames(results)
-                })
+                }).catch(error => console.log(error))
             }
      },
     [location.pathname, value])
@@ -27,9 +27,9 @@ export const SearchForm = ({ onSubmit, className, setPage }) => {
         const {query, ordering = null, genre = null} = e.target.elements
 
         onSubmit(e, 
-        query.value === '' ? null : query.value, 
-        ordering.value === '' ? null : ordering.value, 
-        genre.value === '' ? null : genre.value)
+        query.value === 'All' ? null : query.value, 
+        ordering.value === 'All' ? null : ordering.value, 
+        genre.value === 'All' ? null : genre.value)
         
         if (location.pathname === '/catalog') setPage(1)
     }   
@@ -39,11 +39,11 @@ export const SearchForm = ({ onSubmit, className, setPage }) => {
     }
 
     return (
-        <Form onSubmit={onFormSubmit} class={className}>
+        <Form onSubmit={onFormSubmit} className={className}>
             <label style={{
                 display: 'none'}} htmlFor='search-input'>Search games</label>
-            <Input id='search-input'  value={value} type='text' name='query' onChange={onInputChange} class={className}/>
-            <Button  type='submit' class={className}>GO</Button>
+            <Input id='search-input'  value={value} type='text' name='query' onChange={onInputChange} className={className}/>
+            <Button  type='submit' className={className}>GO</Button>
             {location.pathname === '/catalog' && <SearchFilter/>}
             {(filteredGames && value !== '' && location.pathname === '/') && <FilteredSearchList results={filteredGames}/>}
         </Form>
@@ -56,7 +56,7 @@ const Form = styled.form`
     position: relative;
 
     ${(props) => {
-        switch (props.class){
+        switch (props.className){
             case 'catalog': 
                 return css`
                 max-width: 500px;
@@ -94,7 +94,7 @@ const Input = styled.input`
     font-family: inherit;
     
 ${(props) => {
-    switch(props.class) {
+    switch(props.className) {
         case 'catalog':
             return css`
             height: 40px;
@@ -122,7 +122,7 @@ const Button = styled.button`
     transition: 250ms transform ease;
 
     ${props => {
-        switch(props.class){
+        switch(props.className){
             case 'catalog': 
             return css`
             height: 36px;

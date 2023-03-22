@@ -11,7 +11,7 @@ export const ProfileButton = () => {
     
     return (
         <>
-            {isLoggedIn ? <Button to={`/profile`}><RiUserFill/></Button> : 
+            {isLoggedIn ? <Button to={`/profile/bookmarks`}><RiUserFill/></Button> : 
             <Button to={`/login/login-page`}><RiLoginBoxFill/></Button>}
         </>
     )

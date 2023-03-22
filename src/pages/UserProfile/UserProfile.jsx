@@ -1,11 +1,13 @@
 import { useContext, useEffect, useState } from "react"
 import { Outlet, useNavigate, useParams } from "react-router-dom"
-import { getFriendsInvitationsList, getFriendsList, getUserInfo } from "utils/firebase"
+import {   getUserInfo } from "utils/firebase"
 import { NavLink } from "react-router-dom"
 import {authContext} from '../../context/context'
 import styled from "styled-components"
 import { ProfileCard } from "components/ProfileCard/ProfileCard"
 import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
+import { Loader } from "components/Loader/Loader"
+import {ErrorComponent} from "../../components/ErrorComponent/ErrorComponent"
 
 const User = () => {
     const { userId } = useContext(authContext)
@@ -16,51 +18,53 @@ const User = () => {
     const [favouriteGames, setFavs] = useState([])
     const [isPendingFriend, setIsPendingFriend] = useState(false)
     const [isFriend, setIsFriend] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const [isError, setIsError] = useState(false)
 
     const navigate = useNavigate()
 
-    if(userId === id) navigate('/profile')
+    if(userId === id) navigate('/profile/bookmarks')
 
     useEffect(() => {
-        getUserInfo(id).then((res) => {
+        getUserInfo('dfdfdfd').then((res) => {
+            setIsLoading(true)
             const {username, favs, photoUrl} = res.val() 
             setName(username)
 
             if(favs) setFavs(Object.values(favs))
             if(photoUrl){ setPhoto(photoUrl)}
-            else(setPhoto(avatarPlaceholder))
-        })
-
-        getFriendsInvitationsList(id).then(res => {
-            if (res.val()) {
-                setIsPendingFriend(Object.values(res.val()).some(user => user === userId))
-            }
-        })
-
-        getFriendsList(userId).then(res => {
-            if (res.val()) {
-                setIsFriend(Object.values(res.val()).some(user => user === id))
-            }
+            else (setPhoto(avatarPlaceholder))
+            
+            setIsLoading(false)
+        }).catch(error => {
+            console.log(error)
+            setIsError(true)
+            setIsLoading(false)
         })
 
     }, [id, setIsPendingFriend, userId])
 
     return(
         <Page>
-            <ProfileCard
-                avatar={photo}
-                username={name}
-                isPendingFriend={isPendingFriend}
-                isFriend={isFriend}
-                setIsPendingFriend={setIsPendingFriend}
-                setIsFriend={setIsFriend}
-            />
-                <OutletsSection>
-                    <Tabs>
-                        <Tab to='bookmarks'>Bookmarks</Tab>
-                    </Tabs>
-                    <Outlet context={[favouriteGames]} />
-                </OutletsSection>
+            {isLoading ? <Loader className={'loader-profile'} color={'white'} /> : 
+                (isError ? <ErrorComponent/> :
+                <>
+                    <ProfileCard
+                        avatar={photo}
+                        username={name}
+                        isPendingFriend={isPendingFriend}
+                        isFriend={isFriend}
+                        setIsPendingFriend={setIsPendingFriend}
+                        setIsFriend={setIsFriend}
+                    />
+                    <OutletsSection>
+                        <Tabs>
+                            <Tab to='bookmarks'>Bookmarks</Tab>
+                        </Tabs>
+                        <Outlet context={[favouriteGames]} />
+                    </OutletsSection>
+                </>)
+            }
         </Page>
     )
 }
@@ -72,19 +76,31 @@ const Page = styled.div`
     box-sizing: border-box;
 
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 
     position: relative;
 
     color: white;
     background-color: #00021A;
+
+    
+    @media screen and (min-width: 1200px) {
+        flex-direction: row;
+        align-items: flex-start;
+    }
 `
 
 const OutletsSection = styled.div`
-    width: 50%;
-    margin-left: auto;
+    width: 100%;
+   
+    @media screen and (min-width: 768px) {
+        width: 50%;
+    }
+
+    @media screen and (min-width: 1200px) {
+        margin-left: auto;
+    }
 `
 
 const Tabs = styled.div`

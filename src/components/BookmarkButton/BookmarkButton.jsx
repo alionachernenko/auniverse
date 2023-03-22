@@ -26,7 +26,7 @@ export const BookmarkButton = ({gameData}) => {
     useEffect(() => {
         getFavouriteGames(userId).then(res => {
             if(res.val()) setIsFavourite(Object.keys(res.val()).some(el => el === slug))
-        })
+        }).catch(error => console.log(error))
     }, [userId, isFavourite, slug])
 
         return (

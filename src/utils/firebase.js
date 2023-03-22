@@ -35,16 +35,15 @@ export const addNewUser = (userId, email, password, favs, username) => {
 };
 
 export const uploadAvatar = (photo, userId) => {
-  uploadBytes(
-    sRef(storage, `/userpics/${photo.files[0].name}`),
-    photo.files[0]
-  ).then(() => {
-    getDownloadURL(sRef(storage, `/userpics/${photo.files[0].name}`)).then(
-      url => {
-        set(ref(database, 'users/' + userId + '/photoUrl'), url);
-      }
-    );
-  });
+  uploadBytes(sRef(storage, `/userpics/${photo.files[0].name}`), photo.files[0])
+    .then(() => {
+      getDownloadURL(sRef(storage, `/userpics/${photo.files[0].name}`)).then(
+        url => {
+          set(ref(database, 'users/' + userId + '/photoUrl'), url);
+        }
+      );
+    })
+    .catch(error => console.log(error));
 };
 
 export const getUserInfo = userId => {
@@ -60,7 +59,7 @@ export const addGameToFavourite = (userId, gameSlug, gameData) => {
     set(ref(database, 'users/' + userId + '/favs'), {
       ...res.val(),
       [gameSlug]: gameData,
-    });
+    }).catch(error => console.log(error));
   });
 };
 
@@ -73,7 +72,7 @@ export const addUserToFriensInvitationsList = (id, userId) => {
     set(ref(database, 'users/' + id + '/friendsInvites'), {
       ...res.val(),
       [userId]: userId,
-    });
+    }).catch(error => console.log(error));
   });
 };
 
@@ -117,12 +116,14 @@ export const removeFriend = (id, userId) => {
 
 export const leaveComment = (userId, gameSlug, text) => {
   console.log('hi', database, gameSlug, userId);
-  get(ref(database, '/comments/' + gameSlug)).then(res =>
-    set(ref(database, `/comments/` + gameSlug), {
-      ...res.val(),
-      [`${userId}-${nanoid()}`]: text,
-    })
-  );
+  get(ref(database, '/comments/' + gameSlug))
+    .then(res =>
+      set(ref(database, `/comments/` + gameSlug), {
+        ...res.val(),
+        [`${userId}-${nanoid()}`]: text,
+      })
+    )
+    .catch(error => console.log(error));
 };
 
 export const getComments = gameSlug => {

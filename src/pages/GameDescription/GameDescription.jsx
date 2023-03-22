@@ -9,6 +9,7 @@ import { BookmarkButton } from "components/BookmarkButton/BookmarkButton";
 import { Container } from "components/Container/Container";
 import { getComments } from "utils/firebase";
 import { Comments } from "components/Comments/Comments";
+import { ErrorComponent } from "components/ErrorComponent/ErrorComponent";
 
 const formatComments = (comments) => {
     return Object.entries(comments.val()).map(el => {
@@ -27,7 +28,9 @@ const GameDescription = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [gameData, setGameData] = useState({})
     const [comments, setComments] = useState([])
+    const [isError, setIsError] = useState(false)
     const { gameSlug } = useParams()
+
 
     window.scroll({
         top: 0,
@@ -50,16 +53,17 @@ const GameDescription = () => {
 
             setIsLoading(false)
         }).catch(error => {
-            console.log(error)
-            setIsLoading(false)
-        })
+                console.log(error)
+                setIsError(true)
+                setIsLoading(false)
+            })
         
     }, [gameSlug])
 
     return (
         <Page>
             <Container>
-            {isLoading ? <Loader color={'white'} /> :
+            {isLoading ? <Loader color={'white'} /> : isError ? <ErrorComponent/> :
             <>
                 <div style={{display: 'flex'}}>
                     <Info>

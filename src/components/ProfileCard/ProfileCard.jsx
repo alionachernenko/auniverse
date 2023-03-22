@@ -11,6 +11,7 @@ import {FiUserPlus, FiUserX} from 'react-icons/fi'
 import { MdDone } from 'react-icons/md'
 
 import styled from "styled-components"
+import { toast } from "react-toastify"
 
 export const ProfileCard = ({avatar, username, isAvatarLoading, setPhotoPath, setIsAvatarLoading, setUsername, isPendingFriend, isFriend, setIsPendingFriend, setIsFriend}) => {
     const { userId } = useContext(authContext)
@@ -43,8 +44,17 @@ export const ProfileCard = ({avatar, username, isAvatarLoading, setPhotoPath, se
 
         const file = e.target.files[0]
         e.preventDefault()
-        if(file){
-            if(file.size > 2097152){
+        if (file) {
+            
+            if (file.size > 2097152) {
+                toast.info('Maximum size: 2 MB', {
+                        position: "top-left",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        draggable: true,
+                        theme: "dark",
+                    });
                 setIsAvatarLoading(false)
                 return
             }
@@ -104,6 +114,11 @@ const Info = styled.div`
     justify-content: center;
 
     gap: 10px;
+
+    @media screen and (min-width: 1200px) {
+        margin-left: auto;
+        margin-right: auto
+    }
     
 `
 
@@ -144,9 +159,9 @@ const FriendStatus = styled.p`
 `
 
 const Avatar = styled.img`
-width: 200;
+width: 200px;
 height: 100%;
-object-fit: 'cover';
+object-fit: cover;
 
 transition: 250ms filter ease;
     ${AvatarWrapper}:hover &{
@@ -221,7 +236,7 @@ const ChangeFriendStatusButton = styled.button`
     height: 30px;
     padding: 5px;
     border: none;
-    
+
     position: absolute;
     z-index: 1111;
     opacity: 0;

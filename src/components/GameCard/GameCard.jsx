@@ -133,7 +133,7 @@ const Card = styled.div`
     }}
 `
 
-const Genres = styled.div`
+const Genres = styled.ul`
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
@@ -147,7 +147,7 @@ const Genres = styled.div`
 const Genre = styled.li`
     padding: 0 5px 0 0;
 
-    & :not(:last-child){
+    &:not(:last-child){
     border-right: 1px solid orange;
 }
 `

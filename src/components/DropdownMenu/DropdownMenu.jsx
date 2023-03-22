@@ -22,7 +22,7 @@ export const DropdownMenu = ({ onClick }) => {
                 <li><Link onClick={onClick} to={'/'}><ImHome2 size={50}/></Link></li>
                 <li><Link onClick={onClick} to={'/catalog'}><IoLogoGameControllerB size={50}/></Link></li>
                 <li><Link onClick={onClick} to={'/users'}><HiUsers size={50}/></Link></li>
-                <li><Link onClick={onClick} to={'/profile'}><FaUserCircle size={50}/></Link></li>
+                <li><Link onClick={onClick} to={'/profile/bookmarks'}><FaUserCircle size={50}/></Link></li>
             </Options>
             </Menu>
         </Backdrop>, document.querySelector('#burger-menu-root'))

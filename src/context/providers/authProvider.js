@@ -27,7 +27,7 @@ const AuthProvider = ({ children }) => {
 
     userLogIn(email, password)
       .then(() => {
-        navigate(`/profile`);
+        navigate(`/profile/bookmarks`);
         setIsLoading(false);
       })
       .catch(({ code }) => {
@@ -61,8 +61,6 @@ const AuthProvider = ({ children }) => {
         setIsLoading(false);
       });
   };
-
-  console.log(userId);
 
   return (
     <authContext.Provider

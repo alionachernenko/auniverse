@@ -1,23 +1,14 @@
-import { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { getUserInfo, acceptInvitationAndAddUser } from "utils/firebase"
+import { getUserInfo} from "utils/firebase"
 import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
 import styled from "styled-components"
-import { authContext } from "context/context"
 
-
-export const UserCard = ({ id, isPending, setInvitations, setFriends }) => {
-    const { userId } = useContext(authContext)
+export const UserCard = ({ id}) => {
 
     const [name, setName] = useState('')
     const [avatar, setAvatar] = useState()
     
-    const onAcceptButtonClick = () => {
-        acceptInvitationAndAddUser(id, userId).then(() =>
-                    setInvitations(prev => prev.filter(friend => friend !== id)),
-                    setFriends(prev => [...prev, id]))
-    }
-
     useEffect(() => {
         getUserInfo(id).then(res => {
             const { username, photoUrl } = res.val()
@@ -25,20 +16,17 @@ export const UserCard = ({ id, isPending, setInvitations, setFriends }) => {
             setName(username)
             if(res.val().photoUrl) {setAvatar(photoUrl)}
             else {setAvatar(avatarPlaceholder)}
-        })
+        }).catch(error => console.log(error))
     }, [id])
 
     return(
         <Card>     
-            <CardLink to={`/users/${id}`}>
+            <CardLink to={`/users/${id}/bookmarks`}>
                 <AvatarWrapper>
                 <Avatar width={200} src={`${avatar}`} alt={`${name}'s avatar`}/>
             </AvatarWrapper>
                 <Username>{name}</Username>
-              
             </CardLink>
-            {isPending && <button onClick={onAcceptButtonClick}>
-                Accept invitation</button>}
         </Card>
     )
 }
@@ -51,21 +39,19 @@ const Card = styled.li`
     transform: scale(1);
     transition: 200ms all ease;
     width: auto;
+    max-width: 500px;
+    flex-wrap: wrap;
 
     &:hover{
         transform: scale(0.95)
     }
-
-    @media screen and (max-width: 360px) {
-        width: fit-content;
-    }
    
-   max-width: 360px
+   
     
 `
 const AvatarWrapper = styled.div`
-    height: 90px;
-    width: 90px;
+    height: 60px;
+    width: 60px;
     border-radius: 100px;
     
     display: flex;
@@ -77,34 +63,30 @@ const AvatarWrapper = styled.div`
     position: relative;
     background-color: #080D2B;
 
-    @media screen and (min-width: 320px){
+    @media screen and (min-width: 420px){
         height: 100px;
         width: 100px;
+        
     }
 `
 
 const Avatar = styled.img`
     width: 100%;
     height: 100%;
-    object-fit: 'cover';
+    object-fit: cover;
 `
 
 const CardLink = styled(Link)`
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    flex-wrap: wrap;
     gap: 10px;
-    
     color: black;
 `
 
 const Username = styled.p`
     color: white;
     font-size: 25px;
-    font-weight: 500;
-        
-     @media screen and (max-width: 360px) {
-        display: none;
-    }
-    
+    font-weight: 500;    
 `

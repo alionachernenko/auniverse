@@ -1,6 +1,7 @@
 import { useOutletContext } from "react-router-dom"
-import { UserCard } from "components/UserCard/UserCard"
 import styled from "styled-components"
+import { FriendCard } from "components/FriendCard/FriendCard"
+
 
 export const Friends = () => {
     // eslint-disable-next-line no-unused-vars
@@ -8,45 +9,51 @@ export const Friends = () => {
     
     return ( 
         <Block>
+            
+
             {invitations.length !== 0 &&
-                <>
-                <p>This users want to be your friends</p>
                     <InvitationsList>
                         {invitations.map(friend =>
-                            <UserCard id={friend} isPending={true} setInvitations={setInvitations} setFriends={setFriends} />)}
-                    </InvitationsList></>}
+                            <FriendCard id={friend} isPending={true} setInvitations={setInvitations} setFriends={setFriends} />)}
+                </InvitationsList>
+            }
             <FriendsList>
-                {friends && friends.map(friend => <UserCard id={friend} isPending={false} />)}
+                {friends && friends.map(friend => <FriendCard id={friend} key={friend} isPending={false} />)}
             </FriendsList>
+            
         </Block>
     )
 }
 
 const Block = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
 
-@media screen and (min-width: 1200px) {
-    flex-direction: row
-}
-    
+    @media screen and (min-width: 1200px) {
+        flex-direction: column;
+    }
 `
 
 const InvitationsList = styled.ul`
     margin-right: auto;
     display: flex;
     flex-wrap: wrap;
+    padding: 10px;
 `
 
 const FriendsList = styled.ul`
     margin-right: auto;
     display: flex;
     flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
 
     @media screen and (min-width: 1200px){
         flex-wrap: nowrap;
-        flex-direction: column
+        flex-direction: column;
     }
 `
 

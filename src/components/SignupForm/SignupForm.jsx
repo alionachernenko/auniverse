@@ -5,7 +5,7 @@ import {authContext} from '../../context/context'
 import styled from 'styled-components'
 
 
-const SignupForm = () => {
+export const SignupForm = () => {
     const { handleSignUp, isLoading} = useContext(authContext)
 
     return (
@@ -153,5 +153,3 @@ const Icon = styled.div`
     justify-content: center;
     border: 1px solid orange;
 `
-
-export default SignupForm

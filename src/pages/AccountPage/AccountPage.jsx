@@ -4,12 +4,13 @@ import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
 import { getFavouriteGames, userSignOut, getUserInfo, getFriendsList, getFriendsInvitationsList } from "../../utils/firebase"
 import { Loader } from 'components/Loader/Loader'
 import { ProfileCard } from 'components/ProfileCard/ProfileCard'
+import {ImExit} from 'react-icons/im'
 
 import { authContext } from "context/context"
 
-
 import styled from 'styled-components'
 import { Container } from "components/Container/Container"
+import { ErrorComponent } from "components/ErrorComponent/ErrorComponent"
 
 const AccountPage = () => {
     const { userId, isLoggedIn, setUserId } = useContext(authContext)
@@ -21,6 +22,7 @@ const AccountPage = () => {
     const [photoPath, setPhotoPath] = useState()
     const [isLoading, setIsLoading] = useState(true)
     const [isAvatarLoading, setIsAvatarLoading] = useState(false)
+    const [isError, setIsError] = useState(false)
 
     const navigate = useNavigate()
 
@@ -54,6 +56,7 @@ const AccountPage = () => {
                
             }).catch((error) => {
                 console.error(error);
+                setIsError(true)
                 setIsLoading(false)
             })
     
@@ -73,7 +76,7 @@ const AccountPage = () => {
             <Page>
                 <Container>
                     {isLoading ?
-                        <Loader className={'loader-profile'} color={'#00021A'} /> :
+                        <Loader className={'loader-profile'} color={'white'} /> : isError ? <ErrorComponent/> :
                         <>
                             <Page>
                                 <ProfileCard
@@ -95,7 +98,7 @@ const AccountPage = () => {
                                         context={[favouriteGames, friends, setFriends, invitations, setInvitations]}
                                     />
                                 </OutletsSection>
-                                <LogOut type="button" onClick={logOut}>Log out</LogOut>
+                                <LogOut type="button" onClick={logOut}><ImExit/></LogOut>
                             </Page>
                         </>}
                 </Container>
@@ -156,20 +159,24 @@ const OutletsSection = styled.div`
 `
 
 const LogOut = styled.button`
-    display: block;
+    position: absolute;
+    top: 0;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: none;
     color: white;
+
         font-family: 'Nunito', sans-serif;
         width: fit-content;
         box-sizing: border-box;
-        padding: 5px 20px;
+        padding: 10px;
         background-color: #080D2B;
         font-size: 20px;
-        position: relative;
         background-color: orange;
         box-shadow: red 2px 3px;
         transition: 100ms all linear;
-        position: relative;
 
         &:hover {
             box-shadow: red 4px 5px;

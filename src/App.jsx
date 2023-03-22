@@ -10,6 +10,8 @@ import { Footer } from "components/Footer/Footer";
 import { LoadingPage } from "components/LoadingPage/LoadingPage";
 import { Bookmarks } from "components/Bookmarks/Bookmarks";
 import { Friends } from "components/Friends/Friends";
+import { SignupForm } from "components/SignupForm/SignupForm";
+import { LoginForm } from 'components/LoginForm/LoginForm';
 
 const Homepage = lazy(() => import('./pages/Homepage/Homepage'))
 const Catalog = lazy(() => import('./pages/Catalog/Catalog'))
@@ -17,8 +19,6 @@ const GameDescription = lazy(() => import('./pages/GameDescription/GameDescripti
 const AuthenticationPage = lazy(() => import('./pages/AuthenticationPage/AuthenticationPage'))
 const AccountPage = lazy(() => import('./pages/AccountPage/AccountPage'))
 const ErrorPage = lazy(() => import('./pages/ErrorPage/ErrorPage'))
-const LoginForm = lazy(() => import('./components/LoginForm/LoginForm'))
-const SignupForm = lazy(() => import('./components/SignupForm/SignupForm'))
 const UserProfile = lazy(() => import('./pages/UserProfile/UserProfile'))
 const Users = lazy(() => import('./pages/Users/Users'))
 

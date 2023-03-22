@@ -6,7 +6,7 @@ import { Oval } from 'react-loader-spinner'
 
 import styled from 'styled-components'
 
-const LoginForm = () => {
+export const LoginForm = () => {
     const { handleLogInSubmit, isLoading } = useContext(authContext)
 
     const onFormSubmit = (e) => {
@@ -168,4 +168,3 @@ const Icon = styled.div`
     background-color: white;
 `
 
-export default LoginForm

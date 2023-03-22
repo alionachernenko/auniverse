@@ -1,14 +1,15 @@
 import { useOutletContext } from "react-router-dom"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
+
 export const Bookmarks = () => {
     const [favouriteGames] = useOutletContext()
 
     return (
         <Block>
             <List>
-                {favouriteGames.map(({ background_image, name, slug }) =>
-                    <Bookmark>
+                {favouriteGames.map(({ background_image, name, slug, id }) =>
+                    <Bookmark key={id}>
                         <Poster src={`${background_image}`} alt={`${name} poster`}/>
                         <Title to={`/catalog/${slug}`}>{name}</Title>
                     </Bookmark>)
@@ -31,10 +32,9 @@ const Block = styled.div`
 `
 
 const List = styled.ul`
-    width: 100%;
     height: 100%;
     padding: 10px;
-
+    width: 100%;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -42,7 +42,7 @@ const List = styled.ul`
     gap: 10px;
 
     @media screen and (min-width: 1200px) {
-        width: 50%;
+        width: 470px;
     }
 `
 const Bookmark = styled.li`

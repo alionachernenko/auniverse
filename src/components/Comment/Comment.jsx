@@ -13,7 +13,10 @@ export const Comment = ({ userId, text }) => {
             
             setAuthorUsername(username)
             setAuthorAvatar(photoUrl)
-        })
+        }).catch(error => {
+            console.log(error)
+        }
+    )
     }, [userId])
 
     return (
