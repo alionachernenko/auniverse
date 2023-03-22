@@ -9,10 +9,6 @@ export const Loader = ({className, color}) => {
     )
 }
 
-
-//=============STYLES===============//
-
-
 const Wrapper = styled.div`
     ${(props) => {
         switch(props.render){

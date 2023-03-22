@@ -12,6 +12,7 @@ const Catalog = ({onSubmit, searchParams}) => {
     const [totalPages, setTotalPages] = useState(0)
     const [isLoading, setIsLoading] = useState(true)
     const [page, setPage] = useState(1)
+
     const { ordering, value, genre } = searchParams
     
     
@@ -33,11 +34,11 @@ const Catalog = ({onSubmit, searchParams}) => {
             })
         }
         else {
-            getGames(1).then(({data}) => {
-            setGames(data.results)
-            setTotalPages(data.count / 20)
-        })
-        }
+                getGames(1).then(({data}) => {
+                    setGames(data.results)
+                    setTotalPages(data.count / 20)
+                })
+            }
 
         getGameBySearchQuery(value, page, ordering, genre).then(({data}) => {
                 const { results, count } = data
@@ -61,12 +62,17 @@ const Catalog = ({onSubmit, searchParams}) => {
         });
     }
     return (
-        <Page style={{boxSizing: 'border-box',minHeight: 'calc(100vh - 61px)', position: "relative"}}>
+        <Page>
             <SearchForm className={'catalog'} onSubmit={onSubmit} setPage={setPage} />
             {isLoading ? <Loader className={'loader-catalog'} color={'white'} /> :
-                (games.length !== 0 ? <><GameList games={games} />
+                (games.length !== 0 ?
+                    <>
+                        <GameList games={games} />
                         <Pagination totalPages={totalPages <= 500 ? totalPages : 500} changePage={handlePageChange} page={page} />
-                    </> : <h1 style={{color: 'white'}}>No matches</h1>)}
+                    </> :
+                    <h1 style={{ color: 'white' }}>No matches</h1>
+                )
+            }
         </Page>
     )
 }

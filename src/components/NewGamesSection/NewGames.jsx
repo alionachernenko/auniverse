@@ -1,7 +1,5 @@
 import styled from "styled-components";
 import { Loader } from "components/Loader/Loader";
-import { SwiperSlide } from "swiper/react"
-import { GameCard } from "components/GameCard/GameCard"
 import { Slider } from "../../components/Slider/Slider"
 import { useState, useEffect, useContext } from "react";
 import { getNewGames } from "services/games-api";
@@ -9,98 +7,73 @@ import {breakpointContext} from '../../context/context'
 import { GameList } from "components/GameList/GameList";
 
 const NewGames = () => {
-    const {breakpoint} = useContext(breakpointContext)
+    const { breakpoint } = useContext(breakpointContext)
+    
     const [games, setGames] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [isError, setIsError] = useState(false)
 
-    console.log(breakpoint)
 
     useEffect(() => {
             getNewGames(1).then(({data}) => {
             const { results } = data
-            console.log(results)
+                
             setGames(results.filter(game => game.slug !== 'atomic-heart'))
-
             setIsLoading(false)
         }).catch(error => {
-
-            console.log(error)
             setIsError(true)
             setIsLoading(false)
+
+            console.log(error)
         }
         )
     }, [breakpoint])
 
     return (
-
-
         <Section>
-        <div>
-                    <Span>New 2023</Span>
-                   <Div>
-                        <h2>What will you choose this time?</h2>
+            <OuterWrapper>
+            <Subtitle>New 2023</Subtitle>
+                   <InnerWrapper>
+                        <Title>What will you choose this time?</Title>
                         {isLoading ? <Loader className={'loader-homepage'} color={'darkblue'} /> : ( isError ? 
-                        <><p>Something went wrong</p></> : 
-                        breakpoint === 'desktop' ? <Slider>
-                            {games.map((game => 
-                                     
-                                         <SwiperSlide style={{
-                                            width: 'fit-content',
-                                            margin: 0,
-                                            }
-                                         } key={game.id}><GameCard data={game} width={255} className={'gamecard_slider'}/></SwiperSlide>
-                                  
-                          ))}
-                        </Slider> : <GameList games={games}/>
+                        <p>Something went wrong</p> : 
+                        breakpoint === 'desktop' ?
+                            <Slider games={games} /> :
+                            <GameList games={games} />
                         )}
-                    </Div>
-                </div>
-            </Section>
+                    </InnerWrapper>
+            </OuterWrapper>
+        </Section>
     )
-   
-    }
+}
 
 
-    const Section = styled.section`
-    gap: 30px;
+const Section = styled.section`
     padding-top: 20px;
     overflow: hidden;
     background-color: #ffffff;
 
     @media screen and (min-width: 1200px) {
+        padding-top: 0;
         display: flex;
-        padding-top: 0
-    }
-
-    & h2{
-        margin-bottom: 60px;
-        font-size: 40px;
-        
-   
-        line-height: 34px;
-        margin-left: 60px;
-
-        @media screen and (max-width: 1199px){
-            display: none
-        }
-    }
-    
-    & span {
-        writing-mode: vertical-lr;
-        background-color: blue;
-        width: 90px;
-    }
-
-    & :first-child{
-        @media screen and (min-width: 1200px) {
-            display: flex
-        }
+        gap: 30px;
     }
 `
 
+const Title = styled.h2`
+    margin-bottom: 60px;
+    margin-left: 60px;
 
-const Div = styled.div`
+    font-size: 40px;
+    line-height: 34px;
+
+    @media screen and (max-width: 1199px){
+        display: none
+    }   
+`
+
+
+const InnerWrapper = styled.div`
 padding: 40px 0;
 
     @media screen and (min-width: 1200px) {
@@ -108,18 +81,26 @@ padding: 40px 0;
     }
 `
 
-const Span = styled.div`
-    background-color: #00021A;
+const OuterWrapper = styled.div`
+    @media screen and (min-width: 1200px) {
+        display: flex
+    }
+`
+
+const Subtitle = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #ffffff;
-    font-weight: 900;
+
     font-size: 50px;
+    font-weight: 900;
     line-height: 91px;
     text-align: center;
     letter-spacing: 0.05em;
     text-transform: uppercase;
+    color: #ffffff;
+    
+    background-color: #00021A;
 
     @media screen and (min-width: 420px) {
         font-size: 72px
@@ -127,7 +108,6 @@ const Span = styled.div`
 
     @media screen and (min-width: 1200px) {
         writing-mode: vertical-rl;
-
     }
 `
 

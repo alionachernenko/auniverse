@@ -8,10 +8,9 @@ import styled from 'styled-components'
 const SignupForm = () => {
     const { handleSignUp, isLoading} = useContext(authContext)
 
-
     return (
         <Form onSubmit={(e) => {
-            const {email, password, username} = e.target.elements
+            const { email, password, username } = e.target.elements
             handleSignUp(e, email.value, password.value, username.value)
         }
         }>
@@ -32,19 +31,18 @@ const SignupForm = () => {
 
 const Form = styled.form`
 display: flex;
-height: 100%;
+height: auto;
 flex-direction: column; 
 background-color: #00021A;
-padding: 35px 20px 20px 20px;
+padding: 40px 20px 20px 20px;
 align-items: center;
 position: relative;
 justify-content: center;
 box-sizing: border-box;
+border-radius: 20px;
 
 @media screen and (max-width: 1199px) {
     max-width: 100%;
-    border-radius: 20px;
-    height: auto;
     padding: 40px 20px;
 }
 `
@@ -72,14 +70,67 @@ const Input = styled.input`
 `
 
 const Button = styled.button`
-    background-color: #FF6600;
-    color: white;
-    text-transform: uppercase;
-    font-family: inherit;
-    padding: 11px 40px;
+    display: block;
     border: none;
-    cursor: pointer;
-    border-radius: 15px;
+    color: white;
+        font-family: 'Nunito', sans-serif;
+        width: fit-content;
+        box-sizing: border-box;
+        padding: 5px 20px;
+        background-color: #080D2B;
+        font-size: 20px;
+        position: relative;
+        background-color: orange;
+        box-shadow: red 2px 3px;
+        transition: 100ms all linear;
+        position: relative;
+
+        &:hover {
+            box-shadow: red 4px 5px;
+            transform: scale(1.05);
+            background-color: white;
+            color: orange
+        }
+
+       
+
+        &::before {
+            content: '';
+            position: absolute;
+            height: 20px;
+            background-color: transparent;
+            border-top: 2px solid orange;
+            border-right: 2px solid orange;
+            
+            top: 0px;
+            right: 0px;
+            width: 20px;
+            transition: 100ms all linear;
+        }
+
+        &::after{
+            content: '';
+            position: absolute;
+            height: 20px;
+            background-color: transparent;
+            border-bottom: 2px solid orange;
+            border-left: 2px solid orange;
+            bottom: 0px;
+            left: 0px;
+            width: 20px;
+            transition: 100ms all linear;
+
+        }
+
+        &:hover::after{
+            bottom: -15px;
+            left: -13px;
+        }
+
+        &:hover::before {
+            top: -13px;
+            right: -15px;
+        }
 `
 
 const Title = styled.h2`

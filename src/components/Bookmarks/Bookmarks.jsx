@@ -3,61 +3,70 @@ import styled from "styled-components"
 import { Link } from "react-router-dom"
 export const Bookmarks = () => {
     const [favouriteGames] = useOutletContext()
+
     return (
         <Block>
-            <BookmarksList>
-                {favouriteGames.map(game => <li>
-                    <img src={`${game.background_image}`} alt={`${game} poster`}></img>
-                    <Link to={`/catalog/${game.slug}`}>{game.name}</Link>
-                </li>)}
-            </BookmarksList>
+            <List>
+                {favouriteGames.map(({ background_image, name, slug }) =>
+                    <Bookmark>
+                        <Poster src={`${background_image}`} alt={`${name} poster`}/>
+                        <Title to={`/catalog/${slug}`}>{name}</Title>
+                    </Bookmark>)
+                }
+            </List>
         </Block>
     )
 }
+
 const Block = styled.div`
     width: 100%;
+
     display: flex;
     flex-direction: column;
     align-items: center;
 
+    @media screen and (min-width: 1200px){
+        align-items: flex-start;
+    }
 `
 
-const BookmarksList = styled.ul`
-    display: flex;
-    flex-direction: column;
-
-    list-style: none;
-    gap: 10px;
-    padding: 10px;
+const List = styled.ul`
     width: 100%;
-    align-items: center;
-    overflow: hidden;
     height: 100%;
+    padding: 10px;
 
-    & img{
-        width: 90px;
-        height: 67px;
-        margin-right: 10px;
-        object-fit: cover;
-        border-radius: 10px
-    }
-
-    & li{
-        padding: 10px;
-        display: flex;
-        width: 100%;
-        background-color: white;
-        align-items: center;
-        font-weight: 900;
-        border-radius: 20px
-
-    }
-
-    & a {
-        color: black;
-    }
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
 
     @media screen and (min-width: 1200px) {
-            width: 50%;
+        width: 50%;
     }
+`
+const Bookmark = styled.li`
+    width: 100%;
+    padding: 10px;
+    border-radius: 20px;
+
+    display: flex;
+    align-items: center;
+
+    font-weight: 900;
+
+    background-color: white;
+`
+
+const Poster = styled.img`
+    width: 90px;
+    height: 67px;
+    border-radius: 10px;
+    margin-right: 10px;
+
+    object-fit: cover;
+`
+
+const Title = styled(Link)`
+    color: black;
 `

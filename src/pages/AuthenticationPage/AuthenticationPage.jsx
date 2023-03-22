@@ -1,11 +1,12 @@
 import { useContext, useEffect } from "react"
 import { Outlet, useNavigate } from "react-router-dom"
-import { NavLink} from "react-router-dom"
-import 'swiper/css';
-import {authContext} from '../../context/context'
-import styled, {keyframes} from 'styled-components';
+import { NavLink } from "react-router-dom"
 
-const Login = () => {
+import { authContext } from '../../context/context'
+
+import styled, { keyframes } from 'styled-components';
+
+const AuthenticationPage = () => {
     const {isLoggedIn} = useContext(authContext)
     
     const navigate = useNavigate()
@@ -59,7 +60,6 @@ const titleAnim = keyframes`
 
 const InfoBlock = styled.div`
 width: 428px;
-background-color: #00021A;
 height: 100%;
 display: flex;
 align-items: center;
@@ -81,7 +81,7 @@ justify-content: center;
 }
 `
 const Page = styled.div`
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -126,24 +126,19 @@ const Tab = styled(NavLink)`
 `
 
 const FormWrapper = styled.div`
-    & .slider{
-        @media screen and (max-width: 1199px){
-            display: none;
-        }
-    }
 
     @media screen and (max-width: 1199px){
         max-width: 100%;
     }
-    
+    margin: auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 80vh;
+    height: auto;
     width: auto;
     border-radius: 20px;
 
 
 `
 
-export default Login
+export default AuthenticationPage

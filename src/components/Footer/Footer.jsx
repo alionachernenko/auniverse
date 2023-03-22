@@ -8,16 +8,16 @@ export const Footer = () => {
         <Container>
             <FooterContainer>
                 <Logo className={'logo_footer'}>AUNIVERSE</Logo>
-                <nav>
-                    <ul>
+                <Navigation>
+                    <Links>
                         <li><Link to='/'>Home</Link></li>
                         <li><Link to='/catalog'>Catalog</Link></li>
-                    </ul>
-                </nav>
-                <address>
+                    </Links>
+                </Navigation>
+                <Contacts>
                     <a href="tel:+380953596448">+380953596448</a>
-                    <a href='mailto:auniverse@gmail.com'>auniverse@gmail.com</a>
-                </address>
+                    <a href='mailto:alionachernenkoch@gmail.com'>alionachernenkoch@gmail.com</a>
+                </Contacts>
                 </FooterContainer>
                 </Container>
         </PageFooter>)
@@ -25,55 +25,19 @@ export const Footer = () => {
 
 const PageFooter = styled.footer`
     height: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    background-color:  #00021A;
-    justify-content: flex-start;
-    align-items: center;
-    color: white;
+    width: 100%;
+    padding: 10px 0;
+
     margin-left: auto;
     margin-right: auto;
-    flex: 1;
-    padding: 10px 0;
-    width: 100%;
 
-    & ul{
-        display: flex;
-        gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
 
-        @media screen and (min-width: 768px){
-            flex-direction: column;
-            justify-content: space-between;
-        }
-    }
-
-    & nav{
-        font-family: 'Nunito', sans-serif;
-        
-
-        & + div{
-            // margin-right: 96px;
-            height: 100%;
-            background-color: white;
-            display: flex;
-            vertical-align: middle;
-            align-items: center;
-            width: 65px;
-            justify-content: center;
-            position: absolute;
-            right: 500px;
-            top: 0;
-          
-        }
-    }
-
-    & address{
-        display: flex;
-        flex-direction: column;
-        font-style: normal;
-        font-family: 'Nunito', sans-serif;
-        gap: 20px
-    }
+    background-color:  #00021A;
+    color: white;
 
     @media screen and (min-width: 768px){
         padding: 0
@@ -82,18 +46,44 @@ const PageFooter = styled.footer`
 `
 
 const FooterContainer = styled.div`
+    margin-left: auto;
+    margin-right: auto;
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-left: auto;
-    margin-right: auto;
+    
     flex-wrap: wrap;
-    position: relative;
     gap: 20px;
 
+    position: relative;
+    
     @media screen and (min-width: 768px){
         flex-direction: row;
         justify-content: space-between;
-        padding: 0 100px
+        padding: 0 100px;
     }
+`
+
+const Navigation = styled.nav`
+    font-family: 'Nunito', sans-serif;
+`
+
+const Links = styled.ul`
+    display: flex;
+    gap: 20px;
+
+    @media screen and (min-width: 768px){
+        flex-direction: column;
+        justify-content: space-between;
+    }
+`
+
+const Contacts = styled.address`
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    font-family: 'Nunito', sans-serif;
+    font-style: normal;
 `

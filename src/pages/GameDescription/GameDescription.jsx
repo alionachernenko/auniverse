@@ -7,19 +7,26 @@ import {authContext} from '../../context/context'
 import styled from "styled-components";
 import { BookmarkButton } from "components/BookmarkButton/BookmarkButton";
 import { Container } from "components/Container/Container";
+import { getComments } from "utils/firebase";
+import { Comments } from "components/Comments/Comments";
+
+const formatComments = (comments) => {
+    return Object.entries(comments.val()).map(el => {
+        return {[el[0]] : el[1]}
+    })
+}
 
 const GameDescription = () => {
     const {isLoggedIn} = useContext(authContext)
 
     const [title, setTitle] = useState('')
-    const [poster, setPoster] = useState()
     const [screenshots, setScreenshots] = useState([])
     const [description, setDescription] = useState()
     const [stores, setStores] = useState()
     const [year, setYear] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [gameData, setGameData] = useState({})
-
+    const [comments, setComments] = useState([])
     const { gameSlug } = useParams()
 
     window.scroll({
@@ -27,19 +34,19 @@ const GameDescription = () => {
     });
 
     useEffect(() => {
-        Promise.all([getGameById(gameSlug), getScreenshots(gameSlug)]).then(res => {
-            const [game, screenshots] = res
+        Promise.all([getGameById(gameSlug), getScreenshots(gameSlug), getComments(gameSlug)]).then(res => {
+            const [game, screenshots, comments] = res
             const {data} = game
-            const {name, background_image, description_raw, stores, released} = data
-            const {results} = screenshots.data
-
+            const {name, description_raw, stores, released} = data
+            const { results } = screenshots.data
+            
             setGameData(data)
             setTitle(name)
-            setPoster(background_image)
             setDescription(description_raw)
             setStores(stores)
             setYear(released.slice(0, 4))
             setScreenshots(results)
+            setComments(formatComments(comments))
 
             setIsLoading(false)
         }).catch(error => {
@@ -50,50 +57,44 @@ const GameDescription = () => {
     }, [gameSlug])
 
     return (
-        
-        <Page background={poster}>
+        <Page>
             <Container>
             {isLoading ? <Loader color={'white'} /> :
             <>
-            <div style={{display: 'flex'}}>
-                <Info>
-                    <div>
-                        <Meta>
-
-                            <Title>{title}</Title>
-                            {year && <Year>{year}</Year>}
-                            {isLoggedIn &&
-                                <BookmarkButton gameData={gameData}/>
-                            }
-                        </Meta>
-                
-                    {description && <Overview>{description}</Overview>}
-                    </div>
-                    {stores && <StoresList stores={stores}/>}
-                        </Info>
-                        </div >
-                        {screenshots &&
-                            <Screenshots>
-                                {screenshots.map(({image}) => 
+                <div style={{display: 'flex'}}>
+                    <Info>
+                        <div>
+                            <Meta>
+                                <Title>{title}</Title>
+                                { year && <Year>{year}</Year> }
+                                { isLoggedIn && <BookmarkButton gameData={gameData}/> }
+                            </Meta>
+                            {description && <Overview>{description}</Overview>}
+                        </div>
+                        {stores && <StoresList stores={stores}/>}
+                    </Info>
+                 </div>
+                    {screenshots &&
+                        <Screenshots>
+                            {screenshots.map(({image}) => 
                                 <ScreenshotWrapper>
                                     <Screenshot src={image} alt='fdff' loading="lazy"/>
                                 </ScreenshotWrapper>)}
-                            </Screenshots>}</>
-                        }
-                </Container>
-            </Page>
-            
+                        </Screenshots>}
+                    <Comments setComments={setComments} gameSlug={gameSlug} comments={comments} />
+            </>
+            }
+            </Container>
+        </Page> 
     )
 }
 
 const Page = styled.div`
     padding: 30px;
 
-    height: calc(100vh - 61px);
+    min-height: calc(100vh - 61px);
     background-size: cover;
     background-position: top;
-    overflow-y: scroll;
-    // align-items: center;
     display: flex;
     flex-direction: column;
     background-color: #00021A;  
@@ -122,28 +123,28 @@ const Info = styled.div`
 `
 
 const Meta = styled.div`
+    margin-bottom: 10px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 10px;
     gap: 10px;
 
 
     @media screen and (min-width: 1200px) {
+        margin-bottom: 20px;
         flex-direction: row;
         align-items: center;
         gap: 20px;
-        margin-bottom: 20px;
-
     }
 `
 const Title = styled.h1`
-    color: white;
+    padding: 10px 0;
+    border-bottom: 1px solid orange;
+
+    font-size: 35px;
     font-weight: 700;
     text-align: left;
-    font-size: 35px;
-    border-bottom: 1px solid orange;
-    padding: 10px 0;
+    color: white;
     
     @media screen and (min-width: 1200px) {
         border-bottom: 0;
@@ -158,6 +159,7 @@ const Year = styled.p`
     font-weight: 700;
     text-align: center;
     font-size: 30px;
+
     @media screen and (min-width: 768px) and (max-width: 1199px) {
         margin-right: 0;
     }
@@ -176,30 +178,35 @@ const Overview = styled.p`
 `
 
 const Screenshots = styled.ul`
-    display: flex;
-    height: auto;
-    gap: 10px;
-    flex-wrap: wrap;
-    backdrop-filter: blur(10px);
     width: 100%;
-    `
+    height: auto;
+    margin-bottom: 60px;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    
+    backdrop-filter: blur(10px);
+`
 
 const Screenshot = styled.img`
-    object-fit: cover;
     height: 100%;
     width: 100%;
+    object-fit: cover;
 `
 
 const ScreenshotWrapper = styled.li`
-    clip-path: polygon(5% 0, 100% 0, 100% 10%, 100% 91%, 95% 100%, 0 100%, 0 71%, 0 10%);
+    width: 100%;
     transition: 250ms all ease;
     cursor: zoom-in;
-    &:hover {
-        transform: scale(0.9);
-        clip-path:none
-    }
 
-    width: 100%;
+    clip-path: polygon(5% 0, 100% 0, 100% 10%, 100% 91%, 95% 100%, 0 100%, 0 71%, 0 10%);
+
+    &:hover {
+        transform: scale(1.2);
+        clip-path:none;
+        z-index: 1111
+    }
 
     @media screen and (min-width: 768px) {
         width: calc((100% - 10px)/2);

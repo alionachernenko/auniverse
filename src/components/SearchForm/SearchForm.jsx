@@ -1,11 +1,11 @@
-import styled, {css} from 'styled-components'
-
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { getGameByName } from 'services/games-api'
 import { SearchFilter } from 'components/SearchFilter/SearchFilter'
 import { FilteredSearchList } from 'components/FilteredSearchList/FilteredSearchList'
+
+import styled, {css} from 'styled-components'
 
 export const SearchForm = ({ onSubmit, className, setPage }) => {
     const [value, setValue] = useState('')
@@ -50,7 +50,6 @@ export const SearchForm = ({ onSubmit, className, setPage }) => {
     )
 }
 
-//=============STYLES============//
 
 const Form = styled.form`
     font-family: 'Nunito', sans-serif;
@@ -84,15 +83,16 @@ const Form = styled.form`
     }}
 `
 const Input = styled.input`
-    font-family: inherit;
     width: 100%;
-    border-radius: 30px;
     margin-right: 5px;
-    border: none;
-    padding-left: 10px;
-    box-sizing: border-box;
     padding-right: 110px;
+    padding-left: 10px;
+    border-radius: 30px;
+    border: none;
+    box-sizing: border-box;
 
+    font-family: inherit;
+    
 ${(props) => {
     switch(props.class) {
         case 'catalog':
@@ -139,16 +139,16 @@ const Button = styled.button`
             
             `
             case 'header': 
-            return css`
-            height: 90%; 
-            right: 1px;
-            font-size: 10px;
-            top: 50%;
-            transform: translateY(-50%) scale(1);
+                return css`
+                height: 90%; 
+                right: 1px;
+                font-size: 10px;
+                top: 50%;
+                transform: translateY(-50%) scale(1);
 
-            @media screen and (min-width: 1200px) {
-            &:hover{
-                transform: translateY(-50%) scale(1.1)
+                @media screen and (min-width: 1200px) {
+                &:hover{
+                    transform: translateY(-50%) scale(1.1)
                 }
             `
             default: return css``

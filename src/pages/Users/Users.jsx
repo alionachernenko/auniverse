@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from 'react'
 import { getUsers } from 'utils/firebase'
+import { authContext } from '../../context/context'
 import { Loader } from 'components/Loader/Loader'
-import {authContext} from '../../context/context'
 
 import { UserCard } from 'components/UserCard/UserCard'
-import styled from 'styled-components'
 import { Container } from 'components/Container/Container'
 
+import styled from 'styled-components'
 const Users = () => {
     const [userIDs, setUserIDs] = useState([])
     const [isLoading, setIsLoading] = useState(true)
@@ -25,20 +25,22 @@ const Users = () => {
     return(
         <Page>
             <Container>
-            {isLoading ? <Loader className={'loader-profile'} color={'#00021A'} /> : 
-            <UsersList>
-                {userIDs.map(userID => <UserCard id={userID}/>)}
-                    </UsersList>}
-                </Container>
+                {isLoading ?
+                    <Loader className={'loader-profile'} color={'#00021A'} /> : 
+                    <UsersList>
+                        {userIDs.map(userID => <UserCard id={userID}/>)}
+                    </UsersList>
+                }
+            </Container>
         </Page>
     )
 }
 
 const Page = styled.div`
+width: 100%; 
 padding: 20px;
 box-sizing: border-box;
 min-height: calc(100vh - 61px);
-width: 100%; 
 `
 
 const UsersList = styled.ul`

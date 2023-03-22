@@ -1,15 +1,16 @@
 import { GameCard } from "../GameCard/GameCard"
-import styled from "styled-components"
 import { Container } from "components/Container/Container"
+import styled from "styled-components"
+
 export const GameList = ({ games }) => {
-    console.log(games)
+
     return (
         <Container>
             <List>
                 {
                     games.map((game) => 
                     <Item key={game.id}>
-                        <GameCard data={game} width={500} className={'gamecard_catalog'}/>
+                        <GameCard data={game} className={'gamecard_catalog'}/>
                     </Item>)
                 }
             </List>
@@ -18,11 +19,10 @@ export const GameList = ({ games }) => {
 }
 
 const List = styled.ul`
+    padding: 0 20px;
     display: flex;
     flex-wrap: wrap;
     gap: 30px;
-    padding: 0 20px;
-
 `
 
 const Item = styled.li`

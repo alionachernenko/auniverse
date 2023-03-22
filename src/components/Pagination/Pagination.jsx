@@ -1,4 +1,5 @@
 import ReactPaginate from "react-paginate"
+
 import { MdOutlineDoubleArrow } from 'react-icons/md'
 import styled from 'styled-components'
 
@@ -27,30 +28,32 @@ export const Pagination = ({totalPages, changePage, page}) => {
 
 const PaginationContainer = styled.div`
     & .container {
-        background-color: transparent;
+        width: 100%;
+        margin-top: auto;
+
         display: flex;
         flex-wrap: wrap;
-        width: 100%;
-        gap: 10px;
-        list-style: none;
         justify-content: center;
         align-items: center;
-        z-index: 1;
-        margin-top: auto;
+        gap: 10px;
+
+        background-color: transparent;
     }
 
     & .page {
-        box-sizing: border-box;
         width: auto;
         min-width: 30px;
+        box-sizing: border-box;
+        height: 30px;
+        padding: 2px;
+        border-radius: 15px;
+
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 30px;
+
         cursor: pointer;
         background-color: transparent;
-        border-radius: 15px;
-        padding: 2px;
     }
 
     & .page a{

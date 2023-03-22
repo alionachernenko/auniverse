@@ -7,7 +7,8 @@ export const StoresList = ({stores}) => {
     return (
         <List>
             {stores.map(({store}) => {
-                const {name, domain} = store
+                const { name, domain } = store
+                console.log(domain)
                 return(<li><a href={`https://${domain}`}>
                     {name === 'Steam' && <FaSteam />}
                     {name === 'PlayStation Store' && <FaPlaystation />}

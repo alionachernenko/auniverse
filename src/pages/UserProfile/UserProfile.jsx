@@ -8,92 +8,96 @@ import { ProfileCard } from "components/ProfileCard/ProfileCard"
 import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
 
 const User = () => {
-    const {id} = useParams()
+    const { userId } = useContext(authContext)
+    const { id } = useParams()
+    
     const [name, setName] = useState('')
     const [photo, setPhoto] = useState('')
     const [favouriteGames, setFavs] = useState([])
-    const {userId} = useContext(authContext)
-    const navigate = useNavigate()
     const [isPendingFriend, setIsPendingFriend] = useState(false)
     const [isFriend, setIsFriend] = useState(false)
 
-    console.log(isPendingFriend)
+    const navigate = useNavigate()
 
     if(userId === id) navigate('/profile')
 
     useEffect(() => {
         getUserInfo(id).then((res) => {
-            console.log(res.val())
             const {username, favs, photoUrl} = res.val() 
             setName(username)
+
             if(favs) setFavs(Object.values(favs))
             if(photoUrl){ setPhoto(photoUrl)}
             else(setPhoto(avatarPlaceholder))
         })
 
         getFriendsInvitationsList(id).then(res => {
-           if(res.val()) setIsPendingFriend(Object.values(res.val()).some(user => user === userId))
+            if (res.val()) {
+                setIsPendingFriend(Object.values(res.val()).some(user => user === userId))
+            }
         })
 
         getFriendsList(userId).then(res => {
-            if(res.val()) setIsFriend(Object.values(res.val()).some(user => user === id))
+            if (res.val()) {
+                setIsFriend(Object.values(res.val()).some(user => user === id))
+            }
         })
 
     }, [id, setIsPendingFriend, userId])
 
     return(
         <Page>
-            <ProfileCard avatar={photo} username={name} isPendingFriend={isPendingFriend} isFriend={isFriend} setIsPendingFriend={setIsPendingFriend} setIsFriend={setIsFriend} />
-                
-                {/* {isPendingFriend && <p>User sent you an invitation</p>} */}
+            <ProfileCard
+                avatar={photo}
+                username={name}
+                isPendingFriend={isPendingFriend}
+                isFriend={isFriend}
+                setIsPendingFriend={setIsPendingFriend}
+                setIsFriend={setIsFriend}
+            />
                 <OutletsSection>
-
                     <Tabs>
                         <Tab to='bookmarks'>Bookmarks</Tab>
                     </Tabs>
                     <Outlet context={[favouriteGames]} />
-                    </OutletsSection>
-            {/* </Container> */}
+                </OutletsSection>
         </Page>
     )
 }
 
-export default User 
-
-
 const Page = styled.div`
-    color: white;
+    min-height: calc(100vh - 61px);
+    width: 100%;
     padding: 20px;
+    box-sizing: border-box;
+
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     justify-content: center;
-    box-sizing: border-box;
+
     position: relative;
-    min-height: calc(100vh - 61px);
-    width: 100%;
+
+    color: white;
     background-color: #00021A;
 `
 
 const OutletsSection = styled.div`
     width: 50%;
     margin-left: auto;
-    & .item{
-        width: 50%
-    }
 `
 
 const Tabs = styled.div`
     margin-bottom: 20px;
+    margin-left: auto;
+
     display: flex;
     justify-content: center;
-    margin-left: auto;
     gap: 10px;
 
     & :not(:last-child) {
         margin-right: 100px;
     }
-
 `
 
 
@@ -111,14 +115,17 @@ const Tab = styled(NavLink)`
     display: block;
 
     &.active::after{
-        position: absolute;
-        width: 100%;
+        content: '';
         display: block;
+        height: 3px;
+        width: 100%;
+        border-radius: 4px;
+
+        position: absolute;
         bottom: 0;
         left: 0;
-        height: 3px;
-        border-radius: 4px;
-        content: '';
         background-color: #FF6600;
     }
 `
+
+export default User 

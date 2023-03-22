@@ -19,9 +19,10 @@ export const MenuButton = () => {
 
 const Button = styled.button`
     border: none;
-    background-color: transparent;
     padding: 0;
 
+    background-color: transparent;
+    
     @media screen and (min-width: 1201px){
         display: none;
     }

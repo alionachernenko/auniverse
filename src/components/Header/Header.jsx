@@ -1,14 +1,12 @@
-import styled from 'styled-components'
-
 import { useLocation } from 'react-router-dom';
-
 import { Logo } from 'components/Logo/Logo';
 import { SearchForm } from 'components/SearchForm/SearchForm';
 import { Navigation } from 'components/Navigation/Navigation';
 import { Container } from 'components/Container/Container';
 import { MenuButton } from 'components/MenuButton/MenuButton';
-import { ProfileButton } from 'components/ProfileButton/ProfileButton';
+import { ProfileButton } from 'components/ProfileButton/ProfileButton'
 
+import styled from 'styled-components'
 export const Header = ({onSubmit}) => {
     const location = useLocation();
 
@@ -30,22 +28,20 @@ export const Header = ({onSubmit}) => {
 }
 
 const PageHeader = styled.header`
-    box-sizing: border-box;
-    display: flex;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
+    padding: 0 13px;
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #00021A;
-    width: 100%;
+    box-sizing: border-box;
+    
     position: relative;
-
-
-    @media screen and (max-width: 420px){
-        padding: 0 13px;
-    }
-
-    @media screen and (min-width: 421px) and (max-width: 767px){
+    
+    background-color: #00021A;
+    
+    @media screen and (min-width: 420px) and (max-width: 767px){
         padding: 0 16px;
     }
 
@@ -55,9 +51,9 @@ const PageHeader = styled.header`
 `
 
 const HeaderContainer = styled.div`
-    display: flex;
-    align-items: center;
     margin-left: auto;
     margin-right: auto;
+    display: flex;
+    align-items: center;
     justify-content: space-between;
 `

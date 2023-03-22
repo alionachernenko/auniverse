@@ -8,6 +8,7 @@ import { ref, set, get, remove } from 'firebase/database';
 import apps from '../config/firebase';
 import { uploadBytes, getDownloadURL } from 'firebase/storage';
 import { ref as sRef } from 'firebase/storage';
+import { nanoid } from 'nanoid';
 
 const { auth, database, storage } = apps;
 
@@ -76,28 +77,25 @@ export const addUserToFriensInvitationsList = (id, userId) => {
   });
 };
 
-export const acceptInvitationAndAddUser = (id, userId) => {
-  return Promise.all([
+export const acceptInvitationAndAddUser = async (id, userId) => {
+  const res = await Promise.all([
     get(ref(database, `users/${userId}/friends`)),
     get(ref(database, `users/${id}/friends`)),
-  ])
-    .then(res => {
-      const [myFriends, usersFriends] = res;
+  ]);
 
-      set(ref(database, 'users/' + userId + '/friends'), {
-        ...myFriends.val(),
-        [id]: id,
-      });
+  const [myFriends, usersFriends] = res;
+  set(ref(database, 'users/' + userId + '/friends'), {
+    ...myFriends.val(),
+    [id]: id,
+  });
 
-      set(ref(database, 'users/' + id + '/friends'), {
-        ...usersFriends.val(),
-        [userId]: userId,
-      });
-    })
-    .then(() => {
-      remove(ref(database, 'users/' + userId + '/friendsInvites/' + id));
-      remove(ref(database, 'users/' + id + '/friendsInvites/' + userId));
-    });
+  set(ref(database, 'users/' + id + '/friends'), {
+    ...usersFriends.val(),
+    [userId]: userId,
+  });
+
+  remove(ref(database, 'users/' + userId + '/friendsInvites/' + id));
+  remove(ref(database, 'users/' + id + '/friendsInvites/' + userId));
 };
 
 export const getFavouriteGames = userId => {
@@ -117,4 +115,34 @@ export const removeFriend = (id, userId) => {
   remove(ref(database, 'users/' + userId + '/friends/' + id));
 };
 
+export const leaveComment = (userId, gameSlug, text) => {
+  console.log('hi', database, gameSlug, userId);
+  get(ref(database, '/comments/' + gameSlug)).then(res =>
+    set(ref(database, `/comments/` + gameSlug), {
+      ...res.val(),
+      [`${userId}-${nanoid()}`]: text,
+    })
+  );
+};
+
+export const getComments = gameSlug => {
+  return get(ref(database, '/comments/' + gameSlug));
+};
+
+export const addAvatar = async (
+  file,
+  userId,
+  setPhotoPath,
+  setIsAvatarLoading
+) => {
+  await uploadBytes(sRef(storage, `/userpics/${file.name}`), file);
+  const url = await getDownloadURL(sRef(storage, `/userpics/${file.name}`));
+  set(ref(database, 'users/' + userId + '/photoUrl'), url);
+  setPhotoPath(url);
+  setIsAvatarLoading(false);
+};
+
+export const changeUsername = (userId, username) => {
+  set(ref(database, 'users/' + userId + '/username'), username);
+};
 export { auth };

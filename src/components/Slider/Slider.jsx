@@ -1,11 +1,13 @@
 /* eslint-disable array-callback-return */
-import { Swiper } from "swiper/react"
+import { Swiper, SwiperSlide } from "swiper/react"
+import { GameCard } from "components/GameCard/GameCard";
+
+import { Autoplay } from "swiper";
+
 import 'swiper/css';
-import 'swiper/css/pagination'
-import { Autoplay, Pagination } from "swiper";
 
 
-export const Slider = ({children}) => {
+export const Slider = ({games}) => {
     return (
         <Swiper style={{marginLeft: 0,
                         paddingLeft: 60}}
@@ -18,9 +20,17 @@ export const Slider = ({children}) => {
                 pauseOnMouseEnter: true,
                 disableOnInteraction: false
             }}
-            modules={[Autoplay, Pagination]}
+            modules={[Autoplay]}
         > 
-            {children}
+            {games.map((game => 
+                <SwiperSlide style={{
+                    width: 'fit-content',
+                    margin: 0,
+                    }
+                }key={game.id}>
+                    <GameCard data={game} className={'gamecard_slider'} />
+                </SwiperSlide>
+            ))}
         </Swiper>
     )
 }

@@ -1,126 +1,133 @@
-// import './GameCard.scss'
-import styled, {css} from 'styled-components'
-
 import { Link } from "react-router-dom"
 import placeholderImage from 'assets/images/placeholder.png'
+import styled, {css} from 'styled-components'
 
 export const GameCard = ({ data, className }) => {
 
     const {name, released, genres, background_image, slug, rating } = data
 
     return (
-        <Link to={`/catalog/${slug}`} aria-label={`Read more about ${name}`} className='readmore-btn'>
+        <Link to={`/catalog/${slug}`} aria-label={`Read more about ${name}`}>
         <Card className={`${className}`}>
-            {background_image ? <img loading='lazy' src={background_image} className='poster' alt={`${name} poster`} width={500}
-                height='auto' /> : <img src={placeholderImage}   alt='No poster here' className='poster'/>}
-                <div className='description'>
+            {background_image ? <Poster loading='lazy' src={background_image} alt={`${name} poster`} width={500}
+                height='auto' /> : <Poster src={placeholderImage}   alt='No poster here'/>}
+                <Description>
                     <Title>
                         {name}
                     </Title>
-                    {released && <p className='release_year'>{released.slice(0, 4)}</p>}
-                    {genres && <Genres className='genres'>
-                        {genres.map((({id, name}) => <li className="genres_item" key={id}>{name}</li>))}
+                    {released && <Year>{released.slice(0, 4)}</Year>}
+                    {genres && <Genres>
+                        {genres.map((({id, name}) => <Genre key={id}>{name}</Genre>))}
                     </Genres>}
-                </div>
+                </Description>
              <Rating className='rating'>{rating}</Rating>
         </Card>
     </Link>
     )
 }
 
+const Poster = styled.img``
+
+const Description = styled.div``
+
+const Year = styled.p``
+
 const Card = styled.div`
     ${({className}) => {
     switch (className) {
         case 'gamecard_catalog':
             return css`
-                height: 500px;
+                height: auto;
+                position: relative;
+                overflow: hidden;
+
                 color: white;
                 background-color: #00021A;
-                overflow: hidden;
-                position: relative;
+                
                 clip-path: polygon(11% 0, 70% 0%, 100% 0, 100% 88%, 88% 100%, 0 100%, 0 67%, 0 11%);
                 transform: scale(1);
                 transition: 250ms transform ease;
-
-                @media screen and (max-width: 767px) {
-                    height: auto;
-                }
-
-                & .poster{
-                    object-fit: cover;
-                    height: 70%;
-                    transition: 500ms all ease;
-                    width: 100%;
-                }
 
                 &:hover{
                     transform: scale(1.05);
                 }
 
-                & .description {
+                @media screen and (min-width: 768px) {
+                    height: 500px;
+                }
+
+                & ${Poster}{
+                    height: 70%;
+                    width: 100%;
+
+                    object-fit: cover;
+                    transition: 500ms all ease;
+                }
+
+            
+                & ${Description} {
                     padding: 15px;
                     display: flex;
                     flex-direction: column;
                     gap: 5px;
                 }
-
-               
             `
         case 'gamecard_slider':
             return css`
-                height: 350px;
-                overflow: hidden;
-                position: relative;
                 max-width: 500px;
+                height: 350px;
+                position: relative;
+                overflow: hidden;
+                
                 clip-path: polygon(11% 0, 70% 0%, 100% 0, 100% 88%, 88% 100%, 0 100%, 0 70%, 0 11%);
 
-                & .description {
-                    position: absolute;
+                & ${Description} {
                     width: 50%;
-                    right: 100%;
-                    transition: 250ms right ease;
-                    top: 0;
                     height: 100%;
-                    background-color: #00021A;
+                    padding: 0 10px;
+                    box-sizing: border-box;
+
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
                     gap: 15px;
-                    box-sizing: border-box;
-                    padding: 0 10px;
 
+                    position: absolute;
+                    top: 0;;
+                    right: 100%;
+
+                    background-color: #00021A;
                     
+                    transition: 250ms right ease;
 
-                    & h1, p{
+                    & ${Year}{
                         color: white;
                     }
 
-                    & ul{
-                        flex-wrap: wrap;
-                    }
                 }
 
-                & .rating, & .release_year {
+                & .rating, & ${Year} {
                     display: none;
                 }
 
-                & .poster {
-                        object-fit: cover;
-                        transition: 500ms all ease;
+                & ${Poster} {
                         width: 100%;
                         height: 100%;
+                        object-fit: cover;
+                        transition: 500ms all ease;
+                        
                     }
 
-                &:hover .poster {
+                &:hover ${Poster} {
                     height: 100%;
                     filter: blur(5px);
                 }
 
-                &:hover .description {
+                &:hover ${Description} {
                     right: 50%;
                 }
             `
-
+        
         default: return css``
         }
     }}
@@ -128,42 +135,48 @@ const Card = styled.div`
 
 const Genres = styled.div`
     display: flex;
+    flex-wrap: wrap;
     gap: 5px;
-    color: #f0f0f0;
+    
     font-size: 15;
     letter-spacing: 0.05em;
-    list-style: none;
-    flex-wrap: wrap;
+    
+    color: #f0f0f0;
+`
 
-    & li{
-        padding: 0 5px 0 0;
-    }
+const Genre = styled.li`
+    padding: 0 5px 0 0;
 
-    & li:not(:last-child){
+    & :not(:last-child){
     border-right: 1px solid orange;
 }
 `
 
 const Title = styled.p`
-     color: white;
+    color: white;
+
+    font-size: 25px;
     font-weight: 700;
     text-transform: uppercase;
-    font-size: 25px;
     letter-spacing: 0.05em;
+
     white-space: normal;
     word-break: break-word;
 `
 
 const Rating = styled.p`
-        position: absolute;
-        top: 0;
-        right: 40px;
-        color: white;
-        background-color: #050B2B;
-        padding: 10px 10px 5px 10px;
-        font-size: 20px;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        transition: 400ms top ease;
+    display: flex;
+    align-items: center;
+    padding: 10px 10px 5px 10px;
+
+    position: absolute;
+    top: 0;
+    right: 40px;
+
+    font-size: 20px;
+    font-weight: 700;
+
+    color: white;
+    background-color: #050B2B;
+    transition: 400ms top ease;
 `

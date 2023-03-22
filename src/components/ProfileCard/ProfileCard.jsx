@@ -1,113 +1,141 @@
-import styled from "styled-components"
-import { RxUpload } from "react-icons/rx"
-import { Oval } from "react-loader-spinner"
-import {authContext} from '../../context/context'
 import { useContext, useState } from "react"
-import { uploadBytes, getDownloadURL, ref as sRef } from 'firebase/storage'
-import {set, ref} from 'firebase/database'
-import firebaseApps from 'config/firebase'
 import { useLocation, useParams } from "react-router-dom"
+import { authContext } from '../../context/context'
+import { addAvatar, addUserToFriensInvitationsList, changeUsername, removeFriend} from "utils/firebase"
+
+import { Oval } from "react-loader-spinner"
+
+import { RxUpload } from "react-icons/rx"
 import { BsPenFill } from 'react-icons/bs'
 import {FiUserPlus, FiUserX} from 'react-icons/fi'
 import { MdDone } from 'react-icons/md'
-import { addUserToFriensInvitationsList, removeFriend } from "utils/firebase"
-export const ProfileCard = ({avatar, username, isAvatarLoading, setPhotoPath, setIsAvatarLoading, setUsername, isPendingFriend, isFriend, setIsPendingFriend, setIsFriend}) => {
 
+import styled from "styled-components"
+
+export const ProfileCard = ({avatar, username, isAvatarLoading, setPhotoPath, setIsAvatarLoading, setUsername, isPendingFriend, isFriend, setIsPendingFriend, setIsFriend}) => {
     const { userId } = useContext(authContext)
     const { id } = useParams()
-    
     const location = useLocation()
+
     const [showChangeUsernameFrom, setShowChangeUsernameForm] = useState(false)
 
-    console.log(isPendingFriend)
+    const deleteFriend = () => {
+        removeFriend(id, userId)
+        setIsFriend(false)
+    }
+
+    const sendInvitation = () => {
+        addUserToFriensInvitationsList(id, userId)
+        setIsPendingFriend(true)
+    }
     
-    const uploadAvatar = (e) => {
+    const onUsernameFormSubmit = (e) => {
         e.preventDefault()
-        if(e.target.files[0]){
-            if(e.target.files[0].size > 2097152){
-                console.log('noooooJJFJFJJFJFJ')
+
+        const username = e.target.elements.username.value
+
+        changeUsername(userId, username)
+        setUsername(username)
+        setShowChangeUsernameForm(false)
+    }
+
+    const uploadAvatar = (e) => {
+
+        const file = e.target.files[0]
+        e.preventDefault()
+        if(file){
+            if(file.size > 2097152){
                 setIsAvatarLoading(false)
                 return
             }
+
             setIsAvatarLoading(true)
-            uploadBytes(sRef(firebaseApps.storage, `/userpics/${e.target.files[0].name}`), e.target.files[0]).then(() => {
-            return getDownloadURL(sRef(firebaseApps.storage, `/userpics/${e.target.files[0].name}`))}).then((url) =>{
-                set(ref(firebaseApps.database, 'users/' + userId + '/photoUrl'), url)
-                        setPhotoPath(url)
-                        setIsAvatarLoading(false)
-                    })
-                }
+            addAvatar(file, userId, setPhotoPath, setIsAvatarLoading)
+        }
     }
     return(
         <Info>
             <AvatarWrapper>
                 {location.pathname.includes('profile') ?
-                    <><UploadInput id='upload_file'accept=".png, .jpg, .jpeg, .gif" type='file' name='photo' onChange={(e) => uploadAvatar(e)}/>
-                    <UploadButton htmlFor="upload_file">
-                        <RxUpload size='100%' fill='orange' color="orange" stroke="orange"/>
-                        </UploadButton></> : !isPendingFriend && !isFriend ? <ChangeFriendStatusButton type='button' onClick={() => {
-                            addUserToFriensInvitationsList(id, userId)
-                            setIsPendingFriend(true)
-                    }}><FiUserPlus/></ChangeFriendStatusButton> : isPendingFriend ? <FriendStatus>You sent an invitation</FriendStatus> : <ChangeFriendStatusButton onClick={() => {
-                            removeFriend(id, userId)
-                            setIsFriend(false)
-                    }}><FiUserX/></ChangeFriendStatusButton>
-                        }
-                        {isAvatarLoading ? <Spinner><Oval color='#FF6600' secondaryColor='orange' width={'100%'} height={'100%'}/></Spinner> : 
-                        <Avatar style={{objectFit: 'cover',width: 200, height: '100%'}} src={`${avatar}`} alt=""/>}
-                    </AvatarWrapper>
+                    <>
+                        <UploadInput id='upload_file' accept=".png, .jpg, .jpeg, .gif" type='file' name='photo' onChange={(e) => uploadAvatar(e)} />
+                        <UploadButton htmlFor="upload_file">
+                            <RxUpload size='100%' fill='orange' color="orange" stroke="orange"/>
+                        </UploadButton>
+                    </>
+                    : !isPendingFriend && !isFriend ?
+                        <ChangeFriendStatusButton type='button' onClick={sendInvitation}>
+                            <FiUserPlus />
+                        </ChangeFriendStatusButton>
+                        : isPendingFriend ?
+                            <FriendStatus>You sent an invitation</FriendStatus>
+                        :   <ChangeFriendStatusButton onClick={deleteFriend}>
+                                <FiUserX />
+                            </ChangeFriendStatusButton>}
+                
+                {isAvatarLoading ?
+                    <Spinner>
+                        <Oval color='#FF6600' secondaryColor='orange' width={'100%'} height={'100%'} />
+                    </Spinner> : 
+                    <Avatar src={`${avatar}`} alt={`${username}'s avatar`} />}
+            </AvatarWrapper>
                     <div style={{display: 'flex', gap: 5, alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap'}}>
-                {!showChangeUsernameFrom && <Username>{username}</Username>}
-                {location.pathname.includes('profile') && !showChangeUsernameFrom && <ChangeUsernameButton onClick={() => setShowChangeUsernameForm(true)}><BsPenFill color="white"/></ChangeUsernameButton>}</div>
-                {showChangeUsernameFrom && <ChangeUsernameForm action="" onSubmit={
-                    (e) => {
-                        e.preventDefault()
-                        set(ref(firebaseApps.database, 'users/' + userId + '/username'), e.target.elements.username.value)
-                        setUsername(e.target.elements.username.value)
-                        setShowChangeUsernameForm(false)
-                    }
-                }>
-                    <input type='text' name="username" minLength='3' required autoComplete='off'/>
-                    <button><MdDone size={15}/></button>
-                </ChangeUsernameForm>}
-            </Info>
+                        {!showChangeUsernameFrom && <Username>
+                            {username}
+                        </Username>}
+                        {location.pathname.includes('profile') && !showChangeUsernameFrom && <ChangeUsernameButton onClick={() => setShowChangeUsernameForm(true)}>
+                            <BsPenFill color="white" />
+                        </ChangeUsernameButton>}
+                    </div>
+                    {showChangeUsernameFrom && <ChangeUsernameForm onSubmit={(e) => onUsernameFormSubmit(e)}>
+                        <input type='text' name="username" minLength='3' required autoComplete='off'/>
+                        <button><MdDone size={15}/></button>
+                    </ChangeUsernameForm>}
+        </Info>
     )
 }
 
 const Info = styled.div`
+    margin-bottom: 20px;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     gap: 10px;
-    margin-bottom: 20px
+    
 `
 
 const Username = styled.h1`
     text-align: center
 `
 const Spinner = styled.div`
-    text-align: center;
     width: 90%;
-    height: 90%
+    height: 90%;
+    text-align: center;
+    
 `
 const AvatarWrapper = styled.div`
-    border-radius: 100px;
     height: 200px;
     width: 200px;
-    overflow: hidden;
+    border-radius: 100px;
+
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
+
+    overflow: hidden;
+    
     background-color: transparent;
 
 `
 
 const FriendStatus = styled.p`
     position: absolute;
-    opacity: 0;
     z-index: 1111;
+    opacity: 0;
     transition: 250ms opacity ease;
 
     ${AvatarWrapper}:hover &{
@@ -116,24 +144,29 @@ const FriendStatus = styled.p`
 `
 
 const Avatar = styled.img`
-transition: 250ms filter ease;
+width: 200;
+height: 100%;
+object-fit: 'cover';
 
+transition: 250ms filter ease;
     ${AvatarWrapper}:hover &{
         filter: blur(3px)
     }
 `
 
 const UploadButton = styled.label`
-    border: none;
-    position: absolute;
-    opacity: 0;
     width: 30px;
     height: 30px;
-    background-color: white;
     padding: 5px;
+    border: none;
     border-radius: 100px;
-    cursor: pointer;
+
+    position: absolute;
     z-index: 1111;
+    opacity: 0;
+    
+    background-color: white;
+    cursor: pointer;
     transition: 250ms all ease;
 
     ${AvatarWrapper}:hover &{
@@ -144,18 +177,18 @@ const UploadButton = styled.label`
 const UploadInput = styled.input`
     width: 0.1px;
     height: 0.1px;
-    opacity: 0;
-    overflow: hidden;
     position: absolute;
     z-index: -1;
+    opacity: 0;
+    overflow: hidden;
 `
 
 const ChangeUsernameButton = styled.button`
-    background-color: transparent;
     border: none;
     display: flex;
     align-items: center;
-    justify-content: center
+    justify-content: center;
+    background-color: transparent;
 `
 
 const ChangeUsernameForm = styled.form`
@@ -184,16 +217,20 @@ const ChangeUsernameForm = styled.form`
 `
 
 const ChangeFriendStatusButton = styled.button`
-    border: none;
-    position: absolute;
-    opacity: 0;
     width: 30px;
     height: 30px;
-    background-color: white;
     padding: 5px;
+    border: none;
+    
+    position: absolute;
+    z-index: 1111;
+    opacity: 0;
+    
+    background-color: white;
+   
     border-radius: 100px;
     cursor: pointer;
-    z-index: 1111;
+    
     transition: 250ms all ease;
 
     ${AvatarWrapper}:hover &{

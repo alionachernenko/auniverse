@@ -3,7 +3,7 @@ import styled from "styled-components"
 export const SearchFilter = () => {
     return (
         <Filters>
-                <Filter> {/*отдельно */}
+                <Filter>
                     <Label htmlFor='order_select'>Order by:</Label>
                     <FilterOptions name="ordering" id="order_select">
                         <option></option>
