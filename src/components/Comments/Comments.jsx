@@ -35,8 +35,8 @@ export const Comments = ({comments, setComments, gameSlug}) => {
             </Form>
                 {comments.length !== 0 &&
                     <CommentsList>
-                        {comments.map(comment => 
-                            <Comment userId={getAndFormatAuthorId(comment)} text={getCommentText(comment)} />
+                        {comments.map((comment, index) => 
+                            <Comment userId={getAndFormatAuthorId(comment)} key={index} text={getCommentText(comment)} />
                         )}
                     </CommentsList>}
         </Section>

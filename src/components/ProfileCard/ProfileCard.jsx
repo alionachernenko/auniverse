@@ -75,12 +75,12 @@ export const ProfileCard = ({avatar, username, isAvatarLoading, setPhotoPath, se
                     </>
                     : !isPendingFriend && !isFriend ?
                         <ChangeFriendStatusButton type='button' onClick={sendInvitation}>
-                            <FiUserPlus />
+                            <FiUserPlus size='100%' fill='orange' color="orange" stroke="orange"/>
                         </ChangeFriendStatusButton>
                         : isPendingFriend ?
                             <FriendStatus>You sent an invitation</FriendStatus>
                         :   <ChangeFriendStatusButton onClick={deleteFriend}>
-                                <FiUserX />
+                                <FiUserX size='100%' fill='orange' color="orange" stroke="orange"/>
                             </ChangeFriendStatusButton>}
                 
                 {isAvatarLoading ?
@@ -232,8 +232,8 @@ const ChangeUsernameForm = styled.form`
 `
 
 const ChangeFriendStatusButton = styled.button`
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     padding: 5px;
     border: none;
 

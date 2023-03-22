@@ -50,6 +50,7 @@ const Form = styled.form`
 const Input = styled.input`
     width: 360px;
     padding: 14px;
+    border: none;
     margin-bottom: 30px;
     border-bottom: 1px solid white;
 
