@@ -28,6 +28,7 @@ const Message = styled.p`
     font-size: 40px;
     max-width: 700px;
     text-align: center;
+    color: white;
 `
 
 const Image = styled.img`

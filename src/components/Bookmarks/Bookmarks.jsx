@@ -7,6 +7,7 @@ export const Bookmarks = () => {
 
     return (
         <Block>
+            {favouriteGames.length === 0 ? <p>No bookmarks</p> : 
             <List>
                 {favouriteGames.map(({ background_image, name, slug, id }) =>
                     <Bookmark key={id}>
@@ -14,7 +15,8 @@ export const Bookmarks = () => {
                         <Title to={`/catalog/${slug}`}>{name}</Title>
                     </Bookmark>)
                 }
-            </List>
+            </List>}
+            
         </Block>
     )
 }

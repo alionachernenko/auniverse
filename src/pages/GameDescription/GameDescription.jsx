@@ -12,7 +12,7 @@ import { Comments } from "components/Comments/Comments";
 import { ErrorComponent } from "components/ErrorComponent/ErrorComponent";
 
 const formatComments = (comments) => {
-    return Object.entries(comments.val()).map(el => {
+    return Object.entries(comments).map(el => {
         return {[el[0]] : el[1]}
     })
 }
@@ -31,7 +31,6 @@ const GameDescription = () => {
     const [isError, setIsError] = useState(false)
     const { gameSlug } = useParams()
 
-
     window.scroll({
         top: 0,
     });
@@ -42,6 +41,8 @@ const GameDescription = () => {
             const {data} = game
             const {name, description_raw, stores, released} = data
             const { results } = screenshots.data
+
+            console.log(comments)
             
             setGameData(data)
             setTitle(name)
@@ -49,7 +50,8 @@ const GameDescription = () => {
             setStores(stores)
             setYear(released.slice(0, 4))
             setScreenshots(results)
-            setComments(formatComments(comments))
+
+            if(comments.val()) setComments(formatComments(comments.val()))
 
             setIsLoading(false)
         }).catch(error => {
@@ -80,8 +82,8 @@ const GameDescription = () => {
                  </div>
                     {screenshots &&
                         <Screenshots>
-                            {screenshots.map(({image}) => 
-                                <ScreenshotWrapper>
+                            {screenshots.map(({image, id}) => 
+                                <ScreenshotWrapper key={id}>
                                     <Screenshot src={image} alt='fdff' loading="lazy"/>
                                 </ScreenshotWrapper>)}
                         </Screenshots>}

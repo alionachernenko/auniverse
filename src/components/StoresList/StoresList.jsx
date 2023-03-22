@@ -6,10 +6,10 @@ import styled from 'styled-components'
 export const StoresList = ({stores}) => {
     return (
         <List>
-            {stores.map(({store}) => {
+            {stores.map(({store, id}) => {
                 const { name, domain } = store
                 console.log(domain)
-                return(<li><a href={`https://${domain}`}>
+                return(<li key={id}><a href={`https://${domain}`}>
                     {name === 'Steam' && <FaSteam />}
                     {name === 'PlayStation Store' && <FaPlaystation />}
                     {name === 'App Store' && <FaAppStore />}

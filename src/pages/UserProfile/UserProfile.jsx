@@ -26,7 +26,7 @@ const User = () => {
     if(userId === id) navigate('/profile/bookmarks')
 
     useEffect(() => {
-        getUserInfo('dfdfdfd').then((res) => {
+        getUserInfo(id).then((res) => {
             setIsLoading(true)
             const {username, favs, photoUrl} = res.val() 
             setName(username)

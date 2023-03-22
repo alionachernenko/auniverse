@@ -6,10 +6,14 @@ import { ImHome2 } from 'react-icons/im'
 import { FaUserCircle } from 'react-icons/fa'
 import { IoLogoGameControllerB } from 'react-icons/io'
 import { HiUsers } from 'react-icons/hi'
+import {IoLogIn} from 'react-icons/io5'
 
 import styled, { keyframes } from "styled-components"
+import { useContext } from "react"
+import { authContext } from "context/context"
 
 export const DropdownMenu = ({ onClick }) => {
+    const {isLoggedIn} = useContext(authContext)
     return createPortal(
         <Backdrop onClick={(e) => {
             if (e.target === e.currentTarget) {
@@ -22,7 +26,7 @@ export const DropdownMenu = ({ onClick }) => {
                 <li><Link onClick={onClick} to={'/'}><ImHome2 size={50}/></Link></li>
                 <li><Link onClick={onClick} to={'/catalog'}><IoLogoGameControllerB size={50}/></Link></li>
                 <li><Link onClick={onClick} to={'/users'}><HiUsers size={50}/></Link></li>
-                <li><Link onClick={onClick} to={'/profile/bookmarks'}><FaUserCircle size={50}/></Link></li>
+                    <li><Link onClick={onClick} to={'/profile/bookmarks'}>{isLoggedIn ? <FaUserCircle size={50} /> : <IoLogIn size={50} />}</Link></li>
             </Options>
             </Menu>
         </Backdrop>, document.querySelector('#burger-menu-root'))

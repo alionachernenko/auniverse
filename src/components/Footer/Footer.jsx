@@ -12,6 +12,8 @@ export const Footer = () => {
                     <Links>
                         <li><Link to='/'>Home</Link></li>
                         <li><Link to='/catalog'>Catalog</Link></li>
+                        <li><Link to='/users'>Community</Link></li>
+                        <li><Link to='/profile/bookmarks'>Profile</Link></li>
                     </Links>
                 </Navigation>
                 <Contacts>
@@ -86,4 +88,8 @@ const Contacts = styled.address`
 
     font-family: 'Nunito', sans-serif;
     font-style: normal;
+
+    @media screen and (max-width: 767px) {
+        align-items: center;
+    }
 `

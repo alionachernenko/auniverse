@@ -6,20 +6,18 @@ import { FriendCard } from "components/FriendCard/FriendCard"
 export const Friends = () => {
     // eslint-disable-next-line no-unused-vars
     const [_, friends, setFriends, invitations, setInvitations ] = useOutletContext()
-    
+    console.log(friends)
     return ( 
         <Block>
-            
-
             {invitations.length !== 0 &&
                     <InvitationsList>
                         {invitations.map(friend =>
                             <FriendCard id={friend} isPending={true} setInvitations={setInvitations} setFriends={setFriends} />)}
                 </InvitationsList>
             }
-            <FriendsList>
-                {friends && friends.map(friend => <FriendCard id={friend} key={friend} isPending={false} />)}
-            </FriendsList>
+            {friends.length === 0  ? <p style={{textAlign: 'left'}}>No friends</p> : <FriendsList>
+                {friends.map(friend => <FriendCard id={friend} key={friend} isPending={false} />)}
+            </FriendsList>}
             
         </Block>
     )
@@ -28,7 +26,6 @@ export const Friends = () => {
 const Block = styled.div`
     display: flex;
     flex-direction: row;
-    align-items: center;
     gap: 10px;
     flex-wrap: wrap;
 
