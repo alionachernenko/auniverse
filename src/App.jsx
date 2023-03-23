@@ -57,7 +57,7 @@ export function App() {
                 <Route path='/catalog/:gameSlug' element={<GameDescription/>} />
                 <Route path='/login' element={<AuthenticationPage />} >
                     <Route path='login-page' element={<LoginForm/>} />
-                    <Route path='sign-page' element={<SignupForm/>} />
+                    <Route path='signup-page' element={<SignupForm/>} />
                 </Route>
                 <Route path ='/users' element={<Users/>}/>
                     <Route path='/users/:id' element={<UserProfile />}>

@@ -21,7 +21,7 @@ const AuthenticationPage = () => {
         <Page>
             <Tabs>
                 <Tab to='login-page'>Log In</Tab>
-                <Tab to='sign-page'>Sign Up</Tab>
+                <Tab to='signup-page'>Sign Up</Tab>
             </Tabs>
             <FormWrapper>
                 <InfoBlock>
@@ -32,9 +32,6 @@ const AuthenticationPage = () => {
         </Page>
     )
 }
-
-
-//==============STYLES==============//
 
 const titleAnim = keyframes`
      0% {

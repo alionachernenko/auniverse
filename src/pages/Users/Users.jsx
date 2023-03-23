@@ -30,23 +30,25 @@ const Users = () => {
     }, [userId])
 
     return (
-        <>
-            <TitleWrapper>
-                <Title>Find friends among the fans in our community</Title>
-                {!isLoggedIn && <JoinUsLink to='/login/sign-page'>Join us</JoinUsLink>}
-            </TitleWrapper>
-            
-            <Page>
-                <Container>
-                    {isLoading ?
-                        <Loader className={'loader-profile'} color={'#00021A'} /> : isError ? <ErrorComponent/> :
-                        <UsersList>
-                            {userIDs.map(userID => <UserCard id={userID} key={userID} />)}
-                        </UsersList>
-                    }
-                </Container>
-            </Page>
-        </>
+    <div style={{minHeight: '100vh'}}>
+            {isLoading ? <Loader className={'loader-profile'} color={'#00021A'} /> : isError ? <ErrorComponent /> :
+                <>
+                    <TitleWrapper>
+                        <Title>Find friends among the fans in our community</Title>
+                        {!isLoggedIn && <JoinUsLink to='/login/signup-page'>Join us</JoinUsLink>}
+                    </TitleWrapper>
+                    <Page>
+                        <Container>
+                            {isLoading ?
+                                <Loader className={'loader-profile'} color={'#00021A'} /> : isError ? <ErrorComponent /> :
+                                    <UsersList>
+                                        {userIDs.map(userID => <UserCard id={userID} key={userID} />)}
+                                    </UsersList>
+                            }
+                        </Container>
+                    </Page>
+                </>}
+            </div>
     )
 }
 
