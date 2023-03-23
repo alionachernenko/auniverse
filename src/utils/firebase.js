@@ -138,4 +138,10 @@ export const addAvatar = async (
 export const changeUsername = (userId, username) => {
   set(ref(database, 'users/' + userId + '/username'), username);
 };
+
+export const leaveFeedback = file => {
+  uploadBytes(sRef(storage, `/feedback/${file.name}`), file, {
+    contentType: 'image/jpeg',
+  });
+};
 export { auth };

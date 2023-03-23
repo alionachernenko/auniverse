@@ -16,6 +16,17 @@ const Catalog = ({onSubmit, searchParams}) => {
     const [isError, setIsError] = useState(false)
 
     const { ordering, value, genre } = searchParams
+
+    useEffect(() => {
+        setIsLoading(true)
+
+        getGames(1).then(res => {
+            setGames(res.data.results)
+            setTotalPages(res.data.count / 20)
+            setIsLoading(false)
+
+        })
+    }, [])
     
     useEffect(() => {
         setIsLoading(true)
@@ -34,29 +45,7 @@ const Catalog = ({onSubmit, searchParams}) => {
                 setIsLoading(false)
             })
         }
-        else {
-                getGames(1).then(({data}) => {
-                    setGames(data.results)
-                    setTotalPages(data.count / 20)
-                }).catch(error => {
-                console.log(error)
-                setIsError(true)
-                setIsLoading(false)
-            })
-            }
 
-        getGameBySearchQuery(value, page, ordering, genre).then(({data}) => {
-                const { results, count } = data
-
-                setGames(results.filter(game => game.slug !== 'atomic-heart'))
-                setTotalPages(count / 20)
-
-                setIsLoading(false)
-            }).catch(error => {
-                console.log(error)
-                setIsError(true)
-                setIsLoading(false)
-            })
     }, [page, value, ordering, genre])
 
     const handlePageChange = (page) => {
