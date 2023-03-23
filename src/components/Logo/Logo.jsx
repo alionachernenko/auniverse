@@ -54,7 +54,7 @@ const Logotype = styled.div`
                 }
 
                 &:hover::before{
-                    left: 90%;
+                    left: 85%;
                 }
             `
         case 'logo_footer':
