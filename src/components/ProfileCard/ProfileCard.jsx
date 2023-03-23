@@ -44,6 +44,7 @@ export const ProfileCard = ({avatar, username, isAvatarLoading, setPhotoPath, se
 
         const file = e.target.files[0]
         e.preventDefault()
+        console.log(file)
         if (file) {
             
             if (file.size > 2097152) {

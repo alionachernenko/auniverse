@@ -34,18 +34,6 @@ export const addNewUser = (userId, email, password, favs, username) => {
   });
 };
 
-export const uploadAvatar = (photo, userId) => {
-  uploadBytes(sRef(storage, `/userpics/${photo.files[0].name}`), photo.files[0])
-    .then(() => {
-      getDownloadURL(sRef(storage, `/userpics/${photo.files[0].name}`)).then(
-        url => {
-          set(ref(database, 'users/' + userId + '/photoUrl'), url);
-        }
-      );
-    })
-    .catch(error => console.log(error));
-};
-
 export const getUserInfo = userId => {
   return get(ref(database, `users/${userId}`));
 };
@@ -136,11 +124,15 @@ export const addAvatar = async (
   setPhotoPath,
   setIsAvatarLoading
 ) => {
-  await uploadBytes(sRef(storage, `/userpics/${file.name}`), file);
-  const url = await getDownloadURL(sRef(storage, `/userpics/${file.name}`));
-  set(ref(database, 'users/' + userId + '/photoUrl'), url);
-  setPhotoPath(url);
-  setIsAvatarLoading(false);
+  uploadBytes(sRef(storage, `/userpics/${file.name}`), file)
+    .then(res => {
+      return getDownloadURL(sRef(storage, `/userpics/${file.name}`));
+    })
+    .then(res => {
+      set(ref(database, 'users/' + userId + '/photoUrl'), res);
+      setPhotoPath(res);
+      setIsAvatarLoading(false);
+    });
 };
 
 export const changeUsername = (userId, username) => {
