@@ -2,8 +2,11 @@ import { Logo } from "components/Logo/Logo"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 import { Container } from "components/Container/Container"
+import { useContext } from "react"
+import { authContext } from "context/context"
 
 export const Footer = () => {
+    const {isLoggedIn} = useContext(authContext)
     return (<PageFooter>
         <Container>
             <FooterContainer>
@@ -13,7 +16,7 @@ export const Footer = () => {
                         <li><Link to='/'>Home</Link></li>
                         <li><Link to='/catalog'>Catalog</Link></li>
                         <li><Link to='/users'>Community</Link></li>
-                        <li><Link to='/profile/bookmarks'>Profile</Link></li>
+                        <li>{isLoggedIn ? <Link to='/profile/bookmarks'>Profile</Link> : <Link to='/login/login-page'>Log in</Link>}</li>
                     </Links>
                 </Navigation>
                 <Contacts>
