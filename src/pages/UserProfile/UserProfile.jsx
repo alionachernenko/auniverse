@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState } from "react"
 import { Outlet, useNavigate, useParams } from "react-router-dom"
-import {   getUserInfo } from "utils/firebase"
+import { getFriendsInvitationsList, getFriendsList, getUserInfo } from "utils/firebase"
 import { NavLink } from "react-router-dom"
 import {authContext} from '../../context/context'
 import styled from "styled-components"
 import { ProfileCard } from "components/ProfileCard/ProfileCard"
 import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
 import { Loader } from "components/Loader/Loader"
-import {ErrorComponent} from "../../components/ErrorComponent/ErrorComponent"
+import { ErrorComponent } from "components/ErrorComponent/ErrorComponent"
 
 const User = () => {
     const { userId } = useContext(authContext)
@@ -15,8 +15,8 @@ const User = () => {
     
     const [name, setName] = useState('')
     const [photo, setPhoto] = useState('')
-    const [favouriteGames, setFavs] = useState([])
-    const [isPendingFriend, setIsPendingFriend] = useState(false)
+    const [bookmarks, setBookmarks] = useState([])
+    const [isFriendInvited, setIsFriendInvited] = useState(false)
     const [isFriend, setIsFriend] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
@@ -25,16 +25,34 @@ const User = () => {
 
     if(userId === id) navigate('/profile/bookmarks')
 
-    useEffect(() => {
-        getUserInfo(id).then((res) => {
-            setIsLoading(true)
-            const {username, favs, photoUrl} = res.val() 
+    useEffect(() => {//промис олл
+        setIsLoading(true)
+        Promise.all([getUserInfo(id), getFriendsInvitationsList(id), getFriendsList(userId)]).then(res => {
+            const [userInfo, invitationsList, friendsList] = res
+            
+            const { username, favs, photoUrl } = userInfo.val()
+            
             setName(username)
 
-            if(favs) setFavs(Object.values(favs))
-            if(photoUrl){ setPhoto(photoUrl)}
-            else (setPhoto(avatarPlaceholder))
+            if (favs) {
+                setBookmarks(Object.values(favs))
+            }
+
+            if (photoUrl) {
+                setPhoto(photoUrl)
+            }
+            else {
+                setPhoto(avatarPlaceholder)
+            }
             
+            if (invitationsList.val()) {
+                setIsFriendInvited(Object.values(invitationsList.val()).some(user => user === userId))
+            }
+
+            if (friendsList.val()) {
+                setIsFriend(Object.values(friendsList.val()).some(user => user === id))
+            }
+
             setIsLoading(false)
         }).catch(error => {
             console.log(error)
@@ -42,28 +60,27 @@ const User = () => {
             setIsLoading(false)
         })
 
-    }, [id, setIsPendingFriend, userId])
+    }, [id, setIsFriendInvited, userId])
 
     return(
         <Page>
-            {isLoading ? <Loader className={'loader-profile'} color={'white'} /> : 
-                (isError ? <ErrorComponent/> :
-                <>
-                    <ProfileCard
-                        avatar={photo}
-                        username={name}
-                        isPendingFriend={isPendingFriend}
-                        isFriend={isFriend}
-                        setIsPendingFriend={setIsPendingFriend}
-                        setIsFriend={setIsFriend}
-                    />
-                    <OutletsSection>
-                        <Tabs>
-                            <Tab to='bookmarks'>Bookmarks</Tab>
-                        </Tabs>
-                        <Outlet context={[favouriteGames]} />
-                    </OutletsSection>
-                </>)
+            {isLoading ? <Loader className={'loader_profile'} color={'white'} /> : isError ? <ErrorComponent /> : 
+            <>
+                <ProfileCard
+                    avatar={photo}
+                    username={name}
+                    isFriendInvited={isFriendInvited}
+                    isFriend={isFriend}
+                    setIsFriendInvited={setIsFriendInvited}
+                    setIsFriend={setIsFriend}
+                />
+                <OutletsSection>
+                    <Tabs>
+                        <Tab to='bookmarks'>Bookmarks</Tab>
+                    </Tabs>
+                    <Outlet context={[bookmarks]} />
+                </OutletsSection>
+            </>
             }
         </Page>
     )

@@ -74,6 +74,8 @@ const Navigation = styled.nav`
 const Links = styled.ul`
     display: flex;
     gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
 
     @media screen and (min-width: 768px){
         flex-direction: column;

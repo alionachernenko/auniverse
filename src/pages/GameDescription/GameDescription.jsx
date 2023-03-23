@@ -4,12 +4,14 @@ import { getGameById, getScreenshots} from "../../services/games-api"
 import { StoresList } from "components/StoresList/StoresList";
 import { Loader } from "../../components/Loader/Loader";
 import {authContext} from '../../context/context'
-import styled from "styled-components";
+
 import { BookmarkButton } from "components/BookmarkButton/BookmarkButton";
 import { Container } from "components/Container/Container";
 import { getComments } from "utils/firebase";
 import { Comments } from "components/Comments/Comments";
 import { ErrorComponent } from "components/ErrorComponent/ErrorComponent";
+
+import styled from "styled-components";
 
 const formatComments = (comments) => {
     return Object.entries(comments).map(el => {

@@ -167,7 +167,7 @@ const Title = styled.h1`
         
 `
 
-const Subtitle = styled.p`
+const Subtitle = styled.h2`
     position: relative;
 
     text-align: center;

@@ -13,7 +13,7 @@ const getCommentText = (comment) => {
 }
 
 export const Comments = ({comments, setComments, gameSlug}) => {
-    const { userId } = useContext(authContext)
+    const { userId, isLoggedIn} = useContext(authContext)
 
     const onFormSubmit = (e) => {
         e.preventDefault()
@@ -29,19 +29,28 @@ export const Comments = ({comments, setComments, gameSlug}) => {
 
     return (
         <Section>
-            <Form onSubmit={(e) => onFormSubmit(e)}>
+            {!isLoggedIn ? <Message>You must be logged in to comment</Message> :
+                <Form onSubmit={(e) => onFormSubmit(e)}>
                 <Input required name='comment' placeholder="What do you think about this game?" />
                 <SubmitButton type="submit">Comment</SubmitButton>
             </Form>
+            }
                 {comments.length !== 0 &&
                     <CommentsList>
-                        {comments.map((comment, index) => 
-                            <Comment userId={getAndFormatAuthorId(comment)} key={index} text={getCommentText(comment)} />
+                        {comments.map(comment => 
+                            <Comment userId={getAndFormatAuthorId(comment)} key={Object.keys(comment)[0]} text={getCommentText(comment)} />
                         )}
                     </CommentsList>}
         </Section>
     )
 }
+
+const Message = styled.p`
+    color: white;
+    font-size: 30px;
+    font-family: 'Nunito', sans-serif;
+    margin-bottom: 20px
+`
 
 const Section = styled.div`
     width: 100%;

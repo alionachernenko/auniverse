@@ -8,6 +8,7 @@ export const Logo = ({ className }) => {
     )
 }
 
+
 const Logotype = styled.div`
     ${({className}) => {
     switch (className) {
@@ -21,18 +22,25 @@ const Logotype = styled.div`
                 gap: 6px;
                 font-size: 16px;
                 color: #FFFDFD;
+                position: relative;
+                mix-blend-mode: difference;
+                margin-left: 15px;
 
                 &::after {
                     display: block;
                     content: "";
-                    width: 9px;
-                    height: 9px;
+                    width: 10px;
+                    height: 10px;
                     border-radius: 10px;
-                    background-color: white
+                    background-color: white                  
                 }
 
                 &::before{
                     display: block;
+                    position: absolute;
+                    // mix-blend-mode: difference;
+                    color: white;
+                    left: -15px;
                     content: "";
                     border-right: 6px solid transparent;
                     border-top: 6px solid #FFFFFF;
@@ -42,6 +50,11 @@ const Logotype = styled.div`
                     border-top-right-radius: 6px;
                     border-bottom-left-radius: 6px;
                     border-bottom-right-radius: 6px;
+                    transition: 1000ms all ease;
+                }
+
+                &:hover::before{
+                    left: 90%;
                 }
             `
         case 'logo_footer':

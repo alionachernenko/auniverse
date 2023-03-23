@@ -6,14 +6,14 @@ import { addAvatar, addUserToFriensInvitationsList, changeUsername, removeFriend
 import { Oval } from "react-loader-spinner"
 
 import { RxUpload } from "react-icons/rx"
-import { BsPenFill } from 'react-icons/bs'
+import { BsPencilSquare } from 'react-icons/bs'
 import {FiUserPlus, FiUserX} from 'react-icons/fi'
 import { MdDone } from 'react-icons/md'
 
 import styled from "styled-components"
 import { toast } from "react-toastify"
 
-export const ProfileCard = ({avatar, username, isAvatarLoading, setPhotoPath, setIsAvatarLoading, setUsername, isPendingFriend, isFriend, setIsPendingFriend, setIsFriend}) => {
+export const ProfileCard = ({avatar, username, isAvatarLoading, setPhotoPath, setIsAvatarLoading, setUsername, isFriendInvited, isFriend, setIsFriendInvited, setIsFriend}) => {
     const { userId } = useContext(authContext)
     const { id } = useParams()
     const location = useLocation()
@@ -27,7 +27,7 @@ export const ProfileCard = ({avatar, username, isAvatarLoading, setPhotoPath, se
 
     const sendInvitation = () => {
         addUserToFriensInvitationsList(id, userId)
-        setIsPendingFriend(true)
+        setIsFriendInvited(true)
     }
     
     const onUsernameFormSubmit = (e) => {
@@ -73,11 +73,11 @@ export const ProfileCard = ({avatar, username, isAvatarLoading, setPhotoPath, se
                             <RxUpload size='100%' fill='orange' color="orange" stroke="orange"/>
                         </UploadButton>
                     </>
-                    : !isPendingFriend && !isFriend ?
+                    : !isFriendInvited && !isFriend ?
                         <ChangeFriendStatusButton type='button' onClick={sendInvitation}>
                             <FiUserPlus size='100%' fill='orange' color="orange" stroke="orange"/>
                         </ChangeFriendStatusButton>
-                        : isPendingFriend ?
+                        : isFriendInvited ?
                             <FriendStatus>You sent an invitation</FriendStatus>
                         :   <ChangeFriendStatusButton onClick={deleteFriend}>
                                 <FiUserX size='100%' fill='orange' color="orange" stroke="orange"/>
@@ -89,14 +89,14 @@ export const ProfileCard = ({avatar, username, isAvatarLoading, setPhotoPath, se
                     </Spinner> : 
                     <Avatar src={`${avatar}`} alt={`${username}'s avatar`} />}
             </AvatarWrapper>
-                    <div style={{display: 'flex', gap: 5, alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap'}}>
+                    <UsernameWrapper>
                         {!showChangeUsernameFrom && <Username>
                             {username}
                         </Username>}
                         {location.pathname.includes('profile') && !showChangeUsernameFrom && <ChangeUsernameButton onClick={() => setShowChangeUsernameForm(true)}>
-                            <BsPenFill color="white" />
+                            <BsPencilSquare color="white" size={20}/>
                         </ChangeUsernameButton>}
-                    </div>
+                    </UsernameWrapper>
                     {showChangeUsernameFrom && <ChangeUsernameForm onSubmit={(e) => onUsernameFormSubmit(e)}>
                         <input type='text' name="username" minLength='3' required autoComplete='off'/>
                         <button><MdDone size={15}/></button>
@@ -107,7 +107,7 @@ export const ProfileCard = ({avatar, username, isAvatarLoading, setPhotoPath, se
 
 const Info = styled.div`
     margin-bottom: 20px;
-
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -146,7 +146,13 @@ const AvatarWrapper = styled.div`
     background-color: transparent;
 
 `
-
+const UsernameWrapper = styled.div`
+    display: flex; 
+    gap: 5px;
+    align-items: baseline; 
+    justify-content: center; 
+    flex-wrap: wrap;
+`
 const FriendStatus = styled.p`
     position: absolute;
     z-index: 1111;
@@ -204,6 +210,7 @@ const ChangeUsernameButton = styled.button`
     align-items: center;
     justify-content: center;
     background-color: transparent;
+    height: 100%;
 `
 
 const ChangeUsernameForm = styled.form`
