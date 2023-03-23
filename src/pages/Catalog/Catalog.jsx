@@ -30,7 +30,6 @@ const Catalog = ({onSubmit, searchParams}) => {
     
     useEffect(() => {
         setIsLoading(true)
-
         if (value !== '') {
             getGameBySearchQuery(value, page, ordering, genre).then(({data}) => {
                 const { results, count } = data
