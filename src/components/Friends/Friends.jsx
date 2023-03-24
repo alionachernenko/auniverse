@@ -6,7 +6,7 @@ import { FriendCard } from "components/FriendCard/FriendCard"
 export const Friends = () => {
     // eslint-disable-next-line no-unused-vars
     const [_, friends, setFriends, invitations, setInvitations ] = useOutletContext()
-    console.log(friends)
+
     return ( 
         <Block>
             {invitations.length !== 0 &&

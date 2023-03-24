@@ -44,22 +44,7 @@ export const ProfileCard = ({avatar, username, isAvatarLoading, setPhotoPath, se
 
         const file = e.target.files[0]
         e.preventDefault()
-        console.log(file)
         if (file) {
-            
-            // if (file.size > 2097152) {
-            //     toast.info('Maximum size: 2 MB', {
-            //             position: "top-left",
-            //             autoClose: 5000,
-            //             hideProgressBar: false,
-            //             closeOnClick: true,
-            //             draggable: true,
-            //             theme: "dark",
-            //         });
-            //     setIsAvatarLoading(false)
-            //     return
-            // }
-
             setIsAvatarLoading(true)
             addAvatar(file, userId, setPhotoPath, setIsAvatarLoading)
         }

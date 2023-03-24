@@ -44,8 +44,6 @@ const GameDescription = () => {
             const {name, description_raw, stores, released} = data
             const { results } = screenshots.data
 
-            console.log(comments)
-            
             setGameData(data)
             setTitle(name)
             setDescription(description_raw)

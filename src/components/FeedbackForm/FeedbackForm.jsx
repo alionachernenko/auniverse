@@ -11,7 +11,7 @@ import { MdClose } from "react-icons/md"
 export const FeedbackForm = ({onClick}) => {
     const {userId} = useContext(authContext)
 
-    const [images, setImage] = useState([])
+    const [images, setImages] = useState([])
     const [files, setFiles] = useState([])
     const [showForm, setShowForm] = useState(true)
 
@@ -45,7 +45,6 @@ export const FeedbackForm = ({onClick}) => {
     
     const onChooseFile = (e) => {
         const files = Object.values(e.target.files)
-        console.log(files)
         let filesChoosen = []
 
         files.forEach(file => {
@@ -53,10 +52,9 @@ export const FeedbackForm = ({onClick}) => {
             reader.readAsDataURL(file)
 
             reader.onload = () => {
-            console.log(reader.result);
             filesChoosen = [...filesChoosen, reader.result]
                 
-            setImage(filesChoosen)
+            setImages(filesChoosen)
             };
         })
 
@@ -64,7 +62,7 @@ export const FeedbackForm = ({onClick}) => {
     }
 
     const onRemoveFile = (index) => {
-        setImage(prev => prev.filter(image => prev.indexOf(image) !== index))
+        setImages(prev => prev.filter(image => prev.indexOf(image) !== index))
         setFiles(prev => prev.filter(file => prev.indexOf(file) !== index))
     }
 

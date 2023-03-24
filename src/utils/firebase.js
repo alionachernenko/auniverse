@@ -103,7 +103,6 @@ export const removeFriend = (id, userId) => {
 };
 
 export const leaveComment = (userId, gameSlug, text) => {
-  console.log('hi', database, gameSlug, userId);
   get(ref(database, '/comments/' + gameSlug))
     .then(res =>
       set(ref(database, `/comments/` + gameSlug), {
