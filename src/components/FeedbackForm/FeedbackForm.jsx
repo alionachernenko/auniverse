@@ -182,7 +182,6 @@ const Form = styled.form`
     align-items: center;
     gap: 10px;
     width: 100%;
-
 `
 
 const InputsWrapper = styled.div`
