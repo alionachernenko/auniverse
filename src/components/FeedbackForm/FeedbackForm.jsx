@@ -70,7 +70,7 @@ export const FeedbackForm = ({onClick}) => {
 
     return createPortal(
         <Backdrop onClick={(e) => {
-            if(e.target === e.currentTarget)onClick()
+            if(e.target === e.currentTarget) onClick()
         }}>
             <FormBox>
                 <CloseButton type="button" onClick={onClick}>
@@ -217,6 +217,7 @@ const UploadPhotosButton = styled.label`
     position: absolute;
     bottom: 7px;
     left: 7px;
+    cursor: pointer
 `
 
 const Photos = styled.ul`
@@ -245,6 +246,7 @@ const RemovePhotoButton = styled.span`
     border-radius: 10px;
     opacity: 0;
     transition: 200ms all ease;
+    cursor: pointer;
 
     ${PhotoWrapper}:hover &{
         opacity: 1;
