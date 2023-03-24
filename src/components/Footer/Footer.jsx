@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { Container } from "components/Container/Container"
 import { useContext } from "react"
 import { authContext } from "context/context"
-import { FeedbackForm } from "components/FeedbackForm/FeedbackForm"
+import { FeedbackFormButton } from "components/FeedbackFormButton.jsx/FeedbackFormButton"
 
 export const Footer = () => {
     const {isLoggedIn} = useContext(authContext)
@@ -20,10 +20,10 @@ export const Footer = () => {
                         <li>{isLoggedIn ? <Link to='/profile/bookmarks'>Profile</Link> : <Link to='/login/login-page'>Log in</Link>}</li>
                     </Links>
                 </Navigation>
-                <FeedbackForm/>
                 <Contacts>
                     <a href="tel:+380953596448">+380953596448</a>
                     <a href='mailto:alionachernenkoch@gmail.com'>alionachernenkoch@gmail.com</a>
+                    <FeedbackFormButton/>
                 </Contacts>
                 </FooterContainer>
                 </Container>
@@ -49,7 +49,6 @@ const PageFooter = styled.footer`
     @media screen and (min-width: 768px){
         padding: 0
     }
-    
 `
 
 const FooterContainer = styled.div`

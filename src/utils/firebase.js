@@ -139,9 +139,21 @@ export const changeUsername = (userId, username) => {
   set(ref(database, 'users/' + userId + '/username'), username);
 };
 
-export const leaveFeedback = file => {
-  uploadBytes(sRef(storage, `/feedback/${file.name}`), file, {
-    contentType: 'image/jpeg',
+export const leaveFeedbackPhotos = (file, userId, feedbackId) => {
+  uploadBytes(
+    sRef(storage, `/feedback/${feedbackId}/${file.name}-${userId}`),
+    file,
+    {
+      contentType: 'image/jpeg',
+    }
+  );
+};
+
+export const leaveFeedbackText = (text, userId, feedbackId) => {
+  set(ref(database, `/feedback/${feedbackId}`), {
+    author: userId,
+    text,
   });
 };
+
 export { auth };
