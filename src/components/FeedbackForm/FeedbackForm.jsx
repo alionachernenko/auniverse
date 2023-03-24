@@ -98,7 +98,7 @@ export const FeedbackForm = ({onClick}) => {
                 </Form> :
                     <>
                         <ThanksMessage>Thank you!</ThanksMessage>
-                        <ThanksMessage>We will take your concerns into account and fix the problems</ThanksMessage></>
+                        <ThanksMessage>We will take your notes into account and fix the problems</ThanksMessage></>
                 }
             </FormBox>
         </Backdrop>, document.querySelector('#feedback-form-root')
