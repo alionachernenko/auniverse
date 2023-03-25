@@ -6,6 +6,7 @@ import { acceptInvitationAndAddUser } from "utils/firebase"
 import { Link } from "react-router-dom"
 import {FiPlusCircle} from 'react-icons/fi'
 import styled from "styled-components"
+import { AcceptInvitationButton } from "components/AcceptInvitationButton/AcceptInvitationButton"
 
 export const FriendCard = ({id, isPending, setInvitations, setFriends}) => {
     const { userId } = useContext(authContext)
@@ -20,7 +21,7 @@ export const FriendCard = ({id, isPending, setInvitations, setFriends}) => {
     }
 
     useEffect(() => {
-        getUserInfo(id).then(res => {
+    getUserInfo(id).then(res => {
             const { username, photoUrl } = res.val()
             
             setName(username)
@@ -35,8 +36,8 @@ export const FriendCard = ({id, isPending, setInvitations, setFriends}) => {
                 <Avatar width={200} src={`${avatar}`} alt={`${name}'s avatar`}/>
 
             <Username>{name}</Username></Card>
-            {isPending && <AcceptButton onClick={onAcceptButtonClick}>
-                        <FiPlusCircle size='100%'/></AcceptButton>}
+            {isPending && <AcceptInvitationButton onClick={onAcceptButtonClick}>
+                        <FiPlusCircle size='100%'/></AcceptInvitationButton>}
                     
         </li>
     )
@@ -85,36 +86,5 @@ const Username = styled.p`
 
     @media screen and (max-width: 1199px) {
         display: none
-    }
-`
-
-const AcceptButton = styled.button`
-    position: absolute;
-    top: 50%;
-    right: 50%;
-    transform: translate(50%, -50%);
-    height: auto;
-    width: auto;
-    width: 30px;
-    height: 30px;
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 0;
-    border: none;
-    background-color: green;
-    border-radius: 100px;
-
-    font-family: 'Nunito', sans-serif;
-    font-size: 15px;
-
-    color: white;
-
-    @media screen and (min-width: 1200px) {
-        top: 50%;
-        right: 10px;
-        transform: translateY(-50%);
     }
 `
