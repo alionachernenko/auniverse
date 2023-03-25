@@ -20,18 +20,7 @@ const Catalog = ({onSubmit, searchParams}) => {
     useEffect(() => {
         setIsLoading(true)
 
-        getGames(1).then(res => {
-            setGames(res.data.results)
-            setTotalPages(res.data.count / 20)
-            setIsLoading(false)
-
-        })
-    }, [])
-    
-    useEffect(() => {
-        setIsLoading(true)
-        if (value !== '') {
-            getGameBySearchQuery(value, page, ordering, genre).then(({data}) => {
+        getGameBySearchQuery(value, page, ordering, genre).then(({data}) => {
                 const { results, count } = data
 
                 setGames(results.filter(game => game.slug !== 'atomic-heart'))
@@ -43,8 +32,6 @@ const Catalog = ({onSubmit, searchParams}) => {
                 setIsError(true)
                 setIsLoading(false)
             })
-        }
-
     }, [page, value, ordering, genre])
 
     const handlePageChange = (page) => {
@@ -56,7 +43,7 @@ const Catalog = ({onSubmit, searchParams}) => {
     }
     return (
         <Page>
-            {isError ? <ErrorComponent /> :
+            {isError ? <ErrorComponent/> :
             <>
                 <SearchForm className={'catalog'} onSubmit={onSubmit} setPage={setPage} />
                     {isLoading ? <Loader className={'loader-catalog'} color={'white'} /> :
@@ -69,7 +56,7 @@ const Catalog = ({onSubmit, searchParams}) => {
                         )
                     }
                 </>
-        }
+            }
         </Page>
     )
 }

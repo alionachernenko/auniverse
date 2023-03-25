@@ -24,10 +24,10 @@ export const SearchForm = ({ onSubmit, className, setPage }) => {
 
     const onFormSubmit = (e) => {
         e.preventDefault()
-        const {query, ordering = null, genre = null} = e.target.elements
+        const {query = null, ordering = null, genre = null} = e.target.elements
 
         onSubmit(e, 
-        query.value === 'All' ? null : query.value, 
+        query.value === '' ? null : query.value, 
         ordering.value === 'All' ? null : ordering.value, 
         genre.value === 'All' ? null : genre.value)
         
