@@ -3,13 +3,17 @@ import ReactPaginate from "react-paginate"
 import { MdOutlineDoubleArrow } from 'react-icons/md'
 import styled from 'styled-components'
 
-export const Pagination = ({totalPages, changePage, page}) => {
+export const Pagination = ({ totalPages, changePage, page }) => {
+
     return (
         <PaginationContainer>
             <ReactPaginate
-                onClick={(e) => {
-                    changePage(e.nextSelectedPage)
-                }}
+                onPageChange={
+                    (e) => {
+                    
+                    changePage(e.selected)
+                    }
+                }
                 nextClassName='next'
                 previousClassName="prev"
                 previousLabel={<MdOutlineDoubleArrow fill="white"/>}
@@ -17,6 +21,7 @@ export const Pagination = ({totalPages, changePage, page}) => {
                 pageRangeDisplayed={5}
                 marginPagesDisplayed={1}
                 pageClassName='page'
+                disabledClassName="disabled"
                 containerClassName='container'
                 activeClassName='active'
                 forcePage={page - 1}
@@ -68,12 +73,18 @@ const PaginationContainer = styled.div`
         }
     }
 
-    & .next a, & .prev a{
-        display: block;
+    & .disabled a{
+        cursor: not-allowed;
+
+        & svg{
+            fill: grey;
+        }
+        
+        
     }
 
-    & .next:not(.disabled), & .prev:not(.disabled) {
-        cursor: pointer;
+    & .next a, & .prev a{
+        display: block;
     }
 
     & .next svg, & .prev svg {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getGameBySearchQuery, getGames } from "../../services/games-api"
+import { getGameBySearchQuery} from "../../services/games-api"
 import { Pagination } from "../../components/Pagination/Pagination"
 import { SearchForm } from "../../components/SearchForm/SearchForm"
 import { Loader } from "../../components/Loader/Loader"

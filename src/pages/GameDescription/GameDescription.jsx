@@ -44,6 +44,7 @@ const GameDescription = () => {
             const {name, description_raw, stores, released} = data
             const { results } = screenshots.data
 
+            console.log(data)
             setGameData(data)
             setTitle(name)
             setDescription(description_raw)
@@ -77,7 +78,7 @@ const GameDescription = () => {
                             </Meta>
                             {description && <Overview>{description}</Overview>}
                         </div>
-                        {stores && <StoresList stores={stores}/>}
+                                {stores && <StoresList stores={stores} data={gameData}/>}
                     </Info>
                  </div>
                     {screenshots &&

@@ -3,7 +3,8 @@ import { SiGogdotcom, SiNintendo, SiEpicgames } from 'react-icons/si'
 import {RiXboxLine} from 'react-icons/ri'
 import styled from 'styled-components'
 
-export const StoresList = ({stores}) => {
+export const StoresList = ({ stores}) => {
+
     return (
         <List>
             {stores.map(({store, id}) => {

@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Logo } from 'components/Logo/Logo';
 import { SearchForm } from 'components/SearchForm/SearchForm';
 import { Navigation } from 'components/Navigation/Navigation';
@@ -14,7 +14,7 @@ export const Header = ({onSubmit}) => {
         <PageHeader>
             <Container>
                 <HeaderContainer>
-                <Logo className={'logo_header'}>AUNIVERSE</Logo>
+                <Link to='/'><Logo className={'logo_header'}>AUNIVERSE</Logo></Link>
                     <>
                         {location.pathname === '/' && <SearchForm onSubmit={onSubmit} className={'header'} />}
                         <Navigation/>
