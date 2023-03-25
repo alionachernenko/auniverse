@@ -25,7 +25,7 @@ const User = () => {
 
     if(userId === id) navigate('/profile/bookmarks')
 
-    useEffect(() => {//промис олл
+    useEffect(() => {
         setIsLoading(true)
         Promise.all([getUserInfo(id), getFriendsInvitationsList(id), getFriendsList(userId)]).then(res => {
             const [userInfo, invitationsList, friendsList] = res
