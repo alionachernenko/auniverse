@@ -15,7 +15,7 @@ export const Friends = () => {
                             <FriendCard id={friend} isPending={true} setInvitations={setInvitations} setFriends={setFriends} />)}
                 </InvitationsList>
             }
-            {friends.length === 0  ? <p style={{textAlign: 'left'}}>No friends</p> : <FriendsList>
+            {friends.length === 0  ? <p style={{textAlign:'left'}}>No friends</p> : <FriendsList>
                 {friends.map(friend => <FriendCard id={friend} key={friend} isPending={false} />)}
             </FriendsList>}
             
