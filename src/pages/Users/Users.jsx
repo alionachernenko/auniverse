@@ -14,7 +14,7 @@ const Users = () => {
     const [userIDs, setUserIDs] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [isError, setIsError] = useState(false)
-    const {userId, isLoggedIn} = useContext(authContext)
+    const { userId, isLoggedIn } = useContext(authContext)
 
 
     useEffect(() => {

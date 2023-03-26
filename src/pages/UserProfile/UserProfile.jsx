@@ -8,7 +8,7 @@ import { ProfileCard } from "components/ProfileCard/ProfileCard"
 import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
 import { Loader } from "components/Loader/Loader"
 import { ErrorComponent } from "components/ErrorComponent/ErrorComponent"
-import { AcceptInvitationForm } from "components/AcceptInvitationForm/AcceptInvitationForm"
+import { AcceptInvitationForm } from "AcceptInvitationForm/AcceptInvitationForm"
 
 const User = () => {
     const { userId } = useContext(authContext)

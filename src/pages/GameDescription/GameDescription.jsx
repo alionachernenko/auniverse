@@ -66,8 +66,7 @@ const GameDescription = () => {
                 setIsError(true)
                 setIsLoading(false)
             })
-        
-    }, [gameSlug])
+    }, [description, gameSlug])
 
     return (
         <Page>
@@ -83,7 +82,7 @@ const GameDescription = () => {
                                 { isLoggedIn && <BookmarkButton gameData={gameData}/> }
                             </Meta>
                                     {description && <Overview className={showOverview ? 'more' : 'less'}>{description}</Overview>}
-                                    <ToggleShowButton onClick={toggleShowDescription}>Show {showOverview ? 'less' : 'more'}</ToggleShowButton>
+                                    {description && description.length > 673 && <ToggleShowButton onClick={toggleShowDescription}>Show {showOverview ? 'less' : 'more'}</ToggleShowButton>}
                         </div>
                                 {stores && <StoresList stores={stores} data={gameData}/>}
                     </Info>
@@ -193,7 +192,7 @@ const Overview = styled.p`
     text-overflow: ellipsis;
 
     &.less{
-        height: 200px;
+        height: 205px;
     }
 
     &.more{

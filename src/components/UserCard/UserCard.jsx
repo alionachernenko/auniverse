@@ -12,6 +12,7 @@ export const UserCard = ({ id}) => {
     useEffect(() => {
         getUserInfo(id).then(res => {
             const { username, photoUrl } = res.val()
+            console.log(id)
             
             setName(username)
             if(res.val().photoUrl) {setAvatar(photoUrl)}
