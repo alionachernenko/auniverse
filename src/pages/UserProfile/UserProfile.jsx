@@ -13,7 +13,6 @@ import { AcceptInvitationForm } from "components/AcceptInvitationForm/AcceptInvi
 const User = () => {
     const { userId } = useContext(authContext)
     const { id } = useParams()
-    
     const [name, setName] = useState('')
     const [photo, setPhoto] = useState('')
     const [bookmarks, setBookmarks] = useState([])
