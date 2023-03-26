@@ -6,6 +6,7 @@ import { acceptInvitationAndAddUser } from "utils/firebase"
 import { Link } from "react-router-dom"
 import {FiPlusCircle} from 'react-icons/fi'
 import styled from "styled-components"
+import {AiOutlineCloseCircle} from 'react-icons/ai'
 
 export const FriendCard = ({id, isPending, setInvitations, setFriends}) => {
     const { userId } = useContext(authContext)
@@ -19,6 +20,11 @@ export const FriendCard = ({id, isPending, setInvitations, setFriends}) => {
             setInvitations(prev => prev.filter(friend => friend !== id))
             setFriends(prev => [...prev, id])
           })
+      }
+    
+    const onDeclineButtonClick = () => {
+        removeFriendFromPending(id, userId)
+        setInvitations(prev => prev.filter(friend => friend !== id))
     }
 
     useEffect(() => {
@@ -37,12 +43,34 @@ export const FriendCard = ({id, isPending, setInvitations, setFriends}) => {
                 <Avatar width={200} src={`${avatar}`} alt={`${name}'s avatar`}/>
 
             <Username>{name}</Username></Card>
-            {isPending && <AcceptButton onClick={onAcceptButtonClick}>
-                        <FiPlusCircle size='100%'/></AcceptButton>}
+            {isPending &&
+                <ChangeInviteStatusButtons><AcceptButton onClick={onAcceptButtonClick}>
+                    <FiPlusCircle size='100%' /></AcceptButton>
+                    <DeclineButton onClick={onDeclineButtonClick}>
+                        <AiOutlineCloseCircle size='100%' />
+                    </DeclineButton>
+                </ChangeInviteStatusButtons>}
                     
         </li>
     )
 }
+
+const ChangeInviteStatusButtons = styled.div`
+    display: flex;
+    gap: 5px;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    height: auto;
+    width: auto;
+       @media screen and (min-width: 1200px) {
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+    }
+`
+
 
 const Card = styled(Link)`
     
@@ -91,12 +119,6 @@ const Username = styled.p`
 `
 
 const AcceptButton = styled.button`
-    position: absolute;
-    top: 50%;
-    right: 50%;
-    transform: translate(50%, -50%);
-    height: auto;
-    width: auto;
     width: 30px;
     height: 30px;
     
@@ -114,9 +136,25 @@ const AcceptButton = styled.button`
 
     color: white;
 
-    @media screen and (min-width: 1200px) {
-        top: 50%;
-        right: 10px;
-        transform: translateY(-50%);
-    }
+ 
+`
+
+
+const DeclineButton = styled.button`
+    width: 30px;
+    height: 30px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+    border: none;
+    background-color: red;
+    border-radius: 100px;
+
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+
+    color: white;
 `

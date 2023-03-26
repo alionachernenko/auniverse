@@ -8,6 +8,7 @@ import { ProfileCard } from "components/ProfileCard/ProfileCard"
 import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
 import { Loader } from "components/Loader/Loader"
 import { ErrorComponent } from "components/ErrorComponent/ErrorComponent"
+import { AcceptInvitationForm } from "components/AcceptInvitationForm/AcceptInvitationForm"
 
 const User = () => {
     const { userId } = useContext(authContext)
@@ -20,6 +21,14 @@ const User = () => {
     const [isFriend, setIsFriend] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
+    const [isPending, setIsPending] = useState(false)
+
+
+        useEffect(() => {
+        getFriendsInvitationsList(userId).then((res) => {
+            if(res.val()) setIsPending(Object.keys(res.val()).some(friendId => friendId === id))
+        })
+    }, [id, userId])
 
     const navigate = useNavigate()
 
@@ -65,7 +74,8 @@ const User = () => {
     return(
         <Page>
             {isLoading ? <Loader className={'loader_profile'} color={'white'} /> : isError ? <ErrorComponent /> : 
-            <>
+                <>
+                    {isPending && <AcceptInvitationForm setIsPending={setIsPending} setIsFriend={setIsFriend} username={name} />}
                 <ProfileCard
                     avatar={photo}
                     username={name}
@@ -73,6 +83,7 @@ const User = () => {
                     isFriend={isFriend}
                     setIsFriendInvited={setIsFriendInvited}
                     setIsFriend={setIsFriend}
+                    isPending={isPending}
                 />
                 <OutletsSection>
                     <Tabs>

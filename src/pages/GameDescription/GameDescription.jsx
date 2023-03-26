@@ -31,7 +31,13 @@ const GameDescription = () => {
     const [gameData, setGameData] = useState({})
     const [comments, setComments] = useState([])
     const [isError, setIsError] = useState(false)
+    const [showOverview, setShowOverview] = useState(false)
     const { gameSlug } = useParams()
+
+    const toggleShowDescription = () => {
+        setShowOverview(prev => !prev)
+    }
+
 
     window.scroll({
         top: 0,
@@ -76,7 +82,8 @@ const GameDescription = () => {
                                 { year && <Year>{year}</Year> }
                                 { isLoggedIn && <BookmarkButton gameData={gameData}/> }
                             </Meta>
-                            {description && <Overview>{description}</Overview>}
+                                    {description && <Overview className={showOverview ? 'more' : 'less'}>{description}</Overview>}
+                                    <ToggleShowButton onClick={toggleShowDescription}>Show {showOverview ? 'less' : 'more'}</ToggleShowButton>
                         </div>
                                 {stores && <StoresList stores={stores} data={gameData}/>}
                     </Info>
@@ -180,8 +187,18 @@ const Overview = styled.p`
     max-width: 80vw;
     font-size: 20px;
     line-height: 35px;
-    max-height: 200px;
-    overflow-y: scroll
+    overflow: hidden;
+    transition: 250ms all ease;
+    margin-bottom: 20px;
+    text-overflow: ellipsis;
+
+    &.less{
+        height: 200px;
+    }
+
+    &.more{
+        height: auto
+    }
 `
 
 const Screenshots = styled.ul`
@@ -227,5 +244,13 @@ const ScreenshotWrapper = styled.li`
         width: calc((100% - 30px)/4);
     }
 `
-
+const ToggleShowButton = styled.button`
+    background-color: transparent;
+    font-family: 'Nunito', sans-serif;
+    color: white;
+    font-size: 17px;
+    padding: 5px 10px;
+    border: 1px solid orange;
+    border-radius: 10px
+`
 export default GameDescription

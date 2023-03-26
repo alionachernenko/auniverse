@@ -1,7 +1,7 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useState } from "react"
 import { useLocation, useParams } from "react-router-dom"
 import { authContext } from '../../context/context'
-import { addAvatar, addUserToFriensInvitationsList, changeUsername, getFriendsInvitationsList, removeFriend} from "utils/firebase"
+import { addAvatar, addUserToFriensInvitationsList, changeUsername, removeFriend} from "utils/firebase"
 
 import { Oval } from "react-loader-spinner"
 
@@ -11,21 +11,16 @@ import {FiUserPlus, FiUserX} from 'react-icons/fi'
 import { MdDone, MdClose } from 'react-icons/md'
 
 import styled from "styled-components"
-import { AcceptInvitationButton } from "components/AcceptInvitationButton/AcceptInvitationButton"
 
-export const ProfileCard = ({avatar, username, isAvatarLoading, setPhotoPath, setIsAvatarLoading, setUsername, isFriendInvited, isFriend, setIsFriendInvited, setIsFriend, setInvitations, setFriends}) => {
+export const ProfileCard = ({avatar, username, isAvatarLoading, setPhotoPath, setIsAvatarLoading, setUsername, isFriendInvited, isFriend, setIsFriendInvited, setIsFriend, isPending}) => {
     const { userId } = useContext(authContext)
     const { id } = useParams()
     const location = useLocation()
-    const [isPending, setIsPending] = useState(false)
+    
 
     const [showChangeUsernameForm, setShowChangeUsernameForm] = useState(false)
 
-    useEffect(() => {
-        getFriendsInvitationsList(userId).then((res) => {
-            if(res.val()) setIsPending(Object.keys(res.val()).some(friendId => friendId === id))
-        })
-    }, [id, userId])
+
 
     const deleteFriend = () => {
         removeFriend(id, userId)
@@ -66,13 +61,13 @@ export const ProfileCard = ({avatar, username, isAvatarLoading, setPhotoPath, se
                             <RxUpload size='100%' fill='orange' color="orange" stroke="orange"/>
                         </UploadButton>
                     </>
-                    : isPending ? <AcceptInvitationButton setIsFriend={setIsFriend} setInvitations={setInvitations} setFriends={setFriends} setIsPending={setIsPending} /> : !isFriendInvited && !isFriend ?
+                     : !isPending && !isFriendInvited && !isFriend ?
                         <ChangeFriendStatusButton type='button' onClick={sendInvitation}>
                             <FiUserPlus size='100%' fill='orange' color="orange" stroke="orange"/>
                         </ChangeFriendStatusButton>
-                        : isFriendInvited ?
+                        : !isPending && isFriendInvited ?
                             <FriendStatus>You sent an invitation</FriendStatus>
-                        :   <ChangeFriendStatusButton onClick={deleteFriend}>
+                        :  !isPending && <ChangeFriendStatusButton onClick={deleteFriend}>
                                 <FiUserX size='100%' fill='orange' color="orange" stroke="orange"/>
                             </ChangeFriendStatusButton>}
                 
@@ -161,6 +156,10 @@ const AvatarWrapper = styled.div`
     overflow: hidden;
     
     background-color: transparent;
+
+    &:hover button{
+        opacity: 1
+    }
 
 `
 const UsernameWrapper = styled.div`
@@ -269,7 +268,5 @@ const ChangeFriendStatusButton = styled.button`
     
     transition: 250ms all ease;
 
-    ${AvatarWrapper}:hover &{
-        opacity: 1
-    }
+   
 `

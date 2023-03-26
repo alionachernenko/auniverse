@@ -42,9 +42,11 @@ const Users = () => {
                         <Container>
                             {isLoading ?
                                 <Loader className={'loader-profile'} color={'#00021A'} /> : isError ? <ErrorComponent /> :
-                                    <UsersList>
-                                        {userIDs.map(userID => <UserCard id={userID} key={userID} />)}
-                                    </UsersList>
+                                    <>
+                                        <UsersList>
+                                            {userIDs.map(userID => <UserCard id={userID} key={userID} />)}
+                                        </UsersList>
+                                    </>
                             }
                         </Container>
                     </Page>
