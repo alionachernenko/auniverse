@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import { NavLink, Outlet, useNavigate } from "react-router-dom"
 import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
-import { getFavouriteGames, userSignOut, getUserInfo, getFriendsList, getFriendsInvitationsList } from "../../utils/firebase"
+import { getFavouriteGames, userSignOut, getUserInfo, getFriendsList, getFriendsInvitationsList} from "../../utils/firebase"
 import { Loader } from 'components/Loader/Loader'
 import { ProfileCard } from 'components/ProfileCard/ProfileCard'
 import {ImExit} from 'react-icons/im'
@@ -31,7 +31,7 @@ const AccountPage = () => {
             navigate('/login/login-page')
             return
         }
-        
+
         Promise.all([getUserInfo(userId), getFavouriteGames(userId), getFriendsList(userId), getFriendsInvitationsList(userId)])
             .then(res => {
                 const [snapshot, games, friends, invitations] = res
@@ -49,8 +49,8 @@ const AccountPage = () => {
             }
 
                 if (games.val()) setFavouriteGames([...Object.values(games.val())])
-                if (friends.val()) setFriends(Object.values(friends.val()))
-                if(invitations.val()) setInvitations(Object.values(invitations.val()))
+                if (friends.val()) setFriends([...Object.values(friends.val())])
+                if (invitations.val()) setInvitations([...Object.values(invitations.val())])
                 
                 setIsLoading(false)
                
@@ -60,7 +60,7 @@ const AccountPage = () => {
                 setIsLoading(false)
             })
     
-    }, [isLoggedIn, navigate, setFriends, userId])
+    }, [isLoggedIn, navigate, userId])
 
     const logOut = () => {
         userSignOut()
@@ -85,6 +85,8 @@ const AccountPage = () => {
                                     isAvatarLoading={isAvatarLoading}
                                     setIsAvatarLoading={setIsAvatarLoading}
                                     setUsername={setUsername}
+                                    setInvitations={setInvitations}
+                                    setFriends={setFriends}
                                 />
                                 <OutletsSection>
                                     <Tabs>

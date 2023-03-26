@@ -1,8 +1,25 @@
-import styled from "styled-components"
+import { authContext } from "context/context"
+import { useContext } from "react"
+import { useParams } from "react-router-dom"
 
-export const AcceptInvitationButton = ({onClick}) => {
+import styled from "styled-components"
+import { acceptInvitationAndAddUser, removeFriendFromPending } from "utils/firebase"
+
+
+export const AcceptInvitationButton = ({setIsPending, setIsFriend}) => {
+    const { userId } = useContext(authContext)
+    const { id } = useParams()
+    
+    const onAcceptButtonClick = () => {
+        acceptInvitationAndAddUser(id, userId).then(() => {
+            removeFriendFromPending(id, userId)
+            setIsFriend(true)
+            setIsPending(false)
+        } )
+    }
+
     return (
-        <AcceptButton onClick={onClick}></AcceptButton>
+        <AcceptButton onClick={onAcceptButtonClick}></AcceptButton>
     )
 }
 

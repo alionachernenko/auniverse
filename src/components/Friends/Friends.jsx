@@ -4,7 +4,7 @@ import { FriendCard } from "components/FriendCard/FriendCard"
 
 
 export const Friends = () => {
-    // eslint-disable-next-line no-unused-vars
+    //eslint-disable-next-line no-unused-vars
     const [_, friends, setFriends, invitations, setInvitations ] = useOutletContext()
 
     return ( 
@@ -12,10 +12,10 @@ export const Friends = () => {
             {invitations.length !== 0 &&
                     <InvitationsList>
                         {invitations.map(friend =>
-                            <FriendCard id={friend} isPending={true} setInvitations={setInvitations} setFriends={setFriends} />)}
+                            <FriendCard id={friend} key={friend} isPending={true} setInvitations={setInvitations} setFriends={setFriends} />)}
                 </InvitationsList>
             }
-            {friends.length === 0  ? <p style={{textAlign:'left'}}>No friends</p> : <FriendsList>
+            {friends.length === 0  ? <p style={{textAlign: 'left'}}>No friends</p> : <FriendsList>
                 {friends.map(friend => <FriendCard id={friend} key={friend} isPending={false} />)}
             </FriendsList>}
             

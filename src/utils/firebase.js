@@ -102,6 +102,10 @@ export const removeFriend = (id, userId) => {
   remove(ref(database, 'users/' + userId + '/friends/' + id));
 };
 
+export const removeFriendFromPending = (id, userId) => {
+  remove(ref(database, 'users/' + userId + '/friendsInvites/' + id));
+};
+
 export const leaveComment = (userId, gameSlug, text) => {
   get(ref(database, '/comments/' + gameSlug))
     .then(res =>

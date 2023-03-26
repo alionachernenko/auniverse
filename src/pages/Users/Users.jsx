@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom'
 
 import styled, { keyframes }  from 'styled-components'
 import { ErrorComponent } from 'components/ErrorComponent/ErrorComponent'
+
 const Users = () => {
     const [userIDs, setUserIDs] = useState([])
     const [isLoading, setIsLoading] = useState(true)
