@@ -68,13 +68,12 @@ const User = () => {
             setIsLoading(false)
         })
 
-    }, [id, setIsFriendInvited, userId])
+    }, [id, userId])
 
     return(
         <Page>
             {isLoading ? <Loader className={'loader_profile'} color={'white'} /> : isError ? <ErrorComponent /> : 
                 <>
-                    {isPending && <AcceptInvitationForm setIsPending={setIsPending} setIsFriend={setIsFriend} username={name} />}
                 <ProfileCard
                     avatar={photo}
                     username={name}
@@ -83,7 +82,9 @@ const User = () => {
                     setIsFriendInvited={setIsFriendInvited}
                     setIsFriend={setIsFriend}
                     isPending={isPending}
-                />
+                    />
+                    
+                {isPending && <AcceptInvitationForm setIsPending={setIsPending} setIsFriend={setIsFriend} username={name} />}
                 <OutletsSection>
                     <Tabs>
                         <Tab to='bookmarks'>Bookmarks</Tab>

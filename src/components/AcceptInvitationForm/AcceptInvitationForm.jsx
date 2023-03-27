@@ -35,9 +35,12 @@ export const AcceptInvitationForm = ({setIsPending, setIsFriend, username}) => {
 
 const Form = styled.div`
     font-family: 'Nunito', sans-serif;
-    position: absolute;
-    top: 0;
-    left: 10px;
+    // position: absolute;
+    // z-index: 111;
+    // top: 10px;
+    // left: 50%;
+    // transform: translateX(-50%);
+    width: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -45,7 +48,15 @@ const Form = styled.div`
     background-color: white;
     border-radius: 10px;
     padding: 10px;
-    gap: 10px
+    gap: 10px;
+
+    @media screen and (min-width: 768px) {
+        position: absolute;
+        z-index: 111;
+        top: 10px;
+        left: 10px;
+        max-width: 250px
+    }
 `
 
 const Message = styled.p`
