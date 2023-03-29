@@ -1,9 +1,10 @@
 import { authContext } from '../context';
 import { useEffect, useState } from 'react';
-import { userSignUp, userLogIn, addNewUser } from '../../utils/firebase';
+import { userSignUp, userLogIn } from '../../utils/firebase/users';
+import { addNewUser } from '../../utils/firebase/database';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { auth } from '../../utils/firebase';
+import { auth } from '../../utils/firebase/users';
 
 const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState();

@@ -1,8 +1,8 @@
 import { authContext } from "context/context"
 import { useContext } from "react"
 import { useParams } from "react-router-dom"
+import { acceptInvitationAndAddUser, removeFriendFromInvitationsList } from "utils/firebase/database"
 import styled from "styled-components"
-import { acceptInvitationAndAddUser, removeFriendFromPending } from "utils/firebase"
 
 export const AcceptInvitationForm = ({setIsPending, setIsFriend, username}) => {
     const { userId } = useContext(authContext)
@@ -10,14 +10,14 @@ export const AcceptInvitationForm = ({setIsPending, setIsFriend, username}) => {
 
      const onAcceptButtonClick = () => {
         acceptInvitationAndAddUser(id, userId).then(() => {
-            removeFriendFromPending(id, userId)
+            removeFriendFromInvitationsList(id, userId)
             setIsPending(false)
             setIsFriend(true)
         } )
     }
 
     const onDeclineButtonClick = () => {
-        removeFriendFromPending(id, userId)
+        removeFriendFromInvitationsList(id, userId)
         setIsPending(false)
         setIsFriend(false)
     }
@@ -35,11 +35,6 @@ export const AcceptInvitationForm = ({setIsPending, setIsFriend, username}) => {
 
 const Form = styled.div`
     font-family: 'Nunito', sans-serif;
-    // position: absolute;
-    // z-index: 111;
-    // top: 10px;
-    // left: 50%;
-    // transform: translateX(-50%);
     width: auto;
     display: flex;
     flex-direction: column;

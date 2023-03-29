@@ -3,19 +3,19 @@ import baseParams from 'config/rawg-api';
 
 const { KEY, BASE_URL } = baseParams;
 
-export const getGames = async page => {
+export const fetchGames = async page => {
   const data = await axios.get(`${BASE_URL}games?key=${KEY}&page=${page}`);
   return data;
 };
 
-export const getGameByName = async name => {
+export const fetchGameByName = async name => {
   const data = await axios.get(
     `${BASE_URL}games?key=${KEY}&page=${1}&search=${name}`
   );
   return data;
 };
 
-export const getNewGames = async page => {
+export const fetchNewGames = async page => {
   const currentDate = new Date();
 
   const data = await axios.get(
@@ -26,7 +26,7 @@ export const getNewGames = async page => {
   return data;
 };
 
-export const getGameBySearchQuery = async (
+export const fetchGameBySearchQuery = async (
   searchQuery,
   page,
   ordering,
@@ -43,17 +43,17 @@ export const getGameBySearchQuery = async (
   return await axios.get(`${BASE_URL}games`, { params });
 };
 
-export const getGameById = async id => {
+export const fetchGameById = async id => {
   const data = await axios.get(`${BASE_URL}games/${id}?key=${KEY}`);
   return data;
 };
 
-export const getScreenshots = async id => {
+export const fetchScreenshots = async id => {
   const data = await axios.get(`${BASE_URL}games/${id}/screenshots?key=${KEY}`);
   return data;
 };
 
-export const getStores = async id => {
+export const fetchStores = async id => {
   const data = await axios.get(`${BASE_URL}games/${id}/stores?key=${KEY}`);
   return data;
 };

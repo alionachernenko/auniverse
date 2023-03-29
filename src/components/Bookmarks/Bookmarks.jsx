@@ -1,25 +1,23 @@
-import { useOutletContext } from "react-router-dom"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
+import { memo } from "react"
 
-export const Bookmarks = () => {
-    const [favouriteGames] = useOutletContext()
+export const Bookmarks = memo(({ bookmarks }) => {
 
     return (
         <Block>
-            {favouriteGames.length === 0 ? <p>No bookmarks</p> : 
+            {bookmarks.length === 0 ? <p>No bookmarks</p> : 
             <List>
-                {favouriteGames.map(({ background_image, name, slug, id }) =>
+                {bookmarks.map(({ background_image, name, slug, id }) =>
                     <Bookmark key={id}>
                         <Poster src={`${background_image}`} alt={`${name} poster`}/>
                         <Title to={`/catalog/${slug}`}>{name}</Title>
                     </Bookmark>)
                 }
             </List>}
-            
         </Block>
     )
-}
+})
 
 const Block = styled.div`
     width: 100%;

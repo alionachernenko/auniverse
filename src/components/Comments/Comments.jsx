@@ -1,7 +1,9 @@
-import { useContext } from "react"
+import { useContext} from "react"
 import { authContext } from "context/context"
-import { leaveComment } from "utils/firebase"
+import { leaveComment } from "utils/firebase/database"
 import { Comment } from "components/Comment/Comment"
+import { useParams } from "react-router-dom"
+
 import styled from "styled-components"
 
 const getAndFormatAuthorId = (comment) => {
@@ -12,8 +14,10 @@ const getCommentText = (comment) => {
     return Object.values(comment)[0]
 }
 
-export const Comments = ({comments, setComments, gameSlug}) => {
-    const { userId, isLoggedIn} = useContext(authContext)
+export const Comments = ({comments, setComments}) => {
+    const { userId, isLoggedIn } = useContext(authContext)
+    const { gameSlug } = useParams()
+    
 
     const onFormSubmit = (e) => {
         e.preventDefault()
@@ -35,7 +39,7 @@ export const Comments = ({comments, setComments, gameSlug}) => {
                 <SubmitButton type="submit">Comment</SubmitButton>
             </Form>
             }
-                {comments.length !== 0 &&
+                {comments.length &&
                     <CommentsList>
                         {comments.map(comment => 
                             <Comment userId={getAndFormatAuthorId(comment)} key={Object.keys(comment)[0]} text={getCommentText(comment)} />

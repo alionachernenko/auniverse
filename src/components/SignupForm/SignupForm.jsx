@@ -47,14 +47,17 @@ border-radius: 20px;
 }
 `
 
-const Input = styled.input`
-    padding: 14px;
+const Input = styled.input` 
     width: 360px;
-    color: white;
+    padding: 14px;
+    margin-bottom: 30px;
+    border: none;
+    box-sizing: border-box;
+    
     font-family: inherit;
     font-size: 20px;
-    border: none;
-    margin-bottom: 30px;
+    
+    color: white;
     background: transparent !important;
     border-bottom: 1px solid white;
     -webkit-box-shadow: inset 0 0 0 50px #00021A;

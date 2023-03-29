@@ -4,7 +4,7 @@ import styled, {css} from 'styled-components'
 
 export const GameCard = ({ data, className }) => {
 
-    const {name, released, genres, background_image, slug, rating } = data
+    const { name, released, genres, background_image, slug, rating } = data
 
     return (
         <Link to={`/catalog/${slug}`} aria-label={`Read more about ${name}`}>

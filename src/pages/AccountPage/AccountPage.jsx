@@ -1,16 +1,21 @@
 import { useContext, useEffect, useState } from "react"
-import { NavLink, Outlet, useNavigate } from "react-router-dom"
-import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
-import { getFavouriteGames, userSignOut, getUserInfo, getFriendsList, getFriendsInvitationsList} from "../../utils/firebase"
+import { NavLink, useNavigate, useRoutes } from "react-router-dom"
+
+import { fetchBookmarks, fetchUserInfo, fetchFriendsList, fetchFriendsInvitationsList} from "utils/firebase/database"
+import { userSignOut } from "utils/firebase/users"
 import { Loader } from 'components/Loader/Loader'
 import { ProfileCard } from 'components/ProfileCard/ProfileCard'
-import {ImExit} from 'react-icons/im'
+import { ImExit } from 'react-icons/im'
 
 import { authContext } from "context/context"
 
-import styled from 'styled-components'
 import { Container } from "components/Container/Container"
 import { ErrorComponent } from "components/ErrorComponent/ErrorComponent"
+import { Friends } from "components/Friends/Friends"
+import { Bookmarks } from "components/Bookmarks/Bookmarks"
+
+import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
+import styled from 'styled-components'
 
 const AccountPage = () => {
     const { userId, isLoggedIn, setUserId } = useContext(authContext)
@@ -26,13 +31,31 @@ const AccountPage = () => {
 
     const navigate = useNavigate()
 
+    const routes = useRoutes([
+        {
+            path: '/friends',
+            element: <Friends
+                navigate={navigate}
+                friends={friends}
+                setFriends={setFriends}
+                invitations={invitations}
+                setInvitations={setInvitations}
+            />
+                
+        },
+        {
+            path: '/bookmarks',
+            element: <Bookmarks navigate={navigate} bookmarks={favouriteGames} />
+        }
+    ])
+
     useEffect(() => {
         if (!isLoggedIn) {
             navigate('/login/login-page')
             return
         }
 
-        Promise.all([getUserInfo(userId), getFavouriteGames(userId), getFriendsList(userId), getFriendsInvitationsList(userId)])
+        Promise.all([fetchUserInfo(userId), fetchBookmarks(userId), fetchFriendsList(userId), fetchFriendsInvitationsList(userId)])
             .then(res => {
                 const [snapshot, games, friends, invitations] = res
             if (snapshot.exists()) {
@@ -96,9 +119,7 @@ const AccountPage = () => {
                                         </Tab>
                                     </Tabs>
                         
-                                    <Outlet
-                                        context={[favouriteGames, friends, setFriends, invitations, setInvitations]}
-                                    />
+                                    {routes}
                                 </OutletsSection>
                                 <LogOut type="button" onClick={logOut}><ImExit/></LogOut>
                             </Page>

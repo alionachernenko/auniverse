@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react"
-import { getUserInfo } from "utils/firebase"
+import { memo, useEffect, useState } from "react"
+import { fetchUserInfo } from "utils/firebase/database"
 import styled from "styled-components"
 
-export const Comment = ({ userId, text }) => {
-    
+export const Comment = memo(({ userId, text }) => {
+
     const [authorAvatar, setAuthorAvatar] = useState()
     const [authorUsername, setAuthorUsername] = useState('')
     
     useEffect(() => {
-        getUserInfo(userId).then(res => {
+        fetchUserInfo(userId).then(res => {
             const { username, photoUrl } = res.val()
             
             setAuthorUsername(username)
@@ -31,7 +31,7 @@ export const Comment = ({ userId, text }) => {
             <CommentText>{text}</CommentText>
         </CommentWrapper>
     )
-}
+})
 
 const CommentWrapper = styled.li`
     width: 100%;

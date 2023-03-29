@@ -1,4 +1,3 @@
-import "./App.css";
 import 'react-toastify/dist/ReactToastify.css';
 
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
@@ -8,8 +7,6 @@ import { ToastContainer } from "react-toastify";
 import { Header } from "components/Header/Header";
 import { Footer } from "components/Footer/Footer";
 import { LoadingPage } from "components/LoadingPage/LoadingPage";
-import { Bookmarks } from "components/Bookmarks/Bookmarks";
-import { Friends } from "components/Friends/Friends";
 import { SignupForm } from "components/SignupForm/SignupForm";
 import { LoginForm } from 'components/LoginForm/LoginForm';
 
@@ -60,14 +57,8 @@ export function App() {
                     <Route path='signup-page' element={<SignupForm/>} />
                 </Route>
                 <Route path ='/users' element={<Users/>}/>
-                    <Route path='/users/:id' element={<UserProfile />}>
-                        <Route path='bookmarks' element={<Bookmarks/>}/>
-                    </Route>
-                    
-                    <Route path="/profile" element={<AccountPage />}>
-                        <Route path='friends' element={<Friends />}/>
-                        <Route path='bookmarks' element={<Bookmarks/>}/>
-                    </Route>
+                <Route path='/users/:id/*' element={<UserProfile />}/>
+                <Route path="/profile/*" element={<AccountPage />}/>
                 <Route path='*' element={<ErrorPage/>}/>
             </Routes> 
             </Suspense>

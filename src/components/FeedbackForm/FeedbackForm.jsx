@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from "react"
-import { leaveFeedbackPhotos, leaveFeedbackText } from "utils/firebase"
+import { leaveFeedbackPhotos } from "utils/firebase/storage"
+import { leaveFeedbackMessage } from "utils/firebase/database"
 
 import styled, {keyframes} from 'styled-components'
 import { createPortal } from "react-dom"
-import {SlPicture} from 'react-icons/sl'
+import { SlPicture } from 'react-icons/sl'
 import { authContext } from "context/context"
 import { nanoid } from "nanoid"
 import { MdClose } from "react-icons/md"
@@ -34,7 +35,7 @@ export const FeedbackForm = ({onClick}) => {
                     
         const feedbackId = nanoid()
 
-        leaveFeedbackText(text, userId, feedbackId)
+        leaveFeedbackMessage(text, userId, feedbackId)
 
         Object.values(photos).forEach(file => {
             leaveFeedbackPhotos(file, userId, feedbackId)

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
-import { Outlet, useNavigate, useParams } from "react-router-dom"
-import { getFriendsInvitationsList, getFriendsList, getUserInfo } from "utils/firebase"
+import {  useNavigate, useParams, useRoutes } from "react-router-dom"
+import { fetchFriendsInvitationsList, fetchUserInfo, fetchFriendsList } from "utils/firebase/database"
 import { NavLink } from "react-router-dom"
 import {authContext} from '../../context/context'
 import styled from "styled-components"
@@ -9,6 +9,7 @@ import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
 import { Loader } from "components/Loader/Loader"
 import { ErrorComponent } from "components/ErrorComponent/ErrorComponent"
 import { AcceptInvitationForm } from "components/AcceptInvitationForm/AcceptInvitationForm"
+import { Bookmarks } from "components/Bookmarks/Bookmarks"
 
 const User = () => {
     const { userId } = useContext(authContext)
@@ -22,20 +23,20 @@ const User = () => {
     const [isError, setIsError] = useState(false)
     const [isPending, setIsPending] = useState(false)
 
-
-        useEffect(() => {
-        getFriendsInvitationsList(userId).then((res) => {
-            if(res.val()) setIsPending(Object.keys(res.val()).some(friendId => friendId === id))
-        })
-    }, [id, userId])
-
     const navigate = useNavigate()
 
-    if(userId === id) navigate('/profile/bookmarks')
+    const routes = useRoutes([
+        {
+            path: '/bookmarks',
+            element: <Bookmarks navigate={navigate} bookmarks={bookmarks}/>
+        }
+    ])
+
+    if (userId === id) navigate('/profile/bookmarks')
 
     useEffect(() => {
         setIsLoading(true)
-        Promise.all([getUserInfo(id), getFriendsInvitationsList(id), getFriendsList(userId)]).then(res => {
+        Promise.all([fetchUserInfo(id), fetchFriendsInvitationsList(userId), fetchFriendsList(userId)]).then(res => {
             const [userInfo, invitationsList, friendsList] = res
             
             const { username, favs, photoUrl } = userInfo.val()
@@ -55,6 +56,7 @@ const User = () => {
             
             if (invitationsList.val()) {
                 setIsFriendInvited(Object.values(invitationsList.val()).some(user => user === userId))
+                setIsPending(Object.keys(invitationsList.val()).some(friendId => friendId === id))
             }
 
             if (friendsList.val()) {
@@ -89,7 +91,7 @@ const User = () => {
                     <Tabs>
                         <Tab to='bookmarks'>Bookmarks</Tab>
                     </Tabs>
-                    <Outlet context={[bookmarks]} />
+                        {routes}
                 </OutletsSection>
             </>
             }

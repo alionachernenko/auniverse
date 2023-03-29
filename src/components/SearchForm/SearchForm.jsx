@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import { getGameByName } from 'services/games-api'
+import { fetchGameByName } from 'utils/rawg-api'
 import { SearchFilter } from 'components/SearchFilter/SearchFilter'
 import { FilteredSearchList } from 'components/FilteredSearchList/FilteredSearchList'
 
 import styled, {css} from 'styled-components'
 
-export const SearchForm = ({ onSubmit, className, setPage }) => {
+export const SearchForm = memo(({ onSubmit, className, setPage }) => {
     const [value, setValue] = useState('')
     const [filteredGames, setFilteredGames] = useState()
 
@@ -15,7 +15,7 @@ export const SearchForm = ({ onSubmit, className, setPage }) => {
 
     useEffect(() => {
         if (location.pathname === '/' && value !== '') {
-                getGameByName(value).then(({data: {results}}) => {
+                fetchGameByName(value).then(({data: {results}}) => {
                     setFilteredGames(results)
                 }).catch(error => console.log(error))
             }
@@ -24,7 +24,7 @@ export const SearchForm = ({ onSubmit, className, setPage }) => {
 
     const onFormSubmit = (e) => {
         e.preventDefault()
-        const {query = null, ordering = null, genre = null} = e.target.elements
+        const {query, ordering, genre} = e.target.elements
 
         onSubmit(e, 
         query.value === '' ? null : query.value, 
@@ -32,7 +32,7 @@ export const SearchForm = ({ onSubmit, className, setPage }) => {
         genre.value === 'All' ? null : genre.value)
         
         if (location.pathname === '/catalog') setPage(1)
-    }   
+    }
 
     const onInputChange = (e) => {
         setValue(e.target.value)
@@ -40,15 +40,14 @@ export const SearchForm = ({ onSubmit, className, setPage }) => {
 
     return (
         <Form onSubmit={onFormSubmit} className={className}>
-            <label style={{
-                display: 'none'}} htmlFor='search-input'>Search games</label>
+            <label style={{display: 'none'}} htmlFor='search-input'>Search games</label>
             <Input id='search-input'  value={value} type='text' name='query' onChange={onInputChange} className={className}/>
             <Button  type='submit' className={className}>GO</Button>
             {location.pathname === '/catalog' && <SearchFilter/>}
             {(filteredGames && value !== '' && location.pathname === '/') && <FilteredSearchList results={filteredGames}/>}
         </Form>
     )
-}
+})
 
 
 const Form = styled.form`

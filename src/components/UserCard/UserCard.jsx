@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { getUserInfo} from "utils/firebase"
+import { fetchUserInfo } from "utils/firebase/database"
 import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
 import styled from "styled-components"
 
@@ -9,10 +9,10 @@ export const UserCard = ({ id}) => {
     const [name, setName] = useState('')
     const [avatar, setAvatar] = useState()
     
+
     useEffect(() => {
-        getUserInfo(id).then(res => {
+        fetchUserInfo(id).then(res => {
             const { username, photoUrl } = res.val()
-            console.log(id)
             
             setName(username)
             if(res.val().photoUrl) {setAvatar(photoUrl)}

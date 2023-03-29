@@ -7,7 +7,8 @@ import { Autoplay } from "swiper";
 import 'swiper/css';
 
 
-export const Slider = ({games}) => {
+export const Slider = ({ games }) => {
+    console.log('render')
     return (
         <Swiper style={{marginLeft: 0,
                         paddingLeft: 60}}

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
-import { getUsers } from 'utils/firebase'
+import { fetchUsers } from 'utils/firebase/database'
 import { authContext } from '../../context/context'
 import { Loader } from 'components/Loader/Loader'
 
@@ -18,7 +18,7 @@ const Users = () => {
 
 
     useEffect(() => {
-        getUsers().then(res => {
+        fetchUsers().then(res => {
             const IDs = res.val()
 
             setUserIDs(Object.keys(IDs).filter(ID => ID !== userId))

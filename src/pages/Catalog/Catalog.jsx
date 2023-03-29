@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getGameBySearchQuery} from "../../services/games-api"
+import { fetchGameBySearchQuery } from "utils/rawg-api"
 import { Pagination } from "../../components/Pagination/Pagination"
 import { SearchForm } from "../../components/SearchForm/SearchForm"
 import { Loader } from "../../components/Loader/Loader"
@@ -20,7 +20,7 @@ const Catalog = ({onSubmit, searchParams}) => {
     useEffect(() => {
         setIsLoading(true)
 
-        getGameBySearchQuery(value, page, ordering, genre).then(({data}) => {
+        fetchGameBySearchQuery(value, page, ordering, genre).then(({data}) => {
                 const { results, count } = data
 
                 setGames(results.filter(game => game.slug !== 'atomic-heart'))

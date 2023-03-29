@@ -1,17 +1,19 @@
 import { useContext, useEffect, useState } from "react"
 import {  useParams } from "react-router-dom"
-import { getGameById, getScreenshots} from "../../services/games-api"
+import { fetchGameById, fetchScreenshots } from "utils/rawg-api";
 import { StoresList } from "components/StoresList/StoresList";
 import { Loader } from "../../components/Loader/Loader";
 import {authContext} from '../../context/context'
 
 import { BookmarkButton } from "components/BookmarkButton/BookmarkButton";
 import { Container } from "components/Container/Container";
-import { getComments } from "utils/firebase";
 import { Comments } from "components/Comments/Comments";
 import { ErrorComponent } from "components/ErrorComponent/ErrorComponent";
 
 import styled from "styled-components";
+import { GameOverview } from "components/GameOverview/GameOverview";
+import { GameScreenshots } from "components/GameScreenshots/GameScreenshots";
+import { fetchBookmarks, fetchComments } from "utils/firebase/database";
 
 const formatComments = (comments) => {
     return Object.entries(comments).map(el => {
@@ -20,43 +22,41 @@ const formatComments = (comments) => {
 }
 
 const GameDescription = () => {
-    const {isLoggedIn} = useContext(authContext)
+    const { isLoggedIn, userId } = useContext(authContext)
+    const [isBookmark, setIsBookmark] = useState()
 
     const [title, setTitle] = useState('')
     const [screenshots, setScreenshots] = useState([])
-    const [description, setDescription] = useState()
-    const [stores, setStores] = useState()
-    const [year, setYear] = useState(null)
+    const [description, setDescription] = useState('')
+    const [stores, setStores] = useState([])
+    const [year, setYear] = useState('')
     const [isLoading, setIsLoading] = useState(true)
     const [gameData, setGameData] = useState({})
     const [comments, setComments] = useState([])
     const [isError, setIsError] = useState(false)
-    const [showOverview, setShowOverview] = useState(false)
     const { gameSlug } = useParams()
 
-    const toggleShowDescription = () => {
-        setShowOverview(prev => !prev)
-    }
-
-
-    window.scroll({
-        top: 0,
-    });
-
     useEffect(() => {
-        Promise.all([getGameById(gameSlug), getScreenshots(gameSlug), getComments(gameSlug)]).then(res => {
-            const [game, screenshots, comments] = res
+        Promise.all([fetchGameById(gameSlug),
+            fetchScreenshots(gameSlug),
+            fetchComments(gameSlug),
+            fetchBookmarks(userId)
+        ]).then(res => {
+            const [game, screenshots, comments, bookmarks] = res
             const {data} = game
             const {name, description_raw, stores, released} = data
             const { results } = screenshots.data
-
-            console.log(data)
+            
             setGameData(data)
             setTitle(name)
             setDescription(description_raw)
             setStores(stores)
-            setYear(released.slice(0, 4))
+            setYear(released)
             setScreenshots(results)
+
+            if (bookmarks.val()) {
+                setIsBookmark(Object.keys(bookmarks.val()).some(el => el === gameSlug))
+            }
 
             if(comments.val()) setComments(formatComments(comments.val()))
 
@@ -66,7 +66,7 @@ const GameDescription = () => {
                 setIsError(true)
                 setIsLoading(false)
             })
-    }, [description, gameSlug])
+    }, [gameSlug, userId])
 
     return (
         <Page>
@@ -78,23 +78,20 @@ const GameDescription = () => {
                         <div>
                             <Meta>
                                 <Title>{title}</Title>
-                                { year && <Year>{year}</Year> }
-                                { isLoggedIn && <BookmarkButton gameData={gameData}/> }
+                                { year && <Year>{year.slice(0, 4)}</Year> }
+                                {isLoggedIn && <BookmarkButton
+                                    gameData={gameData}
+                                    isBookmark={isBookmark}
+                                    setIsBookmark={setIsBookmark} />
+                                }
                             </Meta>
-                                    {description && <Overview className={showOverview ? 'more' : 'less'}>{description}</Overview>}
-                                    {description && description.length > 673 && <ToggleShowButton onClick={toggleShowDescription}>Show {showOverview ? 'less' : 'more'}</ToggleShowButton>}
+                                {description && <GameOverview description={description} />}
                         </div>
                                 {stores && <StoresList stores={stores} data={gameData}/>}
                     </Info>
                  </div>
-                    {screenshots &&
-                        <Screenshots>
-                            {screenshots.map(({image, id}) => 
-                                <ScreenshotWrapper key={id}>
-                                    <Screenshot src={image} alt='fdff' loading="lazy"/>
-                                </ScreenshotWrapper>)}
-                        </Screenshots>}
-                    <Comments setComments={setComments} gameSlug={gameSlug} comments={comments} />
+                                {screenshots && <GameScreenshots screenshots={screenshots} />}
+                                <Comments setComments={setComments} comments={comments} />
             </>
             }
             </Container>
@@ -180,76 +177,5 @@ const Year = styled.p`
     @media screen and (min-width: 1200px) {
         font-size: 50px;
     }
-`
-const Overview = styled.p`
-    color: white;
-    max-width: 80vw;
-    font-size: 20px;
-    line-height: 35px;
-    overflow: hidden;
-    transition: 250ms all ease;
-    margin-bottom: 20px;
-    text-overflow: ellipsis;
-
-    &.less{
-        height: 205px;
-    }
-
-    &.more{
-        height: auto
-    }
-`
-
-const Screenshots = styled.ul`
-    width: 100%;
-    height: auto;
-    margin-bottom: 60px;
-
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    
-    backdrop-filter: blur(10px);
-`
-
-const Screenshot = styled.img`
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-`
-
-const ScreenshotWrapper = styled.li`
-    width: 100%;
-    transition: 250ms all ease;
-    cursor: zoom-in;
-
-    clip-path: polygon(5% 0, 100% 0, 100% 10%, 100% 91%, 95% 100%, 0 100%, 0 71%, 0 10%);
-
-    &:hover {
-        transform: scale(1.2);
-        clip-path:none;
-        z-index: 1111
-    }
-
-    @media screen and (min-width: 768px) {
-        width: calc((100% - 10px)/2);
-    }
-
-    @media screen and (min-width: 1200px) {
-        width: calc((100% - 20px)/3);
-    }
-
-    @media screen and (min-width: 1440px) {
-        width: calc((100% - 30px)/4);
-    }
-`
-const ToggleShowButton = styled.button`
-    background-color: transparent;
-    font-family: 'Nunito', sans-serif;
-    color: white;
-    font-size: 17px;
-    padding: 5px 10px;
-    border: 1px solid orange;
-    border-radius: 10px
 `
 export default GameDescription

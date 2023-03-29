@@ -1,12 +1,13 @@
 import { useState, useEffect, useContext} from "react"
-import { getUserInfo, removeFriendFromPending } from "utils/firebase"
+import { fetchUserInfo, removeFriendFromInvitationsList, acceptInvitationAndAddUser } from "utils/firebase/database"
 import { authContext } from "context/context"
-import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
-import { acceptInvitationAndAddUser } from "utils/firebase"
+
 import { Link } from "react-router-dom"
-import {FiPlusCircle} from 'react-icons/fi'
+import { FiPlusCircle } from 'react-icons/fi'
+import { AiOutlineCloseCircle } from 'react-icons/ai'
+
 import styled from "styled-components"
-import {AiOutlineCloseCircle} from 'react-icons/ai'
+import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
 
 export const FriendCard = ({id, isPending, setInvitations, setFriends}) => {
     const { userId } = useContext(authContext)
@@ -16,19 +17,19 @@ export const FriendCard = ({id, isPending, setInvitations, setFriends}) => {
 
       const onAcceptButtonClick = () => {
           acceptInvitationAndAddUser(id, userId).then(() => {
-            removeFriendFromPending(id, userId)
+            removeFriendFromInvitationsList(id, userId)
             setInvitations(prev => prev.filter(friend => friend !== id))
             setFriends(prev => [...prev, id])
           })
       }
     
     const onDeclineButtonClick = () => {
-        removeFriendFromPending(id, userId)
+        removeFriendFromInvitationsList(id, userId)
         setInvitations(prev => prev.filter(friend => friend !== id))
     }
 
     useEffect(() => {
-        getUserInfo(id).then(res => {
+        fetchUserInfo(id).then(res => {
             const { username, photoUrl } = res.val()
             
             setName(username)

@@ -1,40 +1,33 @@
-import { useContext, useEffect, useState } from "react"
+import { memo, useContext } from "react"
 import { authContext } from '../../context/context'
-import { removeGameFromFavourite, addGameToFavourite, getFavouriteGames } from "utils/firebase"
+import { removeGameFromBookmarks, addGameToBookmarks } from "utils/firebase/database"
 import { BsBookmark, BsFillBookmarkFill } from 'react-icons/bs'
+import { useParams } from "react-router-dom"
 
 import styled from "styled-components"
 
-export const BookmarkButton = ({gameData}) => {
+export const BookmarkButton = memo(({isBookmark, gameData, setIsBookmark}) => {
     const { userId } = useContext(authContext)
-    
-    const [isFavourite, setIsFavourite] = useState()
-
-    const { slug } = gameData
+    const {gameSlug} = useParams()
 
     const toggleIsFavourite = () => {
-        if (isFavourite) {
-            removeGameFromFavourite(userId, slug)
+        if (isBookmark) {
+            removeGameFromBookmarks(userId, gameSlug)
         }
-        else if (!isFavourite) {
-            addGameToFavourite(userId, slug, gameData)
+        else {
+            addGameToBookmarks(userId, gameSlug, gameData)
         }
         
-        setIsFavourite(prevState => !prevState)
+        setIsBookmark(prevState => !prevState)
     }
 
-    useEffect(() => {
-        getFavouriteGames(userId).then(res => {
-            if(res.val()) setIsFavourite(Object.keys(res.val()).some(el => el === slug))
-        }).catch(error => console.log(error))
-    }, [userId, isFavourite, slug])
 
         return (
             <Button type="button" onClick={toggleIsFavourite}>
-                Bookmark {isFavourite ? <BsFillBookmarkFill size='20px' /> : <BsBookmark size='20px' />}
+                Bookmark {isBookmark ? <BsFillBookmarkFill size='20px' /> : <BsBookmark size='20px' />}
             </Button>
         )
-}
+})
     
 
 

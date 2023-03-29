@@ -1,26 +1,36 @@
 import { useContext, useState } from "react"
 import { useLocation, useParams } from "react-router-dom"
 import { authContext } from '../../context/context'
-import { addAvatar, addUserToFriensInvitationsList, changeUsername, removeFriend} from "utils/firebase"
-
+import { addAvatar } from "utils/firebase/storage"
+import { addUserToFriendsInvitationsList, removeFriend, changeUsername} from "utils/firebase/database"
 import { Oval } from "react-loader-spinner"
-
 import { RxUpload } from "react-icons/rx"
 import { BsPencilSquare } from 'react-icons/bs'
-import {FiUserPlus, FiUserX} from 'react-icons/fi'
+import { FiUserPlus, FiUserX } from 'react-icons/fi'
+import { memo } from "react"
 import { MdDone, MdClose } from 'react-icons/md'
 
 import styled from "styled-components"
 
-export const ProfileCard = ({avatar, username, isAvatarLoading, setPhotoPath, setIsAvatarLoading, setUsername, isFriendInvited, isFriend, setIsFriendInvited, setIsFriend, isPending}) => {
+export const ProfileCard = memo(({
+    avatar,
+    username,
+    isAvatarLoading,
+    setPhotoPath,
+    setIsAvatarLoading,
+    setUsername,
+    isFriendInvited,
+    isFriend,
+    setIsFriendInvited,
+    setIsFriend,
+    isPending
+}) => {
+    
     const { userId } = useContext(authContext)
     const { id } = useParams()
     const location = useLocation()
-    
 
     const [showChangeUsernameForm, setShowChangeUsernameForm] = useState(false)
-
-
 
     const deleteFriend = () => {
         removeFriend(id, userId)
@@ -28,8 +38,24 @@ export const ProfileCard = ({avatar, username, isAvatarLoading, setPhotoPath, se
     }
 
     const sendInvitation = () => {
-        addUserToFriensInvitationsList(id, userId)
+        addUserToFriendsInvitationsList(id, userId)
         setIsFriendInvited(true)
+    }
+
+    const setFriendshipOption = () => {
+        if (!isPending && !isFriendInvited && !isFriend) {
+            return <ChangeFriendStatusButton type='button' onClick={sendInvitation}>
+                            <FiUserPlus size='100%' fill='orange' color="orange" stroke="orange"/>
+                    </ChangeFriendStatusButton>
+        }
+        else if (!isPending && isFriendInvited) {
+            return <FriendStatus>You sent an invitation</FriendStatus>
+        }
+        else if(!isPending){
+            return <ChangeFriendStatusButton onClick={deleteFriend}>
+                        <FiUserX size='100%' fill='orange' color="orange" stroke="orange"/>
+                    </ChangeFriendStatusButton>
+        }
     }
     
     const onUsernameFormSubmit = (e) => {
@@ -43,14 +69,14 @@ export const ProfileCard = ({avatar, username, isAvatarLoading, setPhotoPath, se
     }
 
     const uploadAvatar = (e) => {
-
         const file = e.target.files[0]
-        e.preventDefault()
+
         if (file) {
             setIsAvatarLoading(true)
             addAvatar(file, userId, setPhotoPath, setIsAvatarLoading)
         }
     }
+
     return(
         <Info>
             <AvatarWrapper>
@@ -61,44 +87,40 @@ export const ProfileCard = ({avatar, username, isAvatarLoading, setPhotoPath, se
                             <RxUpload size='100%' fill='orange' color="orange" stroke="orange"/>
                         </UploadButton>
                     </>
-                     : !isPending && !isFriendInvited && !isFriend ?
-                        <ChangeFriendStatusButton type='button' onClick={sendInvitation}>
-                            <FiUserPlus size='100%' fill='orange' color="orange" stroke="orange"/>
-                        </ChangeFriendStatusButton>
-                        : !isPending && isFriendInvited ?
-                            <FriendStatus>You sent an invitation</FriendStatus>
-                        :  !isPending && <ChangeFriendStatusButton onClick={deleteFriend}>
-                                <FiUserX size='100%' fill='orange' color="orange" stroke="orange"/>
-                            </ChangeFriendStatusButton>}
+                    : setFriendshipOption()
+                }
                 
                 {isAvatarLoading ?
                     <Spinner>
                         <Oval color='#FF6600' secondaryColor='orange' width={'100%'} height={'100%'} />
                     </Spinner> : 
-                    <Avatar src={`${avatar}`} alt={`${username}'s avatar`} />}
+                    <Avatar src={`${avatar}`} alt={`${username}'s avatar`} />
+                }
             </AvatarWrapper>
-                    <UsernameWrapper>
-                        {!showChangeUsernameForm && <Username>
-                            {username}
-                        </Username>}
-                {location.pathname.includes('profile') && !showChangeUsernameForm && <ChangeUsernameButton onClick={() => {
-                    console.log('click')
-                    setShowChangeUsernameForm(true)
-                }}>
-                            <BsPencilSquare color="white" size={20}/>
-                        </ChangeUsernameButton>}
+            <UsernameWrapper>
+                {!showChangeUsernameForm && <Username>
+                    {username}
+                </Username>}
+                {location.pathname.includes('profile') && !showChangeUsernameForm &&
+                    <ChangeUsernameButton onClick={() => {
+                        setShowChangeUsernameForm(true)
+                    }}>
+                    <BsPencilSquare color="white" size={20}/>
+                    </ChangeUsernameButton>
+                }
             </UsernameWrapper>
-            
-                    {showChangeUsernameForm && <ChangeUsernameFormWrapper><ChangeUsernameForm onSubmit={(e) => onUsernameFormSubmit(e)}>
+            {showChangeUsernameForm &&
+                <ChangeUsernameFormWrapper>
+                    <ChangeUsernameForm onSubmit={(e) => onUsernameFormSubmit(e)}>
                         <input type='text' name="username" minLength='3' required autoComplete='off'/>
                         <button type="submit"><MdDone size={15}/></button>
                     </ChangeUsernameForm>
-                <CloseChangeUsernameFormButton type="button" onClick={() => setShowChangeUsernameForm(false)}><MdClose size={15} /></CloseChangeUsernameFormButton>
-            </ChangeUsernameFormWrapper>
+                    <CloseChangeUsernameFormButton type="button" onClick={() => setShowChangeUsernameForm(false)}><MdClose size={15} /></CloseChangeUsernameFormButton>
+                </ChangeUsernameFormWrapper>
             }
         </Info>
     )
-}
+})
 
 const ChangeUsernameFormWrapper = styled.div`
     display: flex;

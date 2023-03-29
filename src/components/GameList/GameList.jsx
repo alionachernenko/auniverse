@@ -4,6 +4,7 @@ import styled from "styled-components"
 
 export const GameList = ({ games }) => {
 
+    
     return (
         <Container>
             <List>

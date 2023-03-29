@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { Loader } from "components/Loader/Loader";
 import { Slider } from "../../components/Slider/Slider"
 import { useState, useEffect, useContext } from "react";
-import { getNewGames } from "services/games-api";
-import {breakpointContext} from '../../context/context'
+import { fetchNewGames } from "utils/rawg-api";
+import { breakpointContext } from '../../context/context'
 import { GameList } from "components/GameList/GameList";
 
 const NewGames = () => {
@@ -13,9 +13,8 @@ const NewGames = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [isError, setIsError] = useState(false)
 
-
     useEffect(() => {
-            getNewGames(1).then(({data}) => {
+            fetchNewGames(1).then(({data}) => {
             const { results } = data
                 
             setGames(results.filter(game => game.slug !== 'atomic-heart'))
