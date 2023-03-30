@@ -35,3 +35,4 @@ export * from './SignupForm/SignupForm';
 export * from './Slider/Slider';
 export * from './StoresList/StoresList';
 export * from './UserCard/UserCard';
+export * from './ShowPasswordButton/ShowPasswordButton';

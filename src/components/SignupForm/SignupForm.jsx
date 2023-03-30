@@ -1,12 +1,15 @@
 import { useContext } from 'react'
 import { FaUserEdit } from 'react-icons/fa'
 import { Oval } from 'react-loader-spinner'
-import {authContext} from 'context'
+import { authContext } from 'context'
+import { useState } from 'react'
 import styled from 'styled-components'
+import { ShowPasswordButton } from 'components'
 
 
 export const SignupForm = () => {
-    const { handleSignUp, isLoading} = useContext(authContext)
+    const { handleSignUp, isLoading } = useContext(authContext)
+    const [showPassword, setShowPassword] = useState(false)
 
     return (
         <Form onSubmit={(e) => {
@@ -20,13 +23,28 @@ export const SignupForm = () => {
             </Icon>
             <Title>Sign up</Title>
             
-            <Input type="email" name="email" placeholder="email" autocomplete="off" required/>
-            <Input type="password" name="password" placeholder="password" autocomplete="off" required/>
-            <Input type="text" name="username" placeholder="username" autocomplete="off" required/>
+            <Inputs>
+                <Input type="email" name="email" placeholder="email" autocomplete="off" required />
+                <div style={{ position: 'relative' }}>
+                    <Input type={showPassword ? 'text' : 'password'} name="password" placeholder="password" autocomplete="off" required />
+                    <ShowPasswordButton showPassword={showPassword} onClick={() => setShowPassword(prev => !prev)} />
+                </div>
+                <Input type="text" name="username" placeholder="username" autocomplete="off" required />
+            </Inputs>
+            
+            
+            
             <Button type="submit">Sign Up</Button>
         </Form>
     )
 }
+
+const Inputs = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 30px;
+`
 
 
 const Form = styled.form`
@@ -50,7 +68,6 @@ border-radius: 20px;
 const Input = styled.input` 
     width: 360px;
     padding: 14px;
-    margin-bottom: 30px;
     border: none;
     box-sizing: border-box;
     

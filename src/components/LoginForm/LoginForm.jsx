@@ -1,13 +1,16 @@
 import { authContext } from 'context' 
 
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { IoMdLogIn } from 'react-icons/io'
 import { Oval } from 'react-loader-spinner'
 
 import styled from 'styled-components'
+import { ShowPasswordButton } from 'components'
 
 export const LoginForm = () => {
     const { handleLogInSubmit, isLoading } = useContext(authContext)
+    const [showPassword, setShowPassword] = useState(false)
+
 
     const onFormSubmit = (e) => {
         const { email, password } = e.target
@@ -23,12 +26,25 @@ export const LoginForm = () => {
             </Icon>
             
             <Title>Sign in</Title>
-            <Input type="email" name="email" placeholder='email' required autocomplete="off"/>
-            <Input type="password" name="password" placeholder="password" required autocomplete="off"/>
+              <Inputs>
+                <Input type="email" name="email" placeholder="email" autocomplete="off" required />
+                <div style={{ position: 'relative' }}>
+                    <Input type={showPassword ? 'text' : 'password'} name="password" placeholder="password" autocomplete="off" required />
+                    <ShowPasswordButton showPassword={showPassword} onClick={() => setShowPassword(prev => !prev)} />
+                </div>
+            </Inputs>
             <Button type="submit">Log In</Button>
         </Form>
     ) 
 }
+
+const Inputs = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 30px;
+`
+
 
 const Form = styled.form`
     height: auto;
@@ -51,11 +67,9 @@ const Input = styled.input`
     width: 360px;
     padding: 14px;
     border: none;
-    margin-bottom: 30px;
     border-bottom: 1px solid white;
     box-sizing: border-box;
 
-    
     font-family: inherit;
     font-size: 20px;
     color: white;
