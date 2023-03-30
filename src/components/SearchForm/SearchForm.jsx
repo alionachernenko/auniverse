@@ -41,7 +41,7 @@ export const SearchForm = memo(({ onSubmit, className, setPage }) => {
     return (
         <Form onSubmit={onFormSubmit} className={className}>
             <label style={{display: 'none'}} htmlFor='search-input'>Search games</label>
-            <Input id='search-input'  value={value} type='text' name='query' onChange={onInputChange} className={className}/>
+            <Input id='search-input' placeholder='Enter a game title'  value={value} type='text' name='query' onChange={onInputChange} className={className}/>
             <Button  type='submit' className={className}>GO</Button>
             {location.pathname === '/catalog' && <SearchFilter/>}
             {(filteredGames && value !== '' && location.pathname === '/') && <FilteredSearchList results={filteredGames}/>}
