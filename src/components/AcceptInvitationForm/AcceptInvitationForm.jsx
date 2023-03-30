@@ -1,7 +1,7 @@
-import { authContext } from "context/context"
+import { authContext } from "context"
 import { useContext } from "react"
 import { useParams } from "react-router-dom"
-import { acceptInvitationAndAddUser, removeFriendFromInvitationsList } from "utils/firebase/database"
+import { acceptInvitationAndAddUser, removeFriendFromInvitationsList } from "utils"
 import styled from "styled-components"
 
 export const AcceptInvitationForm = ({setIsPending, setIsFriend, username}) => {

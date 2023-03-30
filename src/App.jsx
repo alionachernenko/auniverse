@@ -4,11 +4,8 @@ import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState, lazy, Suspense } from "react";
 import { ToastContainer } from "react-toastify";
 
-import { Header } from "components/Header/Header";
-import { Footer } from "components/Footer/Footer";
-import { LoadingPage } from "components/LoadingPage/LoadingPage";
-import { SignupForm } from "components/SignupForm/SignupForm";
-import { LoginForm } from 'components/LoginForm/LoginForm';
+import { Header, Footer, LoadingPage, SignupForm, LoginForm } from "components";
+
 
 const Homepage = lazy(() => import('./pages/Homepage/Homepage'))
 const Catalog = lazy(() => import('./pages/Catalog/Catalog'))

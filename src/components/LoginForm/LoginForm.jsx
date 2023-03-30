@@ -1,4 +1,4 @@
-import { authContext } from '../../context/context' 
+import { authContext } from 'context' 
 
 import { useContext } from 'react'
 import { IoMdLogIn } from 'react-icons/io'

@@ -28,6 +28,12 @@ const GoBack = styled(Link)`
     border: 1px solid white;
     padding: 5px 10px;
     border-radius: 5px;
+    transition: 150ms all ease;
+
+    &:hover {
+        transform: scale(1.05);
+        border: 1px solid orange;
+    }
 
     @media screen and (min-width: 768px) {
         top: 20px;

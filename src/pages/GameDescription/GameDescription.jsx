@@ -1,20 +1,13 @@
 import { useContext, useEffect, useState } from "react"
 import {  useLocation, useParams } from "react-router-dom"
-import { fetchGameById, fetchScreenshots } from "utils/rawg-api";
-import { StoresList } from "components/StoresList/StoresList";
-import { Loader } from "../../components/Loader/Loader";
-import {authContext} from '../../context/context'
-
-import { BookmarkButton } from "components/BookmarkButton/BookmarkButton";
-import { Container } from "components/Container/Container";
-import { Comments } from "components/Comments/Comments";
-import { ErrorComponent } from "components/ErrorComponent/ErrorComponent";
+import {
+    Loader, StoresList, BookmarkButton, Container, Comments, ErrorComponent,
+    GameOverview, GameScreenshots, GoBackLink
+} from "components";
+import {authContext} from 'context'
 
 import styled from "styled-components";
-import { GameOverview } from "components/GameOverview/GameOverview";
-import { GameScreenshots } from "components/GameScreenshots/GameScreenshots";
-import { fetchBookmarks, fetchComments } from "utils/firebase/database";
-import { GoBackLink } from "components/GoBackLink/GoBackLink";
+import { fetchBookmarks, fetchComments, fetchGameById, fetchScreenshots} from "utils";
 
 const formatComments = (comments) => {
     return Object.entries(comments).map(el => {

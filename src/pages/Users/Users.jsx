@@ -1,14 +1,12 @@
 import { useContext, useEffect, useState } from 'react'
-import { fetchUsers } from 'utils/firebase/database'
-import { authContext } from '../../context/context'
-import { Loader } from 'components/Loader/Loader'
+import { fetchUsers } from 'utils'
+import { authContext } from 'context'
 
-import { UserCard } from 'components/UserCard/UserCard'
-import { Container } from 'components/Container/Container'
+import { UserCard, Container, ErrorComponent, Loader } from 'components'
+
 import { Link } from 'react-router-dom'
 
 import styled, { keyframes }  from 'styled-components'
-import { ErrorComponent } from 'components/ErrorComponent/ErrorComponent'
 
 const Users = () => {
     const [userIDs, setUserIDs] = useState([])

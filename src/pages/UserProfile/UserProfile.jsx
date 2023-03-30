@@ -1,16 +1,11 @@
 import { useContext, useEffect, useState } from "react"
 import {  useNavigate, useParams, useRoutes } from "react-router-dom"
-import { fetchFriendsInvitationsList, fetchUserInfo, fetchFriendsList } from "utils/firebase/database"
+import { fetchFriendsInvitationsList, fetchUserInfo, fetchFriendsList } from "utils"
 import { NavLink } from "react-router-dom"
-import {authContext} from '../../context/context'
+import {authContext} from 'context'
 import styled from "styled-components"
-import { ProfileCard } from "components/ProfileCard/ProfileCard"
+import { ProfileCard, Loader, ErrorComponent, AcceptInvitationForm, Bookmarks, GoBackLink } from "components"
 import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
-import { Loader } from "components/Loader/Loader"
-import { ErrorComponent } from "components/ErrorComponent/ErrorComponent"
-import { AcceptInvitationForm } from "components/AcceptInvitationForm/AcceptInvitationForm"
-import { Bookmarks } from "components/Bookmarks/Bookmarks"
-import { GoBackLink } from "components/GoBackLink/GoBackLink"
 
 const User = () => {
     const { userId } = useContext(authContext)

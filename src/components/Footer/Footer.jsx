@@ -1,10 +1,8 @@
-import { Logo } from "components/Logo/Logo"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
-import { Container } from "components/Container/Container"
+import { Container, FeedbackFormButton, Logo } from "components"
 import { useContext } from "react"
-import { authContext } from "context/context"
-import { FeedbackFormButton } from "components/FeedbackFormButton.jsx/FeedbackFormButton"
+import { authContext } from "context"
 
 export const Footer = () => {
     const {isLoggedIn} = useContext(authContext)

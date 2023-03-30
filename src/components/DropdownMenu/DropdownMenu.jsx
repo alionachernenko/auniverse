@@ -10,7 +10,7 @@ import {IoLogIn} from 'react-icons/io5'
 
 import styled, { keyframes } from "styled-components"
 import { useContext } from "react"
-import { authContext } from "context/context"
+import { authContext } from "context"
 
 export const DropdownMenu = ({ onClick }) => {
     const {isLoggedIn} = useContext(authContext)

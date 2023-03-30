@@ -1,5 +1,5 @@
 import { memo, useEffect, useState } from "react"
-import { fetchUserInfo } from "utils/firebase/database"
+import { fetchUserInfo } from "utils"
 import styled from "styled-components"
 
 export const Comment = memo(({ userId, text }) => {

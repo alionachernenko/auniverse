@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { fetchUserInfo } from "utils/firebase/database"
+import { fetchUserInfo } from "utils"
 import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
 import styled from "styled-components"
 

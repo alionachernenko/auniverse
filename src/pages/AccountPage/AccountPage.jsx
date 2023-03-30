@@ -1,18 +1,11 @@
 import { useContext, useEffect, useState } from "react"
 import { NavLink, useNavigate, useRoutes } from "react-router-dom"
 
-import { fetchBookmarks, fetchUserInfo, fetchFriendsList, fetchFriendsInvitationsList} from "utils/firebase/database"
-import { userSignOut } from "utils/firebase/users"
-import { Loader } from 'components/Loader/Loader'
-import { ProfileCard } from 'components/ProfileCard/ProfileCard'
+import { fetchBookmarks, fetchUserInfo, fetchFriendsList, fetchFriendsInvitationsList, userSignOut} from "utils"
+import { Loader, ProfileCard, Container, ErrorComponent, Friends, Bookmarks} from 'components'
 import { ImExit } from 'react-icons/im'
 
-import { authContext } from "context/context"
-
-import { Container } from "components/Container/Container"
-import { ErrorComponent } from "components/ErrorComponent/ErrorComponent"
-import { Friends } from "components/Friends/Friends"
-import { Bookmarks } from "components/Bookmarks/Bookmarks"
+import { authContext } from "context"
 
 import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
 import styled from 'styled-components'

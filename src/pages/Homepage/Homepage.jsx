@@ -1,7 +1,6 @@
 import { lazy, Suspense } from "react"
 
-import { Hero } from "components/HeroSection/Hero"
-import { LoadingPage } from "components/LoadingPage/LoadingPage"
+import { Hero, LoadingPage } from "components"
 
 const NewGames = lazy(() => import('../../components/NewGamesSection/NewGames'))
 

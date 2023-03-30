@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { breakpointContext } from '../context';
+import { breakpointContext } from 'context';
 
 const BreakpointProvider = ({ children }) => {
   const [breakpoint, setBreakpoint] = useState();

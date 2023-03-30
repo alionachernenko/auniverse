@@ -1,6 +1,6 @@
 import { memo, useContext } from "react"
-import { authContext } from '../../context/context'
-import { removeGameFromBookmarks, addGameToBookmarks } from "utils/firebase/database"
+import { authContext } from 'context'
+import { removeGameFromBookmarks, addGameToBookmarks } from "utils"
 import { BsBookmark, BsFillBookmarkFill } from 'react-icons/bs'
 import { useParams } from "react-router-dom"
 

@@ -1,6 +1,5 @@
-/* eslint-disable array-callback-return */
 import { Swiper, SwiperSlide } from "swiper/react"
-import { GameCard } from "components/GameCard/GameCard";
+import { GameCard } from "components";
 
 import { Autoplay } from "swiper";
 

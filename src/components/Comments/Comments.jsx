@@ -1,7 +1,7 @@
 import { useContext} from "react"
-import { authContext } from "context/context"
-import { leaveComment } from "utils/firebase/database"
-import { Comment } from "components/Comment/Comment"
+import { authContext } from "context"
+import { leaveComment } from "utils"
+import { Comment } from "components"
 import { useParams } from "react-router-dom"
 
 import styled from "styled-components"

@@ -1,11 +1,10 @@
 import { useContext, useEffect, useState } from "react"
-import { leaveFeedbackPhotos } from "utils/firebase/storage"
-import { leaveFeedbackMessage } from "utils/firebase/database"
+import { leaveFeedbackPhotos, leaveFeedbackMessage } from "utils"
 
 import styled, {keyframes} from 'styled-components'
 import { createPortal } from "react-dom"
 import { SlPicture } from 'react-icons/sl'
-import { authContext } from "context/context"
+import { authContext } from "context"
 import { nanoid } from "nanoid"
 import { MdClose } from "react-icons/md"
 

@@ -1,10 +1,8 @@
-import { GameCard } from "../GameCard/GameCard"
-import { Container } from "components/Container/Container"
+import { Container, GameCard } from "components"
 import styled from "styled-components"
 
 export const GameList = ({ games }) => {
 
-    
     return (
         <Container>
             <List>

@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext} from "react"
-import { fetchUserInfo, removeFriendFromInvitationsList, acceptInvitationAndAddUser } from "utils/firebase/database"
-import { authContext } from "context/context"
+import { fetchUserInfo, removeFriendFromInvitationsList, acceptInvitationAndAddUser } from "utils"
+import { authContext } from "context"
 
 import { Link } from "react-router-dom"
 import { FiPlusCircle } from 'react-icons/fi'

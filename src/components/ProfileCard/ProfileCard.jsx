@@ -1,8 +1,7 @@
 import { useContext, useState } from "react"
 import { useLocation, useParams } from "react-router-dom"
-import { authContext } from '../../context/context'
-import { addAvatar } from "utils/firebase/storage"
-import { addUserToFriendsInvitationsList, removeFriend, changeUsername} from "utils/firebase/database"
+import { authContext } from 'context'
+import { addUserToFriendsInvitationsList, removeFriend, changeUsername, addAvatar} from "utils"
 import { Oval } from "react-loader-spinner"
 import { RxUpload } from "react-icons/rx"
 import { BsPencilSquare } from 'react-icons/bs'

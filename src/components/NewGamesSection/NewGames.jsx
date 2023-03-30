@@ -1,10 +1,8 @@
 import styled from "styled-components";
-import { Loader } from "components/Loader/Loader";
-import { Slider } from "../../components/Slider/Slider"
+import { Loader, Slider, GameList } from "components";
 import { useState, useEffect, useContext } from "react";
-import { fetchNewGames } from "utils/rawg-api";
-import { breakpointContext } from '../../context/context'
-import { GameList } from "components/GameList/GameList";
+import { fetchNewGames } from "utils";
+import { breakpointContext } from 'context'
 
 const NewGames = () => {
     const { breakpoint } = useContext(breakpointContext)

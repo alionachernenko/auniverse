@@ -1,10 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Logo } from 'components/Logo/Logo';
-import { SearchForm } from 'components/SearchForm/SearchForm';
-import { Navigation } from 'components/Navigation/Navigation';
-import { Container } from 'components/Container/Container';
-import { MenuButton } from 'components/MenuButton/MenuButton';
-import { ProfileButton } from 'components/ProfileButton/ProfileButton'
+import { SearchForm, Navigation, Container, MenuButton, ProfileButton, Logo } from 'components';
 
 import styled from 'styled-components'
 export const Header = ({onSubmit}) => {

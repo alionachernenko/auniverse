@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { GiHamburgerMenu} from 'react-icons/gi'
-import { DropdownMenu } from 'components/DropdownMenu/DropdownMenu'
+import { DropdownMenu } from 'components'
 import styled from 'styled-components'
 
 export const MenuButton = () => {

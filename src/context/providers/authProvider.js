@@ -1,4 +1,4 @@
-import { authContext } from '../context';
+import { authContext } from 'context';
 import { useEffect, useState } from 'react';
 import { userSignUp, userLogIn } from '../../utils/firebase/users';
 import { addNewUser } from '../../utils/firebase/database';

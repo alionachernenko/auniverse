@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react"
-import { fetchGameBySearchQuery } from "utils/rawg-api"
-import { Pagination } from "../../components/Pagination/Pagination"
-import { SearchForm } from "../../components/SearchForm/SearchForm"
-import { Loader } from "../../components/Loader/Loader"
-import { GameList } from "../../components/GameList/GameList"
+import { fetchGameBySearchQuery } from "utils"
+import { Pagination, SearchForm, Loader, GameList, ErrorComponent } from 'components'
 import styled from "styled-components"
-import { ErrorComponent } from "components/ErrorComponent/ErrorComponent"
+
 
 
 const Catalog = ({onSubmit, searchParams}) => {

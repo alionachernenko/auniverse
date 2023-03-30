@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { FriendCard } from "components/FriendCard/FriendCard"
+import { FriendCard } from "components"
 import {memo} from 'react'
 
 export const Friends = memo(({friends, setFriends, invitations, setInvitations}) => {
