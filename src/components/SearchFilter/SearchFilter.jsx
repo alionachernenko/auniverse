@@ -23,7 +23,7 @@ export const SearchFilter = () => {
                         <option value="action">Action</option>
                         <option value="adventure">Adventure</option>
                         <option value="indie">Indie</option>
-                        <option value="rpg">RPG</option>
+                        <option value="role-playing-games-rpg">RPG</option>
                         <option value="strategy">Strategy</option>
                         <option value="shooter">Shooter</option>
                         <option value="platformer">Platformer</option>
