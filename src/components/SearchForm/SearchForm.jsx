@@ -7,7 +7,7 @@ import { FilteredSearchList } from 'components/FilteredSearchList/FilteredSearch
 
 import styled, {css} from 'styled-components'
 
-export const SearchForm = memo(({ onSubmit, className, setPage }) => {
+export const SearchForm = memo(({ onSubmit, className, setPage, setSearchParams}) => {
     const [value, setValue] = useState('')
     const [filteredGames, setFilteredGames] = useState()
 
@@ -26,11 +26,16 @@ export const SearchForm = memo(({ onSubmit, className, setPage }) => {
         e.preventDefault()
         const {query, ordering, genre} = e.target.elements
 
-        onSubmit(e, 
-        query.value === '' ? null : query.value, 
-        ordering.value === 'All' ? null : ordering.value, 
-        genre.value === 'All' ? null : genre.value)
-        
+        if (location.pathname === '/') {
+            onSubmit(e, query.value === '' ? null : query.value, null, null)
+        }
+        else {
+            onSubmit(e, 
+            query.value === '' ? null : query.value, 
+            ordering.value === 'All' ? null : ordering.value, 
+            genre.value === 'All' ? null : genre.value)
+        }
+
         if (location.pathname === '/catalog') setPage(1)
     }
 

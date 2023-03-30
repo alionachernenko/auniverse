@@ -10,6 +10,7 @@ import { Loader } from "components/Loader/Loader"
 import { ErrorComponent } from "components/ErrorComponent/ErrorComponent"
 import { AcceptInvitationForm } from "components/AcceptInvitationForm/AcceptInvitationForm"
 import { Bookmarks } from "components/Bookmarks/Bookmarks"
+import { GoBackLink } from "components/GoBackLink/GoBackLink"
 
 const User = () => {
     const { userId } = useContext(authContext)
@@ -76,6 +77,7 @@ const User = () => {
         <Page>
             {isLoading ? <Loader className={'loader_profile'} color={'white'} /> : isError ? <ErrorComponent /> : 
                 <>
+                <GoBackLink/>
                 <ProfileCard
                     avatar={photo}
                     username={name}

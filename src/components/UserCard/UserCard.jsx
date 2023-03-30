@@ -22,7 +22,7 @@ export const UserCard = ({ id}) => {
 
     return(
         <Card>     
-            <CardLink to={`/users/${id}/bookmarks`}>
+            <CardLink to={`/users/${id}/bookmarks`} state={{from: '/users' }}>
                 <AvatarWrapper>
                 <Avatar width={200} src={`${avatar}`} alt={`${name}'s avatar`}/>
             </AvatarWrapper>

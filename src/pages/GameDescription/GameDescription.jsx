@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react"
-import {  useParams } from "react-router-dom"
+import {  useLocation, useParams } from "react-router-dom"
 import { fetchGameById, fetchScreenshots } from "utils/rawg-api";
 import { StoresList } from "components/StoresList/StoresList";
 import { Loader } from "../../components/Loader/Loader";
@@ -14,6 +14,7 @@ import styled from "styled-components";
 import { GameOverview } from "components/GameOverview/GameOverview";
 import { GameScreenshots } from "components/GameScreenshots/GameScreenshots";
 import { fetchBookmarks, fetchComments } from "utils/firebase/database";
+import { GoBackLink } from "components/GoBackLink/GoBackLink";
 
 const formatComments = (comments) => {
     return Object.entries(comments).map(el => {
@@ -34,7 +35,10 @@ const GameDescription = () => {
     const [gameData, setGameData] = useState({})
     const [comments, setComments] = useState([])
     const [isError, setIsError] = useState(false)
+    const location = useLocation()
+
     const { gameSlug } = useParams()
+    console.log(location.state)
 
     useEffect(() => {
         Promise.all([fetchGameById(gameSlug),
@@ -73,6 +77,7 @@ const GameDescription = () => {
             <Container>
             {isLoading ? <Loader color={'white'} /> : isError ? <ErrorComponent/> :
             <>
+                <GoBackLink/>
                 <div style={{display: 'flex'}}>
                     <Info>
                         <div>
@@ -101,6 +106,7 @@ const GameDescription = () => {
 
 const Page = styled.div`
     padding: 30px;
+    position: relative;
 
     min-height: calc(100vh - 61px);
     background-size: cover;

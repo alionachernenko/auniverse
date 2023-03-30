@@ -7,7 +7,7 @@ export const GameCard = ({ data, className }) => {
     const { name, released, genres, background_image, slug, rating } = data
 
     return (
-        <Link to={`/catalog/${slug}`} aria-label={`Read more about ${name}`}>
+        <Link to={`/catalog/${slug}`} aria-label={`Read more about ${name}`} state={{ from: "/catalog" }}>
         <Card className={`${className}`}>
             {background_image ? <Poster loading='lazy' src={background_image} alt={`${name} poster`} width={500}
                 height='auto' /> : <Poster src={placeholderImage}   alt='No poster here'/>}
