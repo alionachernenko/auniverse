@@ -52,7 +52,7 @@ export const StoresList = memo(({ stores }) => {
 
                     return (
                         <li key={id}>
-                            <a href={`https://${domain}`}>
+                            <a href={`https://${domain}`} target='_blank' rel='noreferrer'>
                                 {setStoreIcon(name)}
                             </a>
                         </li>
