@@ -1,8 +1,10 @@
 import styled from "styled-components"
 import { Link } from "react-router-dom"
 import { memo } from "react"
+import { useLocation } from "react-router-dom"
 
 export const Bookmarks = memo(({ bookmarks }) => {
+    const location = useLocation()
 
     return (
         <Block>
@@ -11,7 +13,7 @@ export const Bookmarks = memo(({ bookmarks }) => {
                 {bookmarks.map(({ background_image, name, slug, id }) =>
                     <Bookmark key={id}>
                         <Poster src={`${background_image}`} alt={`${name} poster`}/>
-                        <Title to={`/catalog/${slug}`}>{name}</Title>
+                        <Title to={`/catalog/${slug}`} state={{ from: location.pathname }}>{name}</Title>
                     </Bookmark>)
                 }
             </List>}

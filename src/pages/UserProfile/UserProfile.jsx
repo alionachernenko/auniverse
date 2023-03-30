@@ -40,12 +40,12 @@ const User = () => {
         Promise.all([fetchUserInfo(id), fetchFriendsInvitationsList(userId), fetchFriendsList(userId)]).then(res => {
             const [userInfo, invitationsList, friendsList] = res
             
-            const { username, favs, photoUrl } = userInfo.val()
+            const { username, bookmarks, photoUrl } = userInfo.val()
             
             setName(username)
 
-            if (favs) {
-                setBookmarks(Object.values(favs))
+            if (bookmarks) {
+                setBookmarks(Object.values(bookmarks))
             }
 
             if (photoUrl) {
