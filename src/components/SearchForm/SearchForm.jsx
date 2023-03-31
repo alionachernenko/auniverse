@@ -1,6 +1,5 @@
 import { memo, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-
 import { fetchGameByName } from 'utils/rawg-api'
 import { SearchFilter, FilteredSearchList } from 'components'
 
@@ -9,6 +8,7 @@ import styled, {css} from 'styled-components'
 export const SearchForm = memo(({ onSubmit, className, setPage}) => {
     const [value, setValue] = useState('')
     const [filteredGames, setFilteredGames] = useState()
+
 
     const location = useLocation()
 

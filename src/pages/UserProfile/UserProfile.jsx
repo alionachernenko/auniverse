@@ -6,6 +6,7 @@ import {authContext} from 'context'
 import styled from "styled-components"
 import { ProfileCard, Loader, ErrorComponent, AcceptInvitationForm, Bookmarks, GoBackLink } from "components"
 import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
+import { FriendshipOptions } from "components"
 
 const User = () => {
     const { userId } = useContext(authContext)
@@ -72,7 +73,8 @@ const User = () => {
         <Page>
             {isLoading ? <Loader className={'loader_profile'} color={'white'} /> : isError ? <ErrorComponent /> : 
                 <>
-                <GoBackLink/>
+                    <GoBackLink />
+                <Wrapper >
                 <ProfileCard
                     avatar={photo}
                     username={name}
@@ -81,7 +83,16 @@ const User = () => {
                     setIsFriendInvited={setIsFriendInvited}
                     setIsFriend={setIsFriend}
                     isPending={isPending}
+                />
+                    
+                <FriendshipOptions
+                    isFriendInvited={isFriendInvited}
+                    isFriend={isFriend}
+                    setIsFriendInvited={setIsFriendInvited}
+                    setIsFriend={setIsFriend}
+                    isPending={isPending}
                     />
+                </Wrapper>
                     
                 {isPending && <AcceptInvitationForm setIsPending={setIsPending} setIsFriend={setIsFriend} username={name} />}
                 <OutletsSection>
@@ -96,10 +107,17 @@ const User = () => {
     )
 }
 
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%
+`
+
 const Page = styled.div`
     min-height: calc(100vh - 61px);
     width: 100%;
-    padding: 20px;
+    padding: 40px;
     box-sizing: border-box;
 
     display: flex;

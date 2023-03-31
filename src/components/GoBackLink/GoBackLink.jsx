@@ -35,7 +35,7 @@ const GoBack = styled(Link)`
         border: 1px solid orange;
     }
 
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: 1200px) {
         top: 20px;
     }
 `

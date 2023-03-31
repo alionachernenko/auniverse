@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 import styled from "styled-components"
 import { Container, FeedbackFormButton, Logo } from "components"
 import { useContext } from "react"
@@ -12,9 +12,9 @@ export const Footer = () => {
                 <Logo className={'logo_footer'}>AUNIVERSE</Logo>
                 <Navigation>
                     <Links>
-                        <li><Link to='/'>Home</Link></li>
-                        <li><Link to='/catalog'>Catalog</Link></li>
-                        <li><Link to='/users'>Community</Link></li>
+                        <li><NavLink to='/'>Home</NavLink></li>
+                        <li><NavLink to='/catalog'>Catalog</NavLink></li>
+                        <li><NavLink to='/users'>Community</NavLink></li>
                         <li>{isLoggedIn ? <Link to='/profile/bookmarks'>Profile</Link> : <Link to='/login/login-page'>Log in</Link>}</li>
                     </Links>
                 </Navigation>
@@ -83,6 +83,12 @@ const Links = styled.ul`
         flex-direction: column;
         justify-content: space-between;
     }
+
+    & a {
+        &.active{
+            color: orange
+        }
+    }
 `
 
 const Contacts = styled.address`
@@ -90,6 +96,7 @@ const Contacts = styled.address`
     flex-direction: column;
     gap: 20px;
 
+    word-wrap: wrap;
     font-family: 'Nunito', sans-serif;
     font-style: normal;
 

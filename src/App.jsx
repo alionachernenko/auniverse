@@ -16,7 +16,7 @@ const ErrorPage = lazy(() => import('./pages/ErrorPage/ErrorPage'))
 const UserProfile = lazy(() => import('./pages/UserProfile/UserProfile'))
 const Users = lazy(() => import('./pages/Users/Users'))
 
-export function App() {
+export const App = () => {
     const [searchParams, setSearchParams] = useState({
         value: '', ordering: null, genre: null
     })
