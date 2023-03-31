@@ -1,11 +1,10 @@
 import { useContext, useState } from "react"
-import { useLocation, useParams } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 import { authContext } from 'context'
-import { addUserToFriendsInvitationsList, removeFriend, changeUsername, addAvatar} from "utils"
+import { changeUsername, addAvatar} from "utils"
 import { Oval } from "react-loader-spinner"
 import { RxUpload } from "react-icons/rx"
 import { BsPencilSquare } from 'react-icons/bs'
-import { FiUserPlus, FiUserX } from 'react-icons/fi'
 import { memo } from "react"
 import { MdDone, MdClose } from 'react-icons/md'
 
@@ -18,44 +17,12 @@ export const ProfileCard = memo(({
     setPhotoPath,
     setIsAvatarLoading,
     setUsername,
-    isFriendInvited,
-    isFriend,
-    setIsFriendInvited,
-    setIsFriend,
-    isPending
 }) => {
     
     const { userId } = useContext(authContext)
-    const { id } = useParams()
     const location = useLocation()
 
     const [showChangeUsernameForm, setShowChangeUsernameForm] = useState(false)
-
-    const deleteFriend = () => {
-        removeFriend(id, userId)
-        setIsFriend(false)
-    }
-
-    const sendInvitation = () => {
-        addUserToFriendsInvitationsList(id, userId)
-        setIsFriendInvited(true)
-    }
-
-    const setFriendshipOption = () => {
-        if (!isPending && !isFriendInvited && !isFriend) {
-            return <ChangeFriendStatusButton type='button' onClick={sendInvitation}>
-                            <FiUserPlus size='100%' fill='orange' color="orange" stroke="orange"/>
-                    </ChangeFriendStatusButton>
-        }
-        else if (!isPending && isFriendInvited) {
-            return <FriendStatus>You sent an invitation</FriendStatus>
-        }
-        else if(!isPending){
-            return <ChangeFriendStatusButton onClick={deleteFriend}>
-                        <FiUserX size='100%' fill='orange' color="orange" stroke="orange"/>
-                    </ChangeFriendStatusButton>
-        }
-    }
     
     const onUsernameFormSubmit = (e) => {
         e.preventDefault()
@@ -79,14 +46,13 @@ export const ProfileCard = memo(({
     return(
         <Info>
             <AvatarWrapper>
-                {location.pathname.includes('profile') ?
+                {location.pathname.includes('profile') &&
                     <>
                         <UploadInput id='upload_file' accept=".png, .jpg, .jpeg, .gif" type='file' name='photo' onChange={(e) => uploadAvatar(e)} />
                         <UploadButton htmlFor="upload_file">
                             <RxUpload size='100%' fill='orange' color="orange" stroke="orange"/>
                         </UploadButton>
                     </>
-                    : setFriendshipOption()
                 }
                 
                 {isAvatarLoading ?
@@ -140,8 +106,8 @@ background-color: white;
 
 const Info = styled.div`
     margin-bottom: 20px;
-    width: 100%;
     display: flex;
+    width: 100%;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -189,16 +155,6 @@ const UsernameWrapper = styled.div`
     align-items: baseline; 
     justify-content: center; 
     flex-wrap: wrap;
-`
-const FriendStatus = styled.p`
-    position: absolute;
-    z-index: 1111;
-    opacity: 0;
-    transition: 250ms opacity ease;
-
-    ${AvatarWrapper}:hover &{
-        opacity: 1
-    }
 `
 
 const Avatar = styled.img`
@@ -270,24 +226,4 @@ const ChangeUsernameForm = styled.form`
         align-items: center;
         justify-content: center
     }
-`
-
-const ChangeFriendStatusButton = styled.button`
-    width: 40px;
-    height: 40px;
-    padding: 5px;
-    border: none;
-
-    position: absolute;
-    z-index: 1111;
-    opacity: 0;
-    
-    background-color: white;
-   
-    border-radius: 100px;
-    cursor: pointer;
-    
-    transition: 250ms all ease;
-
-   
 `

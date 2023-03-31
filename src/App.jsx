@@ -1,7 +1,7 @@
 import 'react-toastify/dist/ReactToastify.css';
 
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState, lazy, Suspense } from "react";
+import { useEffect, useState, lazy, Suspense, memo } from "react";
 import { ToastContainer } from "react-toastify";
 
 import { Header, Footer, LoadingPage, SignupForm, LoginForm } from "components";
@@ -16,7 +16,7 @@ const ErrorPage = lazy(() => import('./pages/ErrorPage/ErrorPage'))
 const UserProfile = lazy(() => import('./pages/UserProfile/UserProfile'))
 const Users = lazy(() => import('./pages/Users/Users'))
 
-export function App() {
+export const App = () => {
     const [searchParams, setSearchParams] = useState({
         value: '', ordering: null, genre: null
     })
