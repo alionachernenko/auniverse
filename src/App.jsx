@@ -1,7 +1,7 @@
 import 'react-toastify/dist/ReactToastify.css';
 
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState, lazy, Suspense } from "react";
+import { useEffect, useState, lazy, Suspense, memo } from "react";
 import { ToastContainer } from "react-toastify";
 
 import { Header, Footer, LoadingPage, SignupForm, LoginForm } from "components";
