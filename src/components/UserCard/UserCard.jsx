@@ -8,7 +8,6 @@ export const UserCard = ({ id}) => {
 
     const [name, setName] = useState('')
     const [avatar, setAvatar] = useState()
-    
 
     useEffect(() => {
         fetchUserInfo(id).then(res => {

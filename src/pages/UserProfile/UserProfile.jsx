@@ -33,7 +33,7 @@ const User = () => {
 
     useEffect(() => {
         setIsLoading(true)
-        Promise.all([fetchUserInfo(id), fetchFriendsInvitationsList(userId), fetchFriendsList(userId)]).then(res => {
+        Promise.all([fetchUserInfo(id), fetchFriendsInvitationsList(id), fetchFriendsList(userId)]).then(res => {
             const [userInfo, invitationsList, friendsList] = res
             
             const { username, bookmarks, photoUrl } = userInfo.val()

@@ -118,7 +118,7 @@ const Tab = styled(NavLink)`
         height: 3px;
         border-radius: 4px;
         content: '';
-        background-color: #FF6600;
+        background-color: orange;
     }
 `
 
