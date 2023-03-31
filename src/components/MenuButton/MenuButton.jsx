@@ -9,7 +9,7 @@ export const MenuButton = () => {
     return (
         <>
             <Button onClick={() => setIsMenuOpen(true)}>
-                <GiHamburgerMenu color='white'/>
+                <GiHamburgerMenu color='white' size='100%'/>
             </Button>
             {isMenuOpen && <DropdownMenu onClick={() => setIsMenuOpen(false)}/>}
         </>
@@ -20,6 +20,8 @@ export const MenuButton = () => {
 const Button = styled.button`
     border: none;
     padding: 0;
+    width: 20px;
+    height: 20px;
 
     background-color: transparent;
     
