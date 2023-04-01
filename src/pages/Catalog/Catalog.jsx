@@ -36,7 +36,8 @@ const Catalog = () => {
     }, [page, query, ordering, genre, params])
 
     const handlePageChange = (page) => {
-        setParams({page: (page + 1)})
+        setParams({...searchParams, page: (page + 1)})
+        
         setIsLoading(true)
 
         window.scroll({

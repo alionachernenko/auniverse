@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react"
-import {  useLocation, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import {
     Loader, StoresList, BookmarkButton, Container, Comments, ErrorComponent,
     GameOverview, GameScreenshots, GoBackLink
@@ -28,10 +28,8 @@ const GameDescription = () => {
     const [gameData, setGameData] = useState({})
     const [comments, setComments] = useState([])
     const [isError, setIsError] = useState(false)
-    const location = useLocation()
 
     const { gameSlug } = useParams()
-    console.log(location.state)
 
     useEffect(() => {
         Promise.all([fetchGameById(gameSlug),
@@ -100,6 +98,7 @@ const GameDescription = () => {
 const Page = styled.div`
     padding: 30px;
     position: relative;
+    box-sizing: border-box;
 
     min-height: calc(100vh - 61px);
     background-size: cover;

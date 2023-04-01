@@ -14,8 +14,6 @@ export const FriendshipOptions = memo(({
     isPending
 }) => {
 
-    console.log(isFriendInvited)
-
     const { userId } = useContext(authContext)
     const { id } = useParams()
 

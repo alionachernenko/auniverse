@@ -2,7 +2,6 @@ import styled from "styled-components"
 import { memo, useState } from "react"
 
 export const GameOverview = memo(({ description }) => {
-    console.log('desc')
     const [showOverview, setShowOverview] = useState(false)
 
     

@@ -24,7 +24,7 @@ export const BookmarkButton = memo(({isBookmark, gameData, setIsBookmark}) => {
 
         return (
             <Button type="button" onClick={toggleIsFavourite}>
-                Bookmark {isBookmark ? <BsFillBookmarkFill size='20px' /> : <BsBookmark size='20px' />}
+                Bookmark {isBookmark ? <BsFillBookmarkFill size='20px' /> : <BsBookmark size='20px' className="icon"/>}
             </Button>
         )
 })
@@ -47,4 +47,5 @@ const Button = styled.button`
 
     color: white;
     background-color: rgba(84, 84, 84, 0.5);
+
 `
