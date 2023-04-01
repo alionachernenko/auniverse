@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom"
-import { createPortal } from "react-dom"
 
 import { MdClose } from "react-icons/md"
 import { ImHome2 } from 'react-icons/im'
@@ -14,12 +13,7 @@ import { authContext } from "context"
 
 export const DropdownMenu = ({ onClick }) => {
     const {isLoggedIn} = useContext(authContext)
-    return createPortal(
-        <Backdrop onClick={(e) => {
-            if (e.target === e.currentTarget) {
-                onClick()
-            }
-        }}>
+    return (
         <Menu>
             <CloseButton  onClick={onClick}><MdClose color='orange' size='100%'/></CloseButton>
             <Options>
@@ -29,8 +23,8 @@ export const DropdownMenu = ({ onClick }) => {
                 <li>{isLoggedIn ? <Link onClick={onClick} to={'/profile/bookmarks'}><FaUserCircle size={50} /></Link> :
                         <Link onClick={onClick} to={'/login/login-page'}><IoLogIn size={50} /></Link>}</li>
             </Options>
-            </Menu>
-        </Backdrop>, document.querySelector('#burger-menu-root'))
+        </Menu>
+       )
 }
 
 const menuShow = keyframes`
@@ -51,20 +45,6 @@ const backdropShow = keyframes`
     100% {
         opacity: 1
     }
-`
-
-const Backdrop = styled.div`
-    width: 100vw;
-    height: 100vh; 
-    padding: 20px;
-
-    box-sizing: border-box;
-
-    position: fixed;
-    z-index: 1;
-    background-color: rgba(0, 0, 0, 0.5);
-    
-    animation: ${backdropShow} 200ms ease;
 `
 const Menu = styled.div`
     height: auto;

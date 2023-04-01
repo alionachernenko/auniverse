@@ -1,12 +1,12 @@
-import { useContext, useEffect, useState } from "react"
+import {useContext, useState } from "react"
 import { leaveFeedbackPhotos, leaveFeedbackMessage } from "utils"
 
-import styled, {keyframes} from 'styled-components'
-import { createPortal } from "react-dom"
+import styled from 'styled-components'
 import { SlPicture } from 'react-icons/sl'
 import { authContext } from "context"
 import { nanoid } from "nanoid"
 import { MdClose } from "react-icons/md"
+import { Modal } from "components/Modal/Modal"
 
 export const FeedbackForm = ({onClick}) => {
     const {userId} = useContext(authContext)
@@ -14,18 +14,9 @@ export const FeedbackForm = ({onClick}) => {
     const [images, setImages] = useState([])
     const [files, setFiles] = useState([])
     const [showForm, setShowForm] = useState(true)
-
-    useEffect(() => {
-        const onEscapePress = (e) => {
-            if(e.code === 'Escape') onClick()
-        }
-            window.addEventListener('keydown', onEscapePress)
-
-            return () => {
-                window.removeEventListener('keydown', onEscapePress)
-            }
-    }, [onClick])
-
+    const [showModal, setShowModal] = useState(false)
+    const [activeImage, setActiveImage] = useState()
+ 
     const onFormSubmit = (e) => {
         e.preventDefault()
 
@@ -66,10 +57,8 @@ export const FeedbackForm = ({onClick}) => {
         setFiles(prev => prev.filter(file => prev.indexOf(file) !== index))
     }
 
-    return createPortal(
-        <Backdrop onClick={(e) => {
-            if(e.target === e.currentTarget) onClick()
-        }}>
+    return (
+        <>
             <FormBox>
                 <CloseButton type="button" onClick={onClick}>
                     <MdClose color='orange' size='100%' />
@@ -91,7 +80,10 @@ export const FeedbackForm = ({onClick}) => {
                                 <RemovePhotoButton onClick={() => onRemoveFile(index)}>
                                     <MdClose fill="#00021A" size='100%' />
                                 </RemovePhotoButton>
-                                <Photo src={image} alt='Feedback attachment' />
+                                <Photo src={image} alt='Feedback attachment' onClick={() => {
+                                    setShowModal(true)
+                                    setActiveImage(index)
+                                }} />
                             </PhotoWrapper>)}
                     </Photos>
                     <SubmitButton type="submit">Send feedback</SubmitButton>
@@ -100,21 +92,11 @@ export const FeedbackForm = ({onClick}) => {
                         <ThanksMessage>Thank you!</ThanksMessage>
                         <ThanksMessage>We will take your notes into account and fix the problems</ThanksMessage></>
                 }
-            </FormBox>
-        </Backdrop>, document.querySelector('#feedback-form-root')
+        </FormBox>
+            {showModal && <Modal image={images[activeImage]} onClick={() => setShowModal(false)} />}
+        </>
     )
 }
-
-const backdropShow = keyframes`
-    0% {
-        opacity: 0
-    }
-
-    100% {
-        opacity: 1
-    }
-`
-
 
 const ThanksMessage = styled.p`
     text-align: center;
@@ -139,21 +121,6 @@ const Title = styled.h1`
     }
 `
 
-const Backdrop = styled.div`
-    width: 100vw;
-    height: 100vh; 
-    padding: 20px;
-    overflow-y: scroll;
-
-
-    box-sizing: border-box;
-
-    position: fixed;
-    z-index: 11111;
-    background-color: rgba(0, 0, 0, 0.5);
-    
-    animation: ${backdropShow} 200ms ease;
-`
 
 const FormBox = styled.div`
     position: absolute;

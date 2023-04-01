@@ -1,20 +1,28 @@
 import styled from "styled-components"
 import { memo, useState } from "react"
 import { Modal } from "components/Modal/Modal"
+import { Backdrop } from "components/Backdrop/Backdrop"
 
 export const GameScreenshots = memo(({ screenshots }) => {
     const [showModal, setShowModal] = useState(false)
+    const [activeScreenshot, setActiveImage] = useState()
 
         return (
             <>
                 <Screenshots>
                     {screenshots.map(({image, id}, index) => 
                         <ScreenshotWrapper key={id}>
-                            <Screenshot src={image} alt='fdff' loading="lazy" onClick={() => setShowModal(true)}/>
+                            <Screenshot src={image} alt='fdff' loading="lazy" onClick={() => {
+                                setShowModal(true)
+                                setActiveImage(index)
+                            }} />
                         </ScreenshotWrapper>)
                     }
                 </Screenshots>
-                {showModal && <Modal />}
+                {showModal &&
+                <Backdrop onClick={() => setShowModal(false)}>
+                    <Modal image={screenshots[activeScreenshot].image} onClick={() => setShowModal(false)}/>
+                </Backdrop>}
             </>
         )
     } 
@@ -45,7 +53,7 @@ const ScreenshotWrapper = styled.li`
     clip-path: polygon(5% 0, 100% 0, 100% 10%, 100% 91%, 95% 100%, 0 100%, 0 71%, 0 10%);
 
     &:hover {
-        transform: scale(1.2);
+        transform: scale(1.01);
         clip-path:none;
         z-index: 1111
     }

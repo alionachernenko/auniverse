@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { GiHamburgerMenu} from 'react-icons/gi'
 import { DropdownMenu } from 'components'
+import { Backdrop } from 'components/Backdrop/Backdrop'
 import styled from 'styled-components'
 
 export const MenuButton = () => {
@@ -11,7 +12,10 @@ export const MenuButton = () => {
             <Button onClick={() => setIsMenuOpen(true)}>
                 <GiHamburgerMenu color='white' size='100%'/>
             </Button>
-            {isMenuOpen && <DropdownMenu onClick={() => setIsMenuOpen(false)}/>}
+            {isMenuOpen &&
+                <Backdrop onClick={() => setIsMenuOpen(false)}>
+                    <DropdownMenu onClick={() => setIsMenuOpen(false)}/>
+                </Backdrop>}
         </>
     )
 }
