@@ -1,16 +1,20 @@
 import styled from "styled-components"
-import { memo } from "react"
+import { memo, useState } from "react"
+import { Modal } from "components/Modal/Modal"
 
-export const GameScreenshots = memo(({screenshots}) => {
+export const GameScreenshots = memo(({ screenshots }) => {
+    const [showModal, setShowModal] = useState(false)
+
         return (
             <>
                 <Screenshots>
-                    {screenshots.map(({image, id}) => 
+                    {screenshots.map(({image, id}, index) => 
                         <ScreenshotWrapper key={id}>
-                            <Screenshot src={image} alt='fdff' loading="lazy"/>
+                            <Screenshot src={image} alt='fdff' loading="lazy" onClick={() => setShowModal(true)}/>
                         </ScreenshotWrapper>)
                     }
                 </Screenshots>
+                {showModal && <Modal />}
             </>
         )
     } 

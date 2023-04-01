@@ -28,7 +28,7 @@ const AuthProvider = ({ children }) => {
 
     userLogIn(email, password)
       .then(() => {
-        navigate(`/profile/bookmarks`);
+        navigate(`/profile/bookmarks`, { replace: 'true' });
         setIsLoading(false);
       })
       .catch(({ code }) => {
@@ -41,14 +41,13 @@ const AuthProvider = ({ children }) => {
 
   const handleSignUp = (e, email, password, username, photo) => {
     e.preventDefault();
-
     setIsLoading(true);
-
     userSignUp(email, password, username, photo)
       .then(({ user }) => {
         const { uid } = user;
 
-        addNewUser(uid, email, password, [], username);
+        addNewUser(uid, email, [], username);
+        navigate(`/profile/bookmarks`, { replace: 'true' });
         setIsLoading(false);
       })
       .catch(error => {

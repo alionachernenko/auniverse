@@ -18,6 +18,7 @@ export const SearchForm = memo(({className}) => {
                     setFilteredGames(results)
                 }).catch(error => console.log(error))
         }
+
      },
     [location.pathname, value])
 

@@ -3,11 +3,10 @@ import { nanoid } from 'nanoid';
 
 import { database } from '../../config/firebase';
 
-export const addNewUser = (userId, email, password, favs, username) => {
+export const addNewUser = (userId, email, favs, username) => {
   set(ref(database, 'users/' + userId), {
     email,
     favs,
-    password,
     username,
   });
 };

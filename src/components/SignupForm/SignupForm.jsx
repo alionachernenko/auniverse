@@ -26,7 +26,7 @@ export const SignupForm = () => {
             <Inputs>
                 <Input type="email" name="email" placeholder="email" autocomplete="off" required />
                 <div style={{ position: 'relative' }}>
-                    <Input type={showPassword ? 'text' : 'password'} name="password" placeholder="password" autocomplete="off" required pattern='^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$'/>
+                    <Input type={showPassword ? 'text' : 'password'} name="password" placeholder="password" autocomplete="off" required/>
                     <ShowPasswordButton showPassword={showPassword} onClick={() => setShowPassword(prev => !prev)} />
                 </div>
                 <Input type="text" name="username" placeholder="username" autocomplete="off" required />

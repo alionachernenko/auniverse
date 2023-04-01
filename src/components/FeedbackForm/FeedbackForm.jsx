@@ -77,7 +77,9 @@ export const FeedbackForm = ({onClick}) => {
                 <Title>Leave your feedback below</Title>
                 {showForm ? <Form onSubmit={(e) => onFormSubmit(e)}>
                     <InputsWrapper>
-                        <FeedbackInput name="feedback" required />
+                        <div style={{ overflow: 'hidden', borderRadius: 15}}>
+                            <FeedbackInput name="feedback" required />
+                        </div>
                         <UploadPhotosButton htmlFor="photos">
                             <SlPicture size='100%' fill="#00021A" />
                         </UploadPhotosButton>
@@ -193,6 +195,7 @@ const FeedbackInput = styled.textarea`
     resize: vertical;
     width: 100%;
     box-sizing: border-box;
+    overflow: scroll;
 
     border-radius: 15px;
     padding: 10px;

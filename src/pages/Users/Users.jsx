@@ -18,8 +18,12 @@ const Users = () => {
     useEffect(() => {
         fetchUsers().then(res => {
             const IDs = res.val()
+            console.log(IDs)
 
-            setUserIDs(Object.keys(IDs).filter(ID => ID !== userId))
+            if (IDs) {
+                setUserIDs(Object.keys(IDs).filter(ID => ID !== userId))
+            }
+            
             setIsLoading(false)
         }).catch(error => {
                 console.log(error)
@@ -27,6 +31,8 @@ const Users = () => {
                 setIsLoading(false)
             })
     }, [userId])
+
+    console.log(userIDs)
 
     return (
     <div style={{minHeight: '100vh'}}>

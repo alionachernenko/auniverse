@@ -116,7 +116,7 @@ const Wrapper = styled.div`
 const Page = styled.div`
     min-height: calc(100vh - 61px);
     width: 100%;
-    padding: 20px;
+    padding: 40px;
     box-sizing: border-box;
 
     display: flex;
