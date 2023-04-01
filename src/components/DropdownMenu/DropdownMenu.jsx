@@ -37,15 +37,6 @@ const menuShow = keyframes`
     }
 `
 
-const backdropShow = keyframes`
-    0% {
-        opacity: 0
-    }
-
-    100% {
-        opacity: 1
-    }
-`
 const Menu = styled.div`
     height: auto;
     padding: 20px;
