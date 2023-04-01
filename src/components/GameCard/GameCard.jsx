@@ -1,13 +1,16 @@
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import placeholderImage from 'assets/images/placeholder.png'
 import styled, {css} from 'styled-components'
 
 export const GameCard = ({ data, className }) => {
+    const location = useLocation()
 
     const { name, released, genres, background_image, slug, rating } = data
 
     return (
-        <Link to={`/catalog/${slug}`} aria-label={`Read more about ${name}`} state={{ from: "/catalog" }}>
+        <Link to={`/catalog/${slug}`} aria-label={`Read more about ${name}`} state={
+            { from: `${location.pathname}${location.search}`
+        }}>
         <Card className={`${className}`}>
             {background_image ? <Poster loading='lazy' src={background_image} alt={`${name} poster`} width={500}
                 height='auto' /> : <Poster src={placeholderImage}   alt='No poster here'/>}

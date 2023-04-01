@@ -1,7 +1,7 @@
 import 'react-toastify/dist/ReactToastify.css';
 
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState, lazy, Suspense } from "react";
+import { Route, Routes, useLocation} from "react-router-dom";
+import { useEffect, lazy, Suspense } from "react";
 import { ToastContainer } from "react-toastify";
 
 import { Header, Footer, LoadingPage, SignupForm, LoginForm } from "components";
@@ -17,11 +17,7 @@ const UserProfile = lazy(() => import('./pages/UserProfile/UserProfile'))
 const Users = lazy(() => import('./pages/Users/Users'))
 
 export const App = () => {
-    const [searchParams, setSearchParams] = useState({
-        value: '', ordering: null, genre: null
-    })
 
-    const navigate = useNavigate()
     const location = useLocation();
 
     useEffect(() => {
@@ -30,24 +26,13 @@ export const App = () => {
         })
     }, [location.pathname])
 
-    
-    const searchFormSubmit = (e, value, ordering, genre) => {
-        e.preventDefault()
-
-        setSearchParams(
-            {value, ordering, genre}
-        )
-        
-        navigate('/catalog')
-    }
-
     return (
         <>
-            <Header onSubmit={searchFormSubmit}/>
+            <Header/>
             <Suspense fallback={<LoadingPage/>}>
             <Routes>
                 <Route path='/' element={<Homepage />} />
-                <Route path='/catalog' element={<Catalog onSubmit={searchFormSubmit} searchParams={searchParams} />} />
+                <Route path='/catalog' element={<Catalog/>} />
                 <Route path='/catalog/:gameSlug' element={<GameDescription/>} />
                 <Route path='/login' element={<AuthenticationPage />} >
                     <Route path='login-page' element={<LoginForm/>} />

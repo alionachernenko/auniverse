@@ -4,9 +4,8 @@ import { fetchFriendsInvitationsList, fetchUserInfo, fetchFriendsList } from "ut
 import { NavLink } from "react-router-dom"
 import {authContext} from 'context'
 import styled from "styled-components"
-import { ProfileCard, Loader, ErrorComponent, AcceptInvitationForm, Bookmarks, GoBackLink } from "components"
+import { ProfileCard, Loader, ErrorComponent, AcceptInvitationForm, Bookmarks, GoBackLink, FriendshipOptions} from "components"
 import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
-import { FriendshipOptions } from "components"
 
 const User = () => {
     const { userId } = useContext(authContext)
@@ -117,7 +116,7 @@ const Wrapper = styled.div`
 const Page = styled.div`
     min-height: calc(100vh - 61px);
     width: 100%;
-    padding: 40px;
+    padding: 20px;
     box-sizing: border-box;
 
     display: flex;

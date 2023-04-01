@@ -1,14 +1,14 @@
 import { memo, useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate} from 'react-router-dom'
 import { fetchGameByName } from 'utils/rawg-api'
 import { SearchFilter, FilteredSearchList } from 'components'
 
 import styled, {css} from 'styled-components'
 
-export const SearchForm = memo(({ onSubmit, className, setPage}) => {
+export const SearchForm = memo(({className}) => {
     const [value, setValue] = useState('')
     const [filteredGames, setFilteredGames] = useState()
-
+    const navigate = useNavigate()
 
     const location = useLocation()
 
@@ -17,25 +17,24 @@ export const SearchForm = memo(({ onSubmit, className, setPage}) => {
                 fetchGameByName(value).then(({data: {results}}) => {
                     setFilteredGames(results)
                 }).catch(error => console.log(error))
-            }
+        }
+        
      },
     [location.pathname, value])
 
     const onFormSubmit = (e) => {
         e.preventDefault()
-        const {query, ordering, genre} = e.target.elements
-
-        if (location.pathname === '/') {
-            onSubmit(e, query.value === '' ? null : query.value, null, null)
-        }
-        else {
-            onSubmit(e, 
-            query.value === '' ? null : query.value, 
-            ordering.value === 'All' ? null : ordering.value, 
-            genre.value === 'All' ? null : genre.value)
-        }
-
-        if (location.pathname === '/catalog') setPage(1)
+        const { query, ordering, genre } = e.target.elements
+        
+        const searchParams = new URLSearchParams();
+        
+        searchParams.set('page', 1)
+        
+        if (query.value) searchParams.set('query', query.value);
+        if (ordering && ordering.value !== 'All') searchParams.set('ordering', ordering.value)
+        if (genre && genre.value !== 'All') searchParams.set('genre', genre.value)
+        
+        navigate(`/catalog?${searchParams.toString()}`);
     }
 
     const onInputChange = (e) => {

@@ -28,18 +28,18 @@ export const FriendshipOptions = memo(({
         addUserToFriendsInvitationsList(id, userId)
         setIsFriendInvited(true)
     }
-   
+
     if (!isPending && !isFriendInvited && !isFriend) {
             return <ChangeFriendStatusButton type='button' onClick={sendInvitation}>
                 <FiUserPlus className="icon" size={20} fill='orange' stroke="orange" />
                 <span>Add Friend</span>
                 </ChangeFriendStatusButton>
     }
-    
+
         if (!isPending && isFriendInvited) {
             return <FriendStatus>You sent an invitation</FriendStatus>
     }
-    
+
         if(!isPending){
             return <ChangeFriendStatusButton onClick={deleteFriend}>
                     <FiUserX className="icon" size={20} fill='orange' stroke="orange" />
@@ -52,8 +52,8 @@ export const FriendshipOptions = memo(({
 const ChangeFriendStatusButton = styled.button`
     height: auto;
     padding: 5px 8px;
-    border: 1px solid white;
     display: flex;
+    border: none;
     gap: 5px;
     align-items: center;
 
@@ -63,26 +63,21 @@ const ChangeFriendStatusButton = styled.button`
     border-radius: 100px;
     cursor: pointer;
     
-    transition: 200ms all ease;
+    transition: 250ms all ease;
     font-family: 'Nunito', sans-serif;
     font-size: 17px;
     font-weight: 500;
     color: #00021A;
 
     &:hover {
-        background-color: #00021A;
+        background-color: orange;
         color: white;
     }
 
-    & .icon{
-        fill: orange;
-        stroke: orange;
-        transition: 200ms all ease;
-    }
+zz
 
-    &:hover .icon{
-        fill: white;
-        stroke: white;
+    & .icon{
+        fill: orange
     }
 `
 

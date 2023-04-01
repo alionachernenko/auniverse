@@ -2,22 +2,26 @@ import { useEffect, useState } from "react"
 import { fetchGameBySearchQuery } from "utils"
 import { Pagination, SearchForm, Loader, GameList, ErrorComponent } from 'components'
 import styled from "styled-components"
+import { useSearchParams } from "react-router-dom"
+import { useMemo } from "react"
 
-
-
-const Catalog = ({onSubmit, searchParams}) => {
+const Catalog = () => {
     const [games, setGames] = useState([])
     const [totalPages, setTotalPages] = useState(0)
     const [isLoading, setIsLoading] = useState(true)
-    const [page, setPage] = useState(1)
     const [isError, setIsError] = useState(false)
+    const [params, setParams] = useSearchParams()
 
-    const { ordering, value, genre } = searchParams
+    const searchParams = useMemo(
+        () => Object.fromEntries([...params]),
+        [params]
+    );
+
+    const { ordering = null, query, genre = null, page} = searchParams
 
     useEffect(() => {
         setIsLoading(true)
-
-        fetchGameBySearchQuery(value, page, ordering, genre).then(({data}) => {
+        fetchGameBySearchQuery(query, page, ordering, genre).then(({data}) => {
                 const { results, count } = data
 
                 setGames(results.filter(game => game.slug !== 'atomic-heart'))
@@ -29,10 +33,11 @@ const Catalog = ({onSubmit, searchParams}) => {
                 setIsError(true)
                 setIsLoading(false)
             })
-    }, [page, value, ordering, genre])
+    }, [page, query, ordering, genre, params])
 
     const handlePageChange = (page) => {
-        setPage(page + 1)
+        setParams({page: (page + 1)})
+        setIsLoading(true)
 
         window.scroll({
             top: 0,
@@ -42,7 +47,7 @@ const Catalog = ({onSubmit, searchParams}) => {
         <Page>
             {isError ? <ErrorComponent/> :
             <>
-                <SearchForm className={'catalog'} onSubmit={onSubmit} setPage={setPage} />
+                    <SearchForm className={'catalog'} />
                     {isLoading ? <Loader className={'loader-catalog'} color={'white'} /> :
                         (games.length !== 0 ?
                             <>
