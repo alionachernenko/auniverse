@@ -4,56 +4,31 @@ import { RiXboxLine } from 'react-icons/ri'
 import styled from 'styled-components'
 import { memo } from 'react'
 
-const setStoreIcon = (storeName) => {
-    let icon
-    switch (storeName) {
-        case 'Steam':
-            icon = <FaSteam />
-            break
-        case 'PlayStation Store':
-            icon = <FaPlaystation />
-            break
-        case 'App Store':
-            icon = <FaAppStore />
-            break
-        case 'GOG':
-            icon = <SiGogdotcom />
-            break
-        case 'Xbox Store':
-            icon = <FaXbox />
-            break
-        case 'Xbox 360 Store':
-            icon = <RiXboxLine />
-            break
-        case 'Nintendo Store':
-            icon = <SiNintendo />
-            break
-        case 'Epic Games':
-            icon = <SiEpicgames />
-            break
-        case 'Google Play':
-            icon = <FaGooglePlay />
-            break
-        case 'itch.io':
-            icon = <FaItchIo />
-            break
-        default:
-            return null
-    }
-    return icon
-}
 
 export const StoresList = memo(({ stores }) => {
+
+    const icons = [
+        <FaSteam />,
+        <FaXbox />,
+        <FaPlaystation />,
+        <FaAppStore />,
+        <SiGogdotcom />,
+        <SiNintendo />,
+        <RiXboxLine />,
+        <FaGooglePlay />,
+        <FaItchIo />,
+        <SiEpicgames />
+    ]
+
     console.log('stores')
         return (
             <List>
-                {stores.map(({ store, id }) => {
-                    const { name, domain } = store
-
+                {stores.map(({ url, store_id }) => {
+                    console.log(store_id)
                     return (
-                        <li key={id}>
-                            <a href={`https://${domain}`} target='_blank' rel='noreferrer'>
-                                {setStoreIcon(name)}
+                        <li key={store_id}>
+                            <a href={url} target='_blank' rel='noreferrer'>
+                                {icons[store_id - 1]}
                             </a>
                         </li>
                     )
@@ -79,6 +54,11 @@ const List =  styled.ul`
     & svg {
         width: 30px;
         height: 30px;
+        transition: 150ms all ease;
+
+        &: hover{
+            transform: scale(1.1)
+        }
     }
 `
 

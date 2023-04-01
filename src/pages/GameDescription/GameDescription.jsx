@@ -7,7 +7,7 @@ import {
 import {authContext} from 'context'
 
 import styled from "styled-components";
-import { fetchBookmarks, fetchComments, fetchGameById, fetchScreenshots} from "utils";
+import { fetchBookmarks, fetchComments, fetchGameById, fetchScreenshots, fetchStores} from "utils";
 
 const formatComments = (comments) => {
     return Object.entries(comments).map(el => {
@@ -35,17 +35,19 @@ const GameDescription = () => {
         Promise.all([fetchGameById(gameSlug),
             fetchScreenshots(gameSlug),
             fetchComments(gameSlug),
-            fetchBookmarks(userId)
+            fetchBookmarks(userId),
+            fetchStores(gameSlug)
         ]).then(res => {
-            const [game, screenshots, comments, bookmarks] = res
+            const [game, screenshots, comments, bookmarks, stores] = res
             const {data} = game
-            const {name, description_raw, stores, released} = data
+            const {name, description_raw, released} = data
             const { results } = screenshots.data
+            
             
             setGameData(data)
             setTitle(name)
             setDescription(description_raw)
-            setStores(stores)
+            setStores(stores.data.results)
             setYear(released)
             setScreenshots(results)
 
