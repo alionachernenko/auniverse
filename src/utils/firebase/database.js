@@ -5,6 +5,7 @@ import { database } from '../../config/firebase';
 
 export const addNewUser = (userId, email, favs, username) => {
   set(ref(database, 'users/' + userId), {
+    id: userId,
     email,
     favs,
     username,

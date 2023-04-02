@@ -40,9 +40,12 @@ const InvitationsList = styled.ul`
 const FriendsList = styled.ul`
     margin-right: auto;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     flex-wrap: wrap;
     gap: 10px;
     padding: 10px;
+
 
     @media screen and (min-width: 1200px){
         flex-wrap: nowrap;

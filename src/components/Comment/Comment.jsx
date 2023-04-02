@@ -1,15 +1,19 @@
-import { memo, useEffect, useState } from "react"
+import { memo, useContext, useEffect, useState } from "react"
 import { fetchUserInfo } from "utils"
 import styled from "styled-components"
+import { Link, useLocation } from "react-router-dom"
+import { authContext } from "context"
 
-export const Comment = memo(({ userId, text }) => {
+export const Comment = memo(({ authorId, text }) => {
 
     const [authorAvatar, setAuthorAvatar] = useState()
     const [authorUsername, setAuthorUsername] = useState('')
-    
+    const location = useLocation()
+    const { userId } = useContext(authContext)
+        
     useEffect(() => {
-        fetchUserInfo(userId).then(res => {
-            const { username, photoUrl } = res.val()
+        fetchUserInfo(authorId).then(res => {
+            const { username, photoUrl} = res.val()
             
             setAuthorUsername(username)
             setAuthorAvatar(photoUrl)
@@ -17,7 +21,7 @@ export const Comment = memo(({ userId, text }) => {
             console.log(error)
         }
     )
-    }, [userId])
+    }, [authorId])
 
     return (
         <CommentWrapper>
@@ -25,9 +29,13 @@ export const Comment = memo(({ userId, text }) => {
                 <AvatarWrapper>
                     {authorAvatar && <AuthorAvatar src={authorAvatar} alt={`${authorUsername}'s avatar`}></AuthorAvatar>}
                 </AvatarWrapper>
-                <AuthorName>{authorUsername}</AuthorName>
+                <AuthorName>
+                    <Link to={authorId === userId ? '/profile/bookmarks' : `/users/${authorId}/bookmarks`}
+                        state={{ from: location.pathname }}>
+                        {authorUsername}
+                    </Link>
+                </AuthorName>
             </AuthorInfo>
-            
             <CommentText>{text}</CommentText>
         </CommentWrapper>
     )

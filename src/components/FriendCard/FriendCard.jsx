@@ -1,8 +1,8 @@
-import { useState, useEffect, useContext} from "react"
+import { useState, useEffect, useContext } from "react"
 import { fetchUserInfo, removeFriendFromInvitationsList, acceptInvitationAndAddUser } from "utils"
 import { authContext } from "context"
 
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { FiPlusCircle } from 'react-icons/fi'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 
@@ -14,6 +14,7 @@ export const FriendCard = ({id, isPending, setInvitations, setFriends}) => {
 
     const [name, setName] = useState('')
     const [avatar, setAvatar] = useState()
+    const location = useLocation()
 
       const onAcceptButtonClick = () => {
           acceptInvitationAndAddUser(id, userId).then(() => {
@@ -40,7 +41,7 @@ export const FriendCard = ({id, isPending, setInvitations, setFriends}) => {
 
     return (
         <li key={id} style={{position: 'relative'}}>     
-            <Card to={`/users/${id}/bookmarks`}>
+            <Card to={`/users/${id}/bookmarks`} state={{from: location.pathname}}>
                 <Avatar width={200} src={`${avatar}`} alt={`${name}'s avatar`}/>
 
             <Username>{name}</Username></Card>

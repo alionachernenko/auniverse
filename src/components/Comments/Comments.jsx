@@ -42,7 +42,7 @@ export const Comments = ({comments, setComments}) => {
                 {comments.length &&
                     <CommentsList>
                         {comments.map(comment => 
-                            <Comment userId={getAndFormatAuthorId(comment)} key={Object.keys(comment)[0]} text={getCommentText(comment)} />
+                            <Comment authorId={getAndFormatAuthorId(comment)} key={Object.keys(comment)[0]} text={getCommentText(comment)} />
                         )}
                     </CommentsList>}
         </Section>

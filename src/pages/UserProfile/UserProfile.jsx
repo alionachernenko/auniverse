@@ -28,8 +28,6 @@ const User = () => {
         }
     ])
 
-    if (userId === id) navigate('/profile/bookmarks')
-
     useEffect(() => {
         setIsLoading(true)
         Promise.all([fetchUserInfo(id), fetchFriendsInvitationsList(id), fetchFriendsList(userId)]).then(res => {

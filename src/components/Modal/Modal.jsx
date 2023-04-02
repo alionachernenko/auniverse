@@ -3,9 +3,6 @@ import { MdClose } from "react-icons/md"
 
 
 export const Modal = ({image, onClick}) => {
-    console.log(image)
-
-    
     return(
         <ModalWindow>
             <CloseButton type="button" onClick={onClick}>
@@ -39,11 +36,9 @@ const CloseButton = styled.button`
     align-items: center;
     justify-content: center;
     border-radius: 15px;
-
     position: absolute;
     top: 2px;
     right: 2px;
-
     background-color: white;
     border: orange;
 `

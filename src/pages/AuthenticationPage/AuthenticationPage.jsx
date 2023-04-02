@@ -13,7 +13,7 @@ const AuthenticationPage = () => {
 
     useEffect(() => {
         if (isLoggedIn) {
-           navigate(`/profile/bookmarks`, {replace: true})
+           navigate(`/profile/bookmarks`)
         }
     }, [isLoggedIn, navigate])
     
