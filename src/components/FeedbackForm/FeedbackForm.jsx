@@ -72,7 +72,7 @@ export const FeedbackForm = ({onClick}) => {
                         <UploadPhotosButton htmlFor="photos">
                             <SlPicture size='100%' fill="#00021A" />
                         </UploadPhotosButton>
-                        <FilesInput type="file" name='photos[]' id="photos" multiple onInput={(e) => { onChooseFile(e)}} />
+                        <FilesInput accept=".png, .jpg, .jpeg, .gif" type="file" name='photos[]' id="photos" multiple onInput={(e) => { onChooseFile(e)}} />
                     </InputsWrapper>
                     <Photos>
                         {images && images.map((image, index) =>

@@ -21,11 +21,15 @@ const ModalWindow = styled.div`
     z-index: 111111111111;
     top: 50%;
     left: 50%;
+    // width: 89vw;
+    // height: auto;
+    // max-height: 80vh;
     transform: translate(-50%, -50%)
 `
+
 const Image = styled.img`
-    width: 80vw;
-    
+    width: auto;
+    max-height: 80vh;
 `
 
 const CloseButton = styled.button`
