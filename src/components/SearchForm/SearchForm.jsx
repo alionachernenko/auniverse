@@ -4,6 +4,7 @@ import { fetchGameByName } from 'utils/rawg-api'
 import { SearchFilter, FilteredSearchList } from 'components'
 
 import styled, {css} from 'styled-components'
+import { MdClose } from 'react-icons/md'
 
 export const SearchForm = memo(({className}) => {
     const [value, setValue] = useState('')
@@ -43,15 +44,17 @@ export const SearchForm = memo(({className}) => {
 
     return (
         <Form onSubmit={onFormSubmit} className={className}>
-            <label style={{display: 'none'}} htmlFor='search-input'>Search games</label>
-            <Input id='search-input' placeholder='Enter a game title'  value={value} type='text' name='query' onChange={onInputChange} className={className}/>
-            <Button  type='submit' className={className}>GO</Button>
+            <label style={{ display: 'none' }} htmlFor='search-input'>Search games</label>
+            <div className='input-wrapper'>
+            <Input id='search-input' placeholder='Enter a game title' value={value} type='text' name='query' onChange={onInputChange} className={className} />
+            {value.length > 0 && <ClearButton type='button' onClick={() => setValue('')}><MdClose size='100%' /></ClearButton>}
+                <Button type='submit' className={className}>GO</Button>
+            </div>
             {location.pathname === '/catalog' && <SearchFilter/>}
             {(filteredGames && value !== '' && location.pathname === '/') && <FilteredSearchList results={filteredGames}/>}
         </Form>
     )
 })
-
 
 const Form = styled.form`
     font-family: 'Nunito', sans-serif;
@@ -66,12 +69,27 @@ const Form = styled.form`
                 margin-right: auto;
                 height: auto;
                 padding: 0 10px;
+
+                @media screen and (min-width: 768px) {
+                    width: 500px
+                }
+
+                & .input-wrapper {
+                    position: relative;
+                    margin-bottom: 10px;
+                    height: 40px
+                }
             `
             case 'header':
                 return css`
                     height: 100%;
-                    width: 250px;
+                    width: 400px;
                     margin: 0;
+
+                    & .input-wrapper {
+                        position: relative;
+                        height: 30px
+                    }
 
                     @media screen and (max-width: 1199px){
                         display: none;
@@ -86,7 +104,6 @@ const Form = styled.form`
 `
 const Input = styled.input`
     width: 100%;
-    margin-right: 5px;
     padding-right: 110px;
     padding-left: 10px;
     border-radius: 30px;
@@ -99,10 +116,8 @@ ${(props) => {
     switch(props.className) {
         case 'catalog':
             return css`
-            height: 40px;
-            margin-bottom: 10px;
+            height: 100%;
             font-size: 20px;
-
         `
         case 'header':
             return css`
@@ -129,7 +144,7 @@ const Button = styled.button`
             return css`
             height: 36px;
             top: 2px;
-            right: 13px;
+            right: 2px;
             font-size: 20px;
             transform: scale(1);
 
@@ -144,7 +159,7 @@ const Button = styled.button`
                 return css`
                 height: 90%; 
                 right: 1px;
-                font-size: 10px;
+                font-size: 15px;
                 top: 50%;
                 transform: translateY(-50%) scale(1);
 
@@ -156,9 +171,20 @@ const Button = styled.button`
             default: return css``
         }
     }}
-
-   
 `
 
+
+const ClearButton = styled.button`
+    position: absolute;
+    right: 12%;
+    top: 50%;
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    height: 70%
+`
 
 
