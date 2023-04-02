@@ -8,7 +8,7 @@ import { ProfileCard, Loader, ErrorComponent, AcceptInvitationForm, Bookmarks, G
 import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
 
 const User = () => {
-    const { userId } = useContext(authContext)
+    const { userId, isLoggedIn } = useContext(authContext)
     const { id } = useParams()
     const [name, setName] = useState('')
     const [photo, setPhoto] = useState('')
@@ -29,6 +29,8 @@ const User = () => {
     ])
 
     useEffect(() => {
+        if (id === userId) navigate('/profile/bookmarks')
+
         setIsLoading(true)
         Promise.all([fetchUserInfo(id), fetchFriendsInvitationsList(id), fetchFriendsList(userId)]).then(res => {
             const [userInfo, invitationsList, friendsList] = res
@@ -64,7 +66,7 @@ const User = () => {
             setIsLoading(false)
         })
 
-    }, [id, userId])
+    }, [id, navigate, userId])
 
     return(
         <Page>
@@ -82,13 +84,13 @@ const User = () => {
                     isPending={isPending}
                 />
                     
-                <FriendshipOptions
-                    isFriendInvited={isFriendInvited}
-                    isFriend={isFriend}
-                    setIsFriendInvited={setIsFriendInvited}
-                    setIsFriend={setIsFriend}
-                    isPending={isPending}
-                    />
+                        {isLoggedIn && <FriendshipOptions
+                            isFriendInvited={isFriendInvited}
+                            isFriend={isFriend}
+                            setIsFriendInvited={setIsFriendInvited}
+                            setIsFriend={setIsFriend}
+                            isPending={isPending}
+                        />}
                 </Wrapper>
                     
                 {isPending && <AcceptInvitationForm setIsPending={setIsPending} setIsFriend={setIsFriend} username={name} />}

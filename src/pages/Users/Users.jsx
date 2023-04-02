@@ -18,7 +18,6 @@ const Users = () => {
     useEffect(() => {
         fetchUsers().then(res => {
             const IDs = res.val()
-            console.log(IDs)
 
             if (IDs) {
                 setUserIDs(Object.keys(IDs).filter(ID => ID !== userId))

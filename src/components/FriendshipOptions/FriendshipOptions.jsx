@@ -51,7 +51,7 @@ const ChangeFriendStatusButton = styled.button`
     height: auto;
     padding: 5px 8px;
     display: flex;
-    border: none;
+    border: 1px solid white;
     gap: 5px;
     align-items: center;
 
@@ -61,21 +61,29 @@ const ChangeFriendStatusButton = styled.button`
     border-radius: 100px;
     cursor: pointer;
     
-    transition: 250ms all ease;
+    transition: 200ms all ease;
     font-family: 'Nunito', sans-serif;
     font-size: 17px;
     font-weight: 500;
     color: #00021A;
 
-    &:hover {
-        background-color: orange;
-        color: white;
-    }
-
-zz
+    
 
     & .icon{
-        fill: orange
+        fill: orange;
+        stroke: orange;
+
+        transition: 200ms all ease;
+    }
+
+    &:hover {
+        background-color: transparent;
+        color: white;
+
+        & .icon {
+            fill: white;
+            stroke: white;
+        }
     }
 `
 
