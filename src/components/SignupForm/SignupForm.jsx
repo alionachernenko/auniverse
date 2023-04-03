@@ -62,14 +62,17 @@ const ValidationMessage = styled.p`
     border-radius: 10px;
     text-align: center;
     left: 50%;
-    min-width: fit-content;
-    max-width: 90%;
     transform: translateX(-50%);
-    font-size: 15px;
+    font-size: 12px;
+    pointer-events: none;
     transition: 250ms all ease;
     z-index: 11111;
-    margin-right: -40%;
-    background-color: #EF5959
+    margin-right: -50%;
+    background-color: #EF5959;
+
+    @media screen and (min-width: 1200px) {
+        font-size: 15px
+    }
 `
 
 const Inputs = styled.div`
