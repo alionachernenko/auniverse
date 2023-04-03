@@ -10,7 +10,9 @@ import { ShowPasswordButton } from 'components'
 export const SignupForm = () => {
     const { handleSignUp, isLoading } = useContext(authContext)
     const [showPassword, setShowPassword] = useState(false)
-    
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [username, setUsername] = useState('')
 
     return (
         <Form onSubmit={(e) => {
@@ -25,14 +27,18 @@ export const SignupForm = () => {
             <Title>Sign up</Title>
             <Inputs>
                 <div style={{ position: 'relative' }}>
-                    <Input type="email" name="email" placeholder="email" autocomplete="off" required />
+                    <Input type="email" name="email" placeholder="email" autocomplete="off" required
+                        onChange={(e) => setEmail(e.target.value)} value={email} className={
+                        email.length > 0 && 'non-empty'} />
                     <ValidationMessage className='email'>
                         Provide a valid email (ex: john@company.com)
                     </ValidationMessage>
                 </div>
                 <div style={{ position: 'relative' }}>
                     <Input type={showPassword ? 'text' : 'password'} name="password" placeholder="password"
-                        autocomplete="off" required minLength={8}/>
+                        autocomplete="off" required minLength={8}
+                    onChange={(e) => setPassword(e.target.value)} value={password} className={
+                        password.length > 0 && 'non-empty'}/>
                     <ValidationMessage className='password'>
                         Password must contain minimum
                         eight characters, at least one
@@ -42,7 +48,9 @@ export const SignupForm = () => {
                     <ShowPasswordButton showPassword={showPassword} onClick={() => setShowPassword(prev => !prev)} />
                 </div>
                 <div style={{ position: 'relative' }}>
-                <Input type="text" name="username" placeholder="username" autocomplete="off" required minLength={4} />
+                    <Input type="text" name="username" placeholder="username" autocomplete="off" required minLength={4}
+                onChange={(e) => setUsername(e.target.value)} value={username} className={
+                        username.length > 0 && 'non-empty'}    />
                     <ValidationMessage className='username'>
                     Username must contain at least 4 symbols
                     </ValidationMessage>
@@ -57,7 +65,7 @@ const ValidationMessage = styled.p`
     opacity: 0;
     color: white;
     position: absolute;
-    top: 100%;
+    bottom: 100%;
     padding: 5px;
     border-radius: 10px;
     text-align: center;
@@ -128,17 +136,16 @@ const Input = styled.input`
         border-radius: 10px;
     }
 
-    &:invalid {
+    &:invalid.non-empty {
+
         border-radius: 10px;
         border: 1px solid #EF5959;
         outline: #EF5959
+        
     }
 
-    &:invalid{
-        &:focus + p{
-         {
+    &:invalid:focus.non-empty + p{
             opacity: 1;
-        }
     }
     
 `
