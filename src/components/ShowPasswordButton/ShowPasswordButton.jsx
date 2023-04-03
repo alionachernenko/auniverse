@@ -13,7 +13,7 @@ export const ShowPasswordButton = ({showPassword, onClick}) => {
 const Button = styled.button`
     position: absolute;
     right: 0;
-    top: 50%;
+    top: calc(57px/2);
     transform: translateY(-50%);
     background-color: white;
     border: none;

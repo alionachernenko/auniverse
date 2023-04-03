@@ -1,11 +1,12 @@
-import { Link, NavLink } from "react-router-dom"
+import { Link, NavLink, useLocation } from "react-router-dom"
 import styled from "styled-components"
 import { Container, FeedbackFormButton, Logo } from "components"
 import { useContext } from "react"
 import { authContext } from "context"
 
 export const Footer = () => {
-    const {isLoggedIn} = useContext(authContext)
+    const { isLoggedIn } = useContext(authContext)
+    const location = useLocation()
     return (<PageFooter>
         <Container>
             <FooterContainer>
@@ -13,7 +14,7 @@ export const Footer = () => {
                 <Navigation>
                     <Links>
                         <li><NavLink to='/'>Home</NavLink></li>
-                        <li><NavLink to='/catalog'>Catalog</NavLink></li>
+                        <li><NavLink to={location.pathname !== '/catalog' ? '/catalog' : `/catalog${location.search}`}>Catalog</NavLink></li>
                         <li><NavLink to='/users'>Community</NavLink></li>
                         <li>{isLoggedIn ? <Link to='/profile/bookmarks'>Profile</Link> : <Link to='/login/login-page'>Log in</Link>}</li>
                     </Links>

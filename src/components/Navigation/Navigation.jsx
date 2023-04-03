@@ -1,13 +1,14 @@
 import styled from "styled-components"
-import { NavLink } from "react-router-dom"
+import { NavLink, useLocation } from "react-router-dom"
 
 export const Navigation = () => {
+    const location = useLocation()
     return (
         <>
         <SiteNav>
             <NavigationMenu>
                 <Item><Tab to='/'>Home</Tab></Item>
-                <Item><Tab to='/catalog' end>Catalog</Tab></Item>
+                <Item><Tab to={location.pathname !== '/catalog' ? '/catalog' : `/catalog${location.search}`} end>Catalog</Tab></Item>
                 <Item><Tab to='/users' end>Community</Tab></Item>
             </NavigationMenu>
         </SiteNav>

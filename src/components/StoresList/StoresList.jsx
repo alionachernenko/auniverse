@@ -8,7 +8,7 @@ import { memo } from 'react'
 export const StoresList = memo(({ stores }) => {
 
     const icons = [
-        <FaSteam />,
+        <FaSteam  />,
         <FaXbox />,
         <FaPlaystation />,
         <FaAppStore />,

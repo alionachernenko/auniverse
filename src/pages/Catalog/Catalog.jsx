@@ -17,10 +17,11 @@ const Catalog = () => {
         [params]
     );
 
-    const { ordering = null, query, genre = null, page} = searchParams
+    const { ordering = null, query, genre = null, page } = searchParams
 
     useEffect(() => {
         setIsLoading(true)
+        setParams({...searchParams, page: 1})
         fetchGameBySearchQuery(query, page, ordering, genre).then(({data}) => {
                 const { results, count } = data
 
@@ -33,7 +34,7 @@ const Catalog = () => {
                 setIsError(true)
                 setIsLoading(false)
             })
-    }, [page, query, ordering, genre, params])
+    }, [query, ordering, genre, page, setParams, searchParams])
 
     const handlePageChange = (page) => {
         setParams({...searchParams, page: (page + 1)})

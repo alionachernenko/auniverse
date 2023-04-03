@@ -10,6 +10,7 @@ import { ShowPasswordButton } from 'components'
 export const SignupForm = () => {
     const { handleSignUp, isLoading } = useContext(authContext)
     const [showPassword, setShowPassword] = useState(false)
+    
 
     return (
         <Form onSubmit={(e) => {
@@ -22,22 +23,54 @@ export const SignupForm = () => {
                 <FaUserEdit className='icon' fill='orange' size='30px'/> } 
             </Icon>
             <Title>Sign up</Title>
-            
             <Inputs>
-                <Input type="email" name="email" placeholder="email" autocomplete="off" required />
                 <div style={{ position: 'relative' }}>
-                    <Input type={showPassword ? 'text' : 'password'} name="password" placeholder="password" autocomplete="off" required/>
+                    <Input type="email" name="email" placeholder="email" autocomplete="off" required />
+                    <ValidationMessage className='email'>
+                        Provide a valid email (ex: john@company.com)
+                    </ValidationMessage>
+                </div>
+                <div style={{ position: 'relative' }}>
+                    <Input type={showPassword ? 'text' : 'password'} name="password" placeholder="password"
+                        autocomplete="off" required minLength={8}/>
+                    <ValidationMessage className='password'>
+                        Password must contain minimum
+                        eight characters, at least one
+                        uppercase letter, one lowercase
+                        letter and one number
+                    </ValidationMessage>
                     <ShowPasswordButton showPassword={showPassword} onClick={() => setShowPassword(prev => !prev)} />
                 </div>
-                <Input type="text" name="username" placeholder="username" autocomplete="off" required />
-            </Inputs>
-            
-            
-            
+                <div style={{ position: 'relative' }}>
+                <Input type="text" name="username" placeholder="username" autocomplete="off" required minLength={4} />
+                    <ValidationMessage className='username'>
+                    Username must contain at least 4 symbols
+                    </ValidationMessage>
+                </div>
+            </Inputs>       
             <Button type="submit">Sign Up</Button>
         </Form>
     )
 }
+
+const ValidationMessage = styled.p`
+    opacity: 0;
+    color: white;
+    position: absolute;
+    top: 100%;
+    padding: 5px;
+    border-radius: 10px;
+    text-align: center;
+    left: 50%;
+    min-width: fit-content;
+    max-width: 90%;
+    transform: translateX(-50%);
+    font-size: 15px;
+    transition: 250ms all ease;
+    z-index: 11111;
+    margin-right: -40%;
+    background-color: #EF5959
+`
 
 const Inputs = styled.div`
     display: flex;
@@ -45,7 +78,6 @@ const Inputs = styled.div`
     gap: 30px;
     margin-bottom: 30px;
 `
-
 
 const Form = styled.form`
 display: flex;
@@ -69,6 +101,7 @@ const Input = styled.input`
     width: 360px;
     padding: 14px;
     border: none;
+   
     box-sizing: border-box;
     
     font-family: inherit;
@@ -87,6 +120,24 @@ const Input = styled.input`
     @media screen and (max-width: 1199px){
         width: 100%
     }
+
+    &:focus {
+        border-radius: 10px;
+    }
+
+    &:invalid {
+        border-radius: 10px;
+        border: 1px solid #EF5959;
+        outline: #EF5959
+    }
+
+    &:invalid{
+        &:focus + p{
+         {
+            opacity: 1;
+        }
+    }
+    
 `
 
 const Button = styled.button`
