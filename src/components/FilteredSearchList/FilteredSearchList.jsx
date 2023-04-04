@@ -5,8 +5,10 @@ export const FilteredSearchList = ({results}) => {
     return (
         <FilteredResults>
                 {results.map(({id, background_image, slug, name}) => 
-                <Item key={id}>
-                        <Poster src={`${background_image}`} loading='lazy' alt={`${name} poster`} />
+                    <Item key={id}>
+                        <PosterWrapper>
+                            <Poster src={`${background_image}`} loading='lazy' alt={`${name} poster`} />
+                        </PosterWrapper>
                     <Title to={`/catalog/${slug}`}>
                         {name}
                     </Title>
@@ -17,12 +19,16 @@ export const FilteredSearchList = ({results}) => {
 }
 
 const FilteredResults = styled.ul`
-    width: auto;
-    max-height: 30vh;
+    width: 100%;
+    box-sizing: border-box;
+    max-height: 50vh;
     padding: 10px;
     border-radius: 20px;
 
-    gap: 5px;
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
 
     position: absolute;
     z-index: 3;
@@ -36,12 +42,19 @@ const Item = styled.li`
     display: flex;
     align-items: center;
     font-weight: 900;
+    height: 70px;
+`
+
+const PosterWrapper = styled.div`
+    width: 90px;
+    height: 70px;
+    margin-right: 10px;
 `
 
 const Poster = styled.img`
-    width: 90px;
-    height: auto;
-    margin-right: 10px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 `
 
 const Title = styled(Link)`
