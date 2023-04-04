@@ -3,7 +3,7 @@ import styled, { keyframes } from "styled-components"
 import { useState } from "react"
 import { ShowPasswordButton } from "components"
 
-export const FormInput = ({ type }) => {
+export const FormInput = ({ type, isRequired }) => {
     const [showPassword, setShowPassword] = useState(false)
     
     return (
@@ -23,6 +23,7 @@ export const FormInput = ({ type }) => {
                             />
                             {type === 'password' && <ShowPasswordButton showPassword={showPassword} onClick={() => setShowPassword(prev => !prev)} />}
                             {touched[type] && errors[type] && values[type].length !== 0 && <ValidationMessage>{errors[type]}</ValidationMessage>}
+                            
                         </>)
                 }}
             </Field>
