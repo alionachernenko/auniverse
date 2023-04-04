@@ -20,7 +20,7 @@ export const FormInput = ({ type }) => {
                                 onFocus={() => form.setFieldTouched(type, true)} onBlur={() => form.setFieldTouched(type, false)}
                             />
                             {type === 'password' && <ShowPasswordButton showPassword={showPassword} onClick={() => setShowPassword(prev => !prev)} />}
-                            {touched[type] && errors[type] && <ValidationMessage>{errors[type]}</ValidationMessage>}
+                            {touched[type] && errors[type] && values[type].length && <ValidationMessage>{errors[type]}</ValidationMessage>}
                         </>)
                 }}
             </Field>
