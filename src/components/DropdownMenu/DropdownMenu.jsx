@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom"
+import {NavLink, useLocation } from "react-router-dom"
 
 import { MdClose } from "react-icons/md"
 import { ImHome2 } from 'react-icons/im'
@@ -18,11 +18,11 @@ export const DropdownMenu = ({ onClick }) => {
         <Menu>
             <CloseButton  onClick={onClick}><MdClose color='orange' size='100%'/></CloseButton>
             <Options>
-                <li><Link onClick={onClick} to={'/'}><ImHome2 size={50}/></Link></li>
-                <li><Link onClick={onClick} to={location.pathname !== '/catalog' ? '/catalog' : `/catalog${location.search}`}><IoLogoGameControllerB size={50}/></Link></li>
-                <li><Link onClick={onClick} to={'/users'}><HiUsers size={50}/></Link></li>
-                <li>{isLoggedIn ? <Link onClick={onClick} to={'/profile/bookmarks'}><FaUserCircle size={50} /></Link> :
-                        <Link onClick={onClick} to={'/login/login-page'}><IoLogIn size={50} /></Link>}</li>
+                <li><OptionLink onClick={onClick} to={'/'}><ImHome2 size={50}/></OptionLink></li>
+                <li><OptionLink onClick={onClick} to={`/catalog${location.search}`}><IoLogoGameControllerB size={50}/></OptionLink></li>
+                <li><OptionLink onClick={onClick} to={'/users'}><HiUsers size={50}/></OptionLink></li>
+                <li>{isLoggedIn ? <OptionLink onClick={onClick} to={'/profile/bookmarks'}><FaUserCircle size={50} /></OptionLink> :
+                        <OptionLink onClick={onClick} to={'/login/login-page'}><IoLogIn size={50} /></OptionLink>}</li>
             </Options>
         </Menu>
        )
@@ -72,4 +72,10 @@ const CloseButton = styled.button`
 
     background-color: white;
     border: orange;
+`
+
+const OptionLink = styled(NavLink)`
+&.active svg {
+    fill: orange
+}
 `
