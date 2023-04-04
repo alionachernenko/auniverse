@@ -15,7 +15,7 @@ export const FormInput = ({ type }) => {
                         <>
                             <Input {...field}
                                 type={!showPassword && type === 'password' ? 'password' : 'text'}
-                                placeholder={type}
+                                placeholder={`${type} *`}
                                 className={errors[type] && values[type].length && 'invalid'}
                                 onFocus={() => form.setFieldTouched(type, true)} onBlur={() => form.setFieldTouched(type, false)}
                                 autoComplete={type === 'password' ? 'new-password' : null}
@@ -43,7 +43,7 @@ const showMessage = keyframes`
 const ValidationMessage = styled.p`
     color: white;
     position: absolute;
-    bottom: 100%;
+    top: 100%;
     padding: 5px;
     border-radius: 10px;
     text-align: center;
@@ -97,5 +97,7 @@ const Input = styled.input`
         border: 1px solid #EF5959;
     }
 
-    &
+    &:focus, &.invalid {
+        ouline: #EF5959
+    }
 `
