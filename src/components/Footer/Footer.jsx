@@ -85,9 +85,17 @@ const Links = styled.ul`
         justify-content: space-between;
     }
 
-    & a {
+    & a{
+        display: block;
+        transform-origin: left;
+        transition: 150ms all ease;
+
         &.active{
             color: orange
+        }
+
+        &:not(.active):hover {
+            transform: scale(1.1)
         }
     }
 `
