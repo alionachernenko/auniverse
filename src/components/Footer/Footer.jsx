@@ -112,4 +112,14 @@ const Contacts = styled.address`
     @media screen and (max-width: 767px) {
         align-items: center;
     }
+
+    & a{
+        display: block;
+        transition: 180ms all ease;
+        transform-origin: left;
+
+        &:hover{
+            transform: scale(1.05)
+        }
+    }
 `

@@ -21,11 +21,18 @@ export const FeedbackFormButton = () => {
 
 const Button = styled.button`
     padding: 10px;
-    border: none;
+    border: 1px solid white;
     background-color: white;
     border-radius: 10px;
     color: white;
     font-family: 'Nunito', sans-serif;
     font-size: 17px;
-    color: #00021A
+    color: #00021A;
+
+    transition: 200ms all ease;
+
+    &:hover {
+        color: white;
+        background-color: #00021A;
+    }
 `

@@ -14,7 +14,7 @@ const Wrapper = styled.div`
         switch(props.render){
             case 'loader-homepage': 
             return css`
-                margin-left: 60px;
+                margin-left: 100px;
             `
             default:
                 return css`

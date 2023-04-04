@@ -49,6 +49,7 @@ const Section = styled.section`
     padding-top: 20px;
     overflow: hidden;
     background-color: #ffffff;
+    height: 644px;
 
     @media screen and (min-width: 1200px) {
         padding-top: 0;
