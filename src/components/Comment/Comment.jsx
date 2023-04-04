@@ -3,6 +3,7 @@ import { fetchUserInfo } from "utils"
 import styled from "styled-components"
 import { Link, useLocation } from "react-router-dom"
 import { authContext } from "context"
+import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
 
 export const Comment = memo(({ authorId, text }) => {
 
@@ -16,7 +17,7 @@ export const Comment = memo(({ authorId, text }) => {
             const { username, photoUrl} = res.val()
             
             setAuthorUsername(username)
-            setAuthorAvatar(photoUrl)
+            setAuthorAvatar(photoUrl ?? avatarPlaceholder)
         }).catch(error => {
             console.log(error)
         }

@@ -42,13 +42,7 @@ const User = () => {
             if (bookmarks) {
                 setBookmarks(Object.values(bookmarks))
             }
-
-            if (photoUrl) {
-                setPhoto(photoUrl)
-            }
-            else {
-                setPhoto(avatarPlaceholder)
-            }
+            setPhoto(photoUrl ?? avatarPlaceholder)
             
             if (invitationsList.val()) {
                 setIsFriendInvited(Object.values(invitationsList.val()).some(user => user === userId))
