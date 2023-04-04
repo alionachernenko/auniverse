@@ -89,4 +89,5 @@ const Username = styled.p`
     color: white;
     font-size: 25px;
     font-weight: 500;    
+    word-break: break-all;
 `

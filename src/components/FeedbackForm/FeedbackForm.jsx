@@ -66,13 +66,13 @@ export const FeedbackForm = ({onClick}) => {
                 <Title>Leave your feedback below</Title>
                 {showForm ? <Form onSubmit={(e) => onFormSubmit(e)}>
                     <InputsWrapper>
-                        <div style={{ overflow: 'hidden', borderRadius: 15}}>
+                        <FeedbackUnputWrapper >
                             <FeedbackInput name="feedback" required />
-                        </div>
-                        <UploadPhotosButton htmlFor="photos">
+                            <UploadPhotosButton htmlFor="photos">
                             <SlPicture size='100%' fill="#00021A" />
-                        </UploadPhotosButton>
-                        <FilesInput accept=".png, .jpg, .jpeg, .gif" type="file" name='photos[]' id="photos" multiple onInput={(e) => { onChooseFile(e)}} />
+                            </UploadPhotosButton>
+                            <FilesInput accept=".png, .jpg, .jpeg, .gif" type="file" name='photos[]' id="photos" multiple onInput={(e) => { onChooseFile(e)}} />
+                        </FeedbackUnputWrapper>
                     </InputsWrapper>
                     <Photos>
                         {images && images.map((image, index) =>
@@ -149,7 +149,6 @@ const Form = styled.form`
     align-items: center;
     gap: 10px;
     width: 100%;
-
 `
 
 const InputsWrapper = styled.div`
@@ -157,17 +156,26 @@ const InputsWrapper = styled.div`
     width: 100%
 `
 
+const FeedbackUnputWrapper = styled.div`
+    overflow: hidden;
+    border-radius: 15px;
+     resize: vertical;
+    border: 1px solid #00021A;
+    width: 100%;
+    padding-bottom: 33px
+`
+
 const FeedbackInput = styled.textarea`
     min-height: 150px !important;
-    resize: vertical;
+    resize: none;
+    outline: none;
     width: 100%;
     box-sizing: border-box;
-    overflow: scroll;
+    overflow-y: scroll;
+    padding: 10px 10px 0 10px;
 
-    border-radius: 15px;
-    padding: 10px;
+    border: none;
     font-family: 'Nunito', sans-serif;
-    border: 1px solid #00021A;
     font-size: 17px
 `
 
@@ -181,7 +189,9 @@ const FilesInput = styled.input`
 `
 
 const UploadPhotosButton = styled.label`
+    display: block;
     width: 25px;
+    height: 25px;
     position: absolute;
     bottom: 7px;
     left: 7px;
