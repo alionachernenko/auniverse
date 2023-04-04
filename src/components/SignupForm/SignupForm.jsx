@@ -2,86 +2,66 @@ import { useContext } from 'react'
 import { FaUserEdit } from 'react-icons/fa'
 import { Oval } from 'react-loader-spinner'
 import { authContext } from 'context'
-import { useState } from 'react'
 import styled from 'styled-components'
-import { ShowPasswordButton } from 'components'
+import { Formik, Form} from 'formik'
+import * as yup from 'yup'
+import { FormInput } from 'components/FormInput/FormInput'
 
+const schema = yup.object().shape({
+    email: yup
+        .string()
+        .trim()
+        .matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Please, provide a valid email (ex: john@company.com)')
+        .required('Email is a required field'),
+    password: yup
+        .string()
+        .trim()
+        .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/, 'Password must contain minimum eight characters, at least one letter, one number and one special character')
+        .min(8)
+        .required('Password is required field'),
+    username: yup
+        .string()
+        .min(4, 'Username must contain minimum 4 characters')
+        .max(12, 'Username may contain maximum 12 characters')
+        .required('Username is required field')
+})
+
+const initialValues = {
+    email: '',
+    password: '',
+    username: ''
+}
 
 export const SignupForm = () => {
     const { handleSignUp, isLoading } = useContext(authContext)
-    const [showPassword, setShowPassword] = useState(false)
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [username, setUsername] = useState('')
 
     return (
-        <Form onSubmit={(e) => {
-            const { email, password, username } = e.target.elements
-            handleSignUp(e, email.value, password.value, username.value)
-        }
-        }>
+        <Formik
+            initialValues={initialValues}
+            onSubmit={(values) => {
+                const { email, password, username } = values
+                handleSignUp(email, password, username)
+            }}
+            validationSchema={schema}
+        >
+        <FormWrapper autoComplete='off'>
             <Icon className='icon-wrapper'>
                 {isLoading ? <Oval color='#FF6600' secondaryColor='orange' width={40} height={40} strokeWidth={4} /> : 
                 <FaUserEdit className='icon' fill='orange' size='30px'/> } 
             </Icon>
             <Title>Sign up</Title>
             <Inputs>
-                <div style={{ position: 'relative' }}>
-                    <Input type="email" name="email" placeholder="email" autocomplete="off" required
-                        onChange={(e) => setEmail(e.target.value)} value={email} className={
-                        email.length > 0 && 'non-empty'} />
-                    <ValidationMessage className='email'>
-                        Provide a valid email (ex: john@company.com)
-                    </ValidationMessage>
-                </div>
-                <div style={{ position: 'relative' }}>
-                    <Input type={showPassword ? 'text' : 'password'} name="password" placeholder="password"
-                        autocomplete="off" required minLength={8}
-                    onChange={(e) => setPassword(e.target.value)} value={password} className={
-                        password.length > 0 && 'non-empty'}/>
-                    <ValidationMessage className='password'>
-                        Password must contain minimum
-                        eight characters, at least one
-                        uppercase letter, one lowercase
-                        letter and one number
-                    </ValidationMessage>
-                    <ShowPasswordButton showPassword={showPassword} onClick={() => setShowPassword(prev => !prev)} />
-                </div>
-                <div style={{ position: 'relative' }}>
-                    <Input type="text" name="username" placeholder="username" autocomplete="off" required minLength={4}
-                onChange={(e) => setUsername(e.target.value)} value={username} className={
-                        username.length > 0 && 'non-empty'}    />
-                    <ValidationMessage className='username'>
-                    Username must contain at least 4 symbols
-                    </ValidationMessage>
-                </div>
+                <FormInput type='email' />
+                <FormInput type='password'/>
+                <FormInput type='username'/>
             </Inputs>       
             <Button type="submit">Sign Up</Button>
-        </Form>
+            </FormWrapper>
+        </Formik>
     )
 }
 
-const ValidationMessage = styled.p`
-    opacity: 0;
-    color: white;
-    position: absolute;
-    bottom: 100%;
-    padding: 5px;
-    border-radius: 10px;
-    text-align: center;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 12px;
-    pointer-events: none;
-    transition: 250ms all ease;
-    z-index: 11111;
-    margin-right: -50%;
-    background-color: #EF5959;
 
-    @media screen and (min-width: 1200px) {
-        font-size: 15px
-    }
-`
 
 const Inputs = styled.div`
     display: flex;
@@ -90,7 +70,7 @@ const Inputs = styled.div`
     margin-bottom: 30px;
 `
 
-const Form = styled.form`
+const FormWrapper = styled(Form)`
 display: flex;
 height: auto;
 flex-direction: column; 
@@ -106,48 +86,6 @@ border-radius: 20px;
     max-width: 100%;
     padding: 40px 20px;
 }
-`
-
-const Input = styled.input` 
-    width: 360px;
-    padding: 14px;
-    border: none;
-   
-    box-sizing: border-box;
-    
-    font-family: inherit;
-    font-size: 20px;
-    
-    color: white;
-    background: transparent !important;
-    border-bottom: 1px solid white;
-    -webkit-box-shadow: inset 0 0 0 50px #00021A;
-    -webkit-text-fill-color: #ffffff;
-    
-    &::placeholder{
-        font-size: 20px;
-    }
-
-    @media screen and (max-width: 1199px){
-        width: 100%
-    }
-
-    &:focus {
-        border-radius: 10px;
-    }
-
-    &:invalid.non-empty {
-
-        border-radius: 10px;
-        border: 1px solid #EF5959;
-        outline: #EF5959
-        
-    }
-
-    &:invalid:focus.non-empty + p{
-            opacity: 1;
-    }
-    
 `
 
 const Button = styled.button`

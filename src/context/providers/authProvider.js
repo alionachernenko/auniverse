@@ -22,8 +22,7 @@ const AuthProvider = ({ children }) => {
 
   const navigate = useNavigate();
 
-  const handleLogInSubmit = (e, email, password) => {
-    e.preventDefault();
+  const handleLogInSubmit = (email, password) => {
     setIsLoading(true);
 
     userLogIn(email, password)
@@ -39,8 +38,7 @@ const AuthProvider = ({ children }) => {
       });
   };
 
-  const handleSignUp = (e, email, password, username, photo) => {
-    e.preventDefault();
+  const handleSignUp = (email, password, username, photo) => {
     setIsLoading(true);
     userSignUp(email, password, username, photo)
       .then(({ user }) => {

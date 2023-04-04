@@ -1,40 +1,57 @@
 import { authContext } from 'context' 
 
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { IoMdLogIn } from 'react-icons/io'
 import { Oval } from 'react-loader-spinner'
 
 import styled from 'styled-components'
-import { ShowPasswordButton } from 'components'
+import { Formik, Form } from 'formik'
+import * as yup from 'yup'
+import { FormInput } from 'components/FormInput/FormInput'
+
+const schema = yup.object().shape({
+    email: yup
+        .string()
+        .trim()
+        .matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Please, provide a valid email (ex: john@company.com)')
+        .required('Email is a required field'),
+    password: yup
+        .string()
+        .trim()
+        .required('Password is required field')
+})
+
+const initialValues = {
+    email: '',
+    password: '',
+}
 
 export const LoginForm = () => {
     const { handleLogInSubmit, isLoading } = useContext(authContext)
-    const [showPassword, setShowPassword] = useState(false)
-
-
-    const onFormSubmit = (e) => {
-        const { email, password } = e.target
-        
-        handleLogInSubmit(e, email.value, password.value)
-    }
     
     return (
-        <Form onSubmit={(e) => onFormSubmit(e)}>
-            <Icon>
-                {isLoading ? <Oval color='#FF6600' secondaryColor='orange' width={40} height={40}/> : 
-                <IoMdLogIn fill='orange' size='30px'/> } 
-            </Icon>
-            
-            <Title>Sign in</Title>
-              <Inputs>
-                <Input type="email" name="email" placeholder="email" autocomplete="off" required />
-                <div style={{ position: 'relative' }}>
-                    <Input type={showPassword ? 'text' : 'password'} name="password" placeholder="password" autocomplete="off" required />
-                    <ShowPasswordButton showPassword={showPassword} onClick={() => setShowPassword(prev => !prev)} />
-                </div>
-            </Inputs>
-            <Button type="submit">Log In</Button>
-        </Form>
+        <Formik
+            initialValues={initialValues}
+            onSubmit={(values) => {
+                const {email, password} = values
+                handleLogInSubmit(email, password)
+            }}
+            validationSchema={schema}
+        >
+            <FormWrapper autoComplete='off'>
+                <Icon>
+                    {isLoading ? <Oval color='#FF6600' secondaryColor='orange' width={40} height={40}/> : 
+                    <IoMdLogIn fill='orange' size='30px'/> } 
+                </Icon>
+                
+                <Title>Sign in</Title>
+                <Inputs>
+                    <FormInput type='email' />
+                    <FormInput type='password'/>
+                </Inputs>
+                <Button type="submit">Log In</Button>
+            </FormWrapper>
+        </Formik>
     ) 
 }
 
@@ -46,7 +63,7 @@ const Inputs = styled.div`
 `
 
 
-const Form = styled.form`
+const FormWrapper = styled(Form)`
     height: auto;
     max-width: 100%;
     padding: 40px 20px 20px 20px;
@@ -62,32 +79,6 @@ const Form = styled.form`
 
     background-color: #00021A;
 `
-
-const Input = styled.input`
-    width: 360px;
-    padding: 14px;
-    border: none;
-    border-bottom: 1px solid white;
-    box-sizing: border-box;
-
-    font-family: inherit;
-    font-size: 20px;
-    color: white;
-
-    background: transparent !important;
-    
-    -webkit-box-shadow: inset 0 0 0 50px #00021A;
-    -webkit-text-fill-color: #ffffff;
-
-    &::placeholder{
-        font-size: 20px;
-    }
-
-    @media screen and (max-width: 1199px){
-        width: 100%
-    }
-`
-
 const Title = styled.h2`
     margin-bottom: 30px;
 
