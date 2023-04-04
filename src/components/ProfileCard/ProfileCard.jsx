@@ -9,6 +9,7 @@ import { memo } from "react"
 import { MdDone, MdClose } from 'react-icons/md'
 
 import styled from "styled-components"
+import { toast } from "react-toastify"
 
 export const ProfileCard = memo(({
     avatar,
@@ -36,8 +37,35 @@ export const ProfileCard = memo(({
 
     const uploadAvatar = (e) => {
         const file = e.target.files[0]
+        const availableTypes = ['image/png', 'image/jpg', 'image/gif', 'image/jpeg']
 
         if (file) {
+            if (file.size > 4194304) {
+                toast(`Maximum size: 4MB. Your size: ${Math.ceil(file.size / 1048576 )}MB`, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
+                return
+            }
+            if (!availableTypes.includes(file.type)) {
+                toast(`Available formats: .png, .gif, .jpg, .jpeg`, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
+                return
+            }
             setIsAvatarLoading(true)
             addAvatar(file, userId, setPhotoPath, setIsAvatarLoading)
         }
