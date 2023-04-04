@@ -50,7 +50,9 @@ export const SignupForm = () => {
                 <FaUserEdit className='icon' fill='orange' size='30px'/> } 
             </Icon>
             <Title>Sign up</Title>
-            <Inputs>
+                <Inputs>
+                    <input style={{ display: 'none' }} />
+                    <input type="password" style={{ display: 'none' }}/>
                 <FormInput type='email' />
                 <FormInput type='password'/>
                 <FormInput type='username'/>

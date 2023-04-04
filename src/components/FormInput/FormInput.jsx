@@ -1,5 +1,5 @@
 import { Field } from "formik"
-import styled from "styled-components"
+import styled, { keyframes } from "styled-components"
 import { useState } from "react"
 import { ShowPasswordButton } from "components"
 
@@ -18,14 +18,26 @@ export const FormInput = ({ type }) => {
                                 placeholder={type}
                                 className={errors[type] && values[type].length && 'invalid'}
                                 onFocus={() => form.setFieldTouched(type, true)} onBlur={() => form.setFieldTouched(type, false)}
+                                autoComplete={type === 'password' ? 'new-password' : null}
+                                required
                             />
                             {type === 'password' && <ShowPasswordButton showPassword={showPassword} onClick={() => setShowPassword(prev => !prev)} />}
-                            {touched[type] && errors[type] && values[type].length && <ValidationMessage>{errors[type]}</ValidationMessage>}
+                            {touched[type] && errors[type] && values[type].length !== 0 && <ValidationMessage>{errors[type]}</ValidationMessage>}
                         </>)
                 }}
             </Field>
         </div>)
 }
+
+const showMessage = keyframes`
+    0% {
+        opacity: 0
+    }
+
+    100% {
+        opacity: 1
+    }
+`
 
 const ValidationMessage = styled.p`
     color: white;
@@ -42,6 +54,8 @@ const ValidationMessage = styled.p`
     z-index: 11111;
     margin-right: -50%;
     background-color: #EF5959;
+    animation: ${showMessage} 200ms ease;
+
 
     @media screen and (min-width: 1200px) {
         font-size: 15px
@@ -80,6 +94,7 @@ const Input = styled.input`
     &.invalid {
         border-radius: 10px;
         border: 1px solid #EF5959;
-        outline: #EF5959
     }
+
+    &
 `

@@ -46,6 +46,8 @@ export const LoginForm = () => {
                 
                 <Title>Sign in</Title>
                 <Inputs>
+                    <input style={{ display: 'none' }} />
+                    <input type="password" style={{ display: 'none' }}/>
                     <FormInput type='email' />
                     <FormInput type='password'/>
                 </Inputs>
