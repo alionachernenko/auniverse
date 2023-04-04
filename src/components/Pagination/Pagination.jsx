@@ -53,6 +53,7 @@ const PaginationContainer = styled.div`
         height: 30px;
         padding: 2px;
         border-radius: 15px;
+        border: 1px solid transparent;
 
         display: flex;
         align-items: center;
@@ -60,17 +61,35 @@ const PaginationContainer = styled.div`
 
         cursor: pointer;
         background-color: transparent;
+        transition: 180ms all ease;
+
+         &:hover {
+                border: 1px solid orange
+            }
+
     }
 
     & .page a{
-    color: white;
-}
+        color: white;
+    }
+
+    
+        & .break a{
+            transition: 180ms all ease;
+            color: white;
+
+            &:hover {
+                color: orange;
+            }
+        }
 
     & .active{
         background-color: orange;
 
         & a {
             color: white;
+
+            
         }
     }
 
@@ -80,8 +99,6 @@ const PaginationContainer = styled.div`
         & svg{
             fill: grey;
         }
-        
-        
     }
 
     & .next a, & .prev a{
@@ -92,6 +109,11 @@ const PaginationContainer = styled.div`
         display: block;
         height: 30px;
         width: 30px;
+        transition: 180ms all ease;
+        
+        &:not(.disabled svg):hover {
+            filter: drop-shadow(2px 0px orange)
+        }
     }
 
     & .prev svg {

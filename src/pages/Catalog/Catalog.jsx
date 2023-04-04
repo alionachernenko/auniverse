@@ -17,11 +17,10 @@ const Catalog = () => {
         [params]
     );
 
-    const { ordering = null, query, genre = null, page } = searchParams
+    const { ordering = null, query = null, genre = null, page = 1} = searchParams
 
     useEffect(() => {
         setIsLoading(true)
-        setParams({...searchParams, page: 1})
         fetchGameBySearchQuery(query, page, ordering, genre).then(({data}) => {
                 const { results, count } = data
 
