@@ -7,9 +7,9 @@ export const Navigation = () => {
         <>
         <SiteNav>
             <NavigationMenu>
-                <Item><Tab to='/'>Home</Tab></Item>
-                <Item><Tab to={`/catalog${location.search}`} end>Catalog</Tab></Item>
-                <Item><Tab to='/users' end>Community</Tab></Item>
+                <Item><Tab to='/'><span>Home</span></Tab></Item>
+                <Item><Tab to={`/catalog${location.search}`} end><span>Catalog</span></Tab></Item>
+                <Item><Tab to='/users' end><span>Community</span></Tab></Item>
             </NavigationMenu>
         </SiteNav>
         </>
@@ -45,6 +45,15 @@ const Item = styled.li`
     font-size: 15px;
     letter-spacing: 0.05em;
     line-height: 140%;
+
+    & span{
+        display: inline-block;
+        transition: 180ms all ease;
+    }
+
+    &:hover :not(.active) span{
+        transform: scale(1.1)
+    }
 `
 
 const Tab = styled(NavLink)`

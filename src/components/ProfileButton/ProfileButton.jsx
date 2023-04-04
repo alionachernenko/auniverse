@@ -27,6 +27,15 @@ const Button = styled(NavLink)`
     height: 61px;
     display: flex;
     align-items: center;
+    
+
+    & svg {
+        transition: 180ms all ease;
+    }
+
+    &:hover svg{
+        transform: scale(1.2)
+    }
 
     &.active::after{
             content: '';
