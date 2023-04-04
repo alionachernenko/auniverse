@@ -8,7 +8,7 @@ export const Navigation = () => {
         <SiteNav>
             <NavigationMenu>
                 <Item><Tab to='/'>Home</Tab></Item>
-                <Item><Tab to={location.pathname !== '/catalog' ? '/catalog' : `/catalog${location.search}`} end>Catalog</Tab></Item>
+                <Item><Tab to={`/catalog${location.search}`} end>Catalog</Tab></Item>
                 <Item><Tab to='/users' end>Community</Tab></Item>
             </NavigationMenu>
         </SiteNav>

@@ -1,6 +1,7 @@
 import 'react-toastify/dist/ReactToastify.css';
 
-import { Route, Routes, useLocation} from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
+
 import { useEffect, lazy, Suspense } from "react";
 import { ToastContainer } from "react-toastify";
 
@@ -34,9 +35,9 @@ export const App = () => {
                 <Route path='/' element={<Homepage />} />
                 <Route path='/catalog' element={<Catalog/>} />
                 <Route path='/catalog/:gameSlug' element={<GameDescription/>} />
-                <Route path='/login' element={<AuthenticationPage />} >
+                <Route path='/login' element={<AuthenticationPage/>} >
                     <Route path='login-page' element={<LoginForm/>} />
-                    <Route path='signup-page' element={<SignupForm/>} />
+                    <Route path='signup-page' element={<SignupForm />} /> 
                 </Route>
                 <Route path ='/users' element={<Users/>}/>
                 <Route path='/users/:id/*' element={<UserProfile />}/>

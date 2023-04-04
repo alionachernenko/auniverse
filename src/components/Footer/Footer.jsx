@@ -1,4 +1,4 @@
-import { Link, NavLink, useLocation } from "react-router-dom"
+import { NavLink, useLocation } from "react-router-dom"
 import styled from "styled-components"
 import { Container, FeedbackFormButton, Logo } from "components"
 import { useContext } from "react"
@@ -14,9 +14,9 @@ export const Footer = () => {
                 <Navigation>
                     <Links>
                         <li><NavLink to='/'>Home</NavLink></li>
-                        <li><NavLink to={location.pathname !== '/catalog' ? '/catalog' : `/catalog${location.search}`}>Catalog</NavLink></li>
+                        <li><NavLink to={`/catalog${location.search}`}>Catalog</NavLink></li>
                         <li><NavLink to='/users'>Community</NavLink></li>
-                        <li>{isLoggedIn ? <Link to='/profile/bookmarks'>Profile</Link> : <Link to='/login/login-page'>Log in</Link>}</li>
+                        <li>{isLoggedIn ? <NavLink to='/profile/bookmarks'>Profile</NavLink> : <NavLink to='/login'>Log in</NavLink>}</li>
                     </Links>
                 </Navigation>
                 <Contacts>

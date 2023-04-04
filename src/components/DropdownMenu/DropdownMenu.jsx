@@ -22,7 +22,7 @@ export const DropdownMenu = ({ onClick }) => {
                 <li><OptionLink onClick={onClick} to={`/catalog${location.search}`}><IoLogoGameControllerB size={50}/></OptionLink></li>
                 <li><OptionLink onClick={onClick} to={'/users'}><HiUsers size={50}/></OptionLink></li>
                 <li>{isLoggedIn ? <OptionLink onClick={onClick} to={'/profile/bookmarks'}><FaUserCircle size={50} /></OptionLink> :
-                        <OptionLink onClick={onClick} to={'/login/login-page'}><IoLogIn size={50} /></OptionLink>}</li>
+                        <OptionLink onClick={onClick} to={'/login'} ><IoLogIn size={50} /></OptionLink>}</li>
             </Options>
         </Menu>
        )
@@ -75,7 +75,7 @@ const CloseButton = styled.button`
 `
 
 const OptionLink = styled(NavLink)`
-&.active svg {
-    fill: orange
-}
+    &.active svg {
+        fill: orange
+    }
 `
