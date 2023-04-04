@@ -21,6 +21,7 @@ const schema = yup.object().shape({
         .required('Password is required field'),
     username: yup
         .string()
+        .trim()
         .min(4, 'Username must contain minimum 4 characters')
         .max(12, 'Username may contain maximum 12 characters')
         .required('Username is required field')

@@ -3,7 +3,7 @@ import styled, { keyframes } from "styled-components"
 import { useState } from "react"
 import { ShowPasswordButton } from "components"
 
-export const FormInput = ({ type, isRequired }) => {
+export const FormInput = ({ type }) => {
     const [showPassword, setShowPassword] = useState(false)
     
     return (
