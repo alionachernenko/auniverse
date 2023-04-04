@@ -74,7 +74,7 @@ width: 100%;
 padding: 20px;
 box-sizing: border-box;
 min-height: calc(100vh - 61px);
-
+background-color: #fff
 `
 
 const UsersList = styled.ul`

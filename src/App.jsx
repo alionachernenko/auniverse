@@ -14,7 +14,7 @@ const AuthenticationPage = lazy(() => import('./pages/AuthenticationPage/Authent
 const AccountPage = lazy(() => import('./pages/AccountPage/AccountPage'))
 const ErrorPage = lazy(() => import('./pages/ErrorPage/ErrorPage'))
 const UserProfile = lazy(() => import('./pages/UserProfile/UserProfile'))
-const Users = lazy(() => import('./pages/Users/Users'))
+const Users = lazy(() => import('./pages/Community/Community'))
 
 export const App = () => {
 

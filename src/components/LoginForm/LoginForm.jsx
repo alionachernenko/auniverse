@@ -44,9 +44,9 @@ export const LoginForm = () => {
                     <IoMdLogIn fill='orange' size='30px'/> } 
                 </Icon>
                 
-                <Title>Log In</Title>
+                <Title>Log in</Title>
                 <Inputs>
-                    <input style={{ display: 'none' }} />
+                    <input style={{ display: 'none'}} />
                     <input type="password" style={{ display: 'none' }}/>
                     <FormInput type='email' />
                     <FormInput type='password'/>
