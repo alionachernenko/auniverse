@@ -92,7 +92,7 @@ export const FeedbackForm = ({onClick}) => {
                         <ThanksMessage>Thank you!</ThanksMessage>
                         <ThanksMessage>We will take your notes into account and fix the problems</ThanksMessage></>
                 }
-        </FormBox>
+                </FormBox>
             {showModal && <Modal image={images[activeImage]} onClick={() => setShowModal(false)} />}
         </>
     )
@@ -123,12 +123,9 @@ const Title = styled.h1`
 
 
 const FormBox = styled.div`
-    position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
     background-color: white;
-    overflow: hidden;
+    overflow-y: overlay;
+    max-height: 80vh;
     height: auto;
     padding: 20px;
     position: relative;

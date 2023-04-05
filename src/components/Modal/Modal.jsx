@@ -13,15 +13,11 @@ export const Modal = ({image, onClick}) => {
 } 
 
 const ModalWindow = styled.div`
-    position: absolute;
-    z-index: 111111111111;
-    top: 50%;
-    left: 50%;
+    position: relative;
     width: 95%;
     max-width: 800px;
     height: auto;
     max-height: 95vh;
-    transform: translate(-50%, -50%);
     overflow-y: overlay;
 `
 const Image = styled.img`
@@ -38,8 +34,8 @@ const CloseButton = styled.button`
     justify-content: center;
     border-radius: 15px;
     position: absolute;
-    top: 2px;
-    right: 2px;
+    top: 10px;
+    right: 12px;
     background-color: white;
     border: orange;
     transition: 150ms all ease;
