@@ -25,14 +25,14 @@ export const Backdrop = ({ children, onClick }) => {
 }
 
 const Wrapper = styled.div`
-    width: 100vw;
-    height: 100vh; 
-    padding: 20px;
-    overflow-y: scroll;
-
-    box-sizing: border-box;
-
     position: fixed;
-    z-index: 11111;
-    background-color: rgba(0, 0, 0, 0.5);
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1200;
 `
