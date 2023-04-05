@@ -43,6 +43,7 @@ const Menu = styled.div`
     padding: 20px;
     position: absolute;
     right: 20px;
+    top: 20px;
 
     border-radius: 20px;
     overflow: hidden;
