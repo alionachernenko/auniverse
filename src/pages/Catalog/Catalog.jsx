@@ -21,7 +21,7 @@ const Catalog = () => {
 
     useEffect(() => {
         setIsLoading(true)
-        if (query && ordering && genre) {
+        if (query || ordering || genre) {
             fetchGameBySearchQuery(query, page, ordering, genre).then(({data}) => {
                 const { results, count } = data
 
