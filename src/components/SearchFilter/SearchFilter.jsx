@@ -6,7 +6,7 @@ export const SearchFilter = () => {
                 <Filter>
                     <Label htmlFor='order_select'>Order by:</Label>
                     <FilterOptions name="ordering" id="order_select">
-                        <option>All</option>
+                        <option>None</option>
                         <option value="added">Added</option>
                         <option value="released">Released</option>
                         <option value="name">Name</option>
