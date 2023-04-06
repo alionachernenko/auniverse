@@ -83,9 +83,12 @@ justify-content: center;
 box-sizing: border-box;
 border-radius: 20px;
 
-@media screen and (max-width: 767px) {
-    width: 500px
-}
+width: 90vw;
+    max-width: 500px;
+
+    @media screen and (min-width: 768px) and (max-width: 1200px) {
+        padding: 40px 20px
+    }
 `
 
 const Button = styled.button`

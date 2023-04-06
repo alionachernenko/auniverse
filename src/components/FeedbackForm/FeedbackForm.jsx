@@ -53,15 +53,12 @@ export const FeedbackForm = ({setIsFormOpen}) => {
         const files = Object.values(e.target.files)
         let filesChoosen = []
 
-        
-
         files.forEach(file => {
             const reader = new FileReader()
             reader.readAsDataURL(file)
 
             reader.onload = () => {
             filesChoosen = [...filesChoosen, reader.result]
-                
                 setImages(filesChoosen)
             };
         })
@@ -71,17 +68,19 @@ export const FeedbackForm = ({setIsFormOpen}) => {
 
     const onRemoveFile = (index) => {
         setImages(prev => prev.filter(image => prev.indexOf(image) !== index))
-        setFiles(prev => prev.filter(file => prev.indexOf(file) !== index))
+        if (files) setFiles(prev => prev.filter(file => prev.indexOf(file) !== index))
     }
 
     return (
         <>
             <Backdrop onClick={() => {
-                    if ((text !== '' || images.length !== 0) && showForm) setShowDialogWindow(true)
-                    else setIsFormOpen(false)
+                localStorage.setItem("files", JSON.stringify(images))
+                if ((text !== '' || images.length !== 0) && showForm) setShowDialogWindow(true)
+                else setIsFormOpen(false)
                 }}>
             <FormBox>
-                <CloseButton type="button" onClick={() => {
+                    <CloseButton type="button" onClick={() => {
+                        localStorage.setItem("files", JSON.stringify(images))
                     if ((text !== '' || images.length !== 0) && showForm) setShowDialogWindow(true)
                     else setIsFormOpen(false)
                 }}>
@@ -161,10 +160,12 @@ const FormBox = styled.div`
     padding: 20px;
     position: relative;
     border-radius: 20px;
+    box-sizing: border-box;
+    width: 90vw;
+    max-width: 600px;
 
     @media screen and (min-width: 768px) {
-        width: 500px;
-         position: absolute;
+        position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -287,6 +288,6 @@ const CloseButton = styled.button`
     top: 2px;
     right: 2px;
 
-    background-color: white;
-    border: orange;
+    background-color: transparent;
+    border: none;
 `

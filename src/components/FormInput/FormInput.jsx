@@ -65,7 +65,7 @@ const ValidationMessage = styled.p`
 
 
 const Input = styled.input` 
-    width: 360px;
+    width: 100%;
     padding: 14px;
     border: none;
    

@@ -97,7 +97,7 @@ const Page = styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding: 100px 0;
+    padding: 100px 20px;
     box-sizing: border-box;
     position: relative;
     background: rgb(15,14,15);

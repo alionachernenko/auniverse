@@ -80,9 +80,11 @@ const FormWrapper = styled(Form)`
     position: relative;
 
     background-color: #00021A;
+    width: 90vw;
+    max-width: 500px;
 
-    @media screen and (max-width: 767px) {
-        width: 500px
+    @media screen and (min-width: 768px) and (max-width: 1200px) {
+        padding: 40px 20px
     }
 `
 const Title = styled.h2`
