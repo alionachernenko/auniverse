@@ -10,11 +10,16 @@ export const Loader = ({className, color}) => {
 }
 
 const Wrapper = styled.div`
+width: fit-content;
     ${(props) => {
         switch(props.render){
             case 'loader-homepage': 
-            return css`
-                margin-left: 100px;
+                return css`
+                margin: auto;
+
+                @media screen and (min-width: 1200px) {
+                    margin-left: 100px;
+                }
             `
             default:
                 return css`

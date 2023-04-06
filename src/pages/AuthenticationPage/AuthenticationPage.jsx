@@ -78,7 +78,7 @@ justify-content: center;
     text-transform: uppercase
 }
 
-@media screen and (max-width: 1199px) {
+@media screen and (max-width: 767px) {
     display: none
 }
 `
@@ -92,7 +92,7 @@ const Page = styled.div`
     background: linear-gradient(59deg, rgba(15,14,15,1) 18%, rgba(0,0,175,1) 100%);
 `
 const Tabs = styled.div`
-    margin-bottom: 5vh;
+    margin-bottom: calc((100vh - 400px)/2);
     display: flex;
 
     & :not(:last-child) {
@@ -128,19 +128,17 @@ const Tab = styled(NavLink)`
 `
 
 const FormWrapper = styled.div`
-
     @media screen and (max-width: 1199px){
         max-width: 100%;
     }
-    margin: auto;
+
+    // margin: auto;
     display: flex;
     align-items: center;
     justify-content: center;
     height: auto;
     width: auto;
     border-radius: 20px;
-
-
 `
 
 export default AuthenticationPage

@@ -26,12 +26,13 @@ const List = styled.ul`
 
 const Item = styled.li`
     width: 100%;
+    display: flex;
 
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: 650px) {
         width: calc((100% - 30px)/2);
     }
 
-    @media screen and (min-width: 1200px) {
+    @media screen and (min-width: 1100px) {
         width: calc((100% - 60px)/3);
     }
 

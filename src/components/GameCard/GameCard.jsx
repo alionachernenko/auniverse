@@ -1,14 +1,16 @@
 import { Link, useLocation } from "react-router-dom"
 import placeholderImage from 'assets/images/placeholder.png'
-import styled, {css} from 'styled-components'
+import styled, { css } from 'styled-components'
+
 
 export const GameCard = ({ data, className }) => {
     const location = useLocation()
 
+
     const { name, released, genres, background_image, slug, rating } = data
 
     return (
-        <Link to={`/catalog/${slug}`} aria-label={`Read more about ${name}`} state={
+        <Link style={{display: 'flex', flex: 1}} to={`/catalog/${slug}`} aria-label={`Read more about ${name}`} state={
             { from: `${location.pathname}${location.search}`
         }}>
         <Card className={`${className}`}>
@@ -43,6 +45,9 @@ const Card = styled.div`
                 height: auto;
                 position: relative;
                 overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
 
                 color: white;
                 background-color: #00021A;
@@ -55,12 +60,9 @@ const Card = styled.div`
                     transform: scale(1.05);
                 }
 
-                @media screen and (min-width: 768px) {
-                    height: 500px;
-                }
 
                 & ${Poster}{
-                    height: 70%;
+                    height: 250px;
                     width: 100%;
 
                     object-fit: cover;
@@ -73,6 +75,7 @@ const Card = styled.div`
                     display: flex;
                     flex-direction: column;
                     gap: 5px;
+                    flex-grow: 1
                 }
             `
         case 'gamecard_slider':
@@ -98,6 +101,7 @@ const Card = styled.div`
                     position: absolute;
                     top: 0;;
                     right: 100%;
+                    flex-grow: 1;
 
                     background-color: #00021A;
                     
@@ -158,7 +162,7 @@ const Genre = styled.li`
 const Title = styled.p`
     color: white;
 
-    font-size: 25px;
+    font-size: 120%;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;

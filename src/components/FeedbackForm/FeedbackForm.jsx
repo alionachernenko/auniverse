@@ -157,13 +157,14 @@ const FeedbackUnputWrapper = styled.div`
     overflow: hidden;
     border-radius: 15px;
      resize: vertical;
+     min-height: 120px;
     border: 1px solid #00021A;
     width: 100%;
     padding-bottom: 33px
 `
 
 const FeedbackInput = styled.textarea`
-    min-height: 150px !important;
+    min-height: 150px;
     resize: none;
     outline: none;
     width: 100%;
