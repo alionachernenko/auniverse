@@ -41,9 +41,8 @@ const List =  styled.ul`
     list-style: none;
     display: flex;
     flex-direction: column;
-     gap: 10px;
-     flex-wrap: wrap;
-   
+    gap: 10px;
+    flex-wrap: wrap;
 
     @media screen and (max-width: 768px) {
         flex-direction: row;
@@ -54,7 +53,6 @@ const List =  styled.ul`
     & svg {
         width: 30px;
         height: 30px;
-        transition: 250ms transform ease;
     }
 `
 
@@ -63,9 +61,10 @@ const Link = styled.a`
     height: auto;
     overflow: hidden;
     display: block;
+    transition: 250ms transform ease;
 
-    &:hover & svg{
-        transform: scale(1.1)
+    &:hover{
+        transform: scale(1.2)
     }
 `
 

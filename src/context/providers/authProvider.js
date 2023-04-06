@@ -30,10 +30,18 @@ const AuthProvider = ({ children }) => {
         navigate(`/profile/bookmarks`, { replace: 'true' });
         setIsLoading(false);
       })
-      .catch(({ code }) => {
-        toast.error(`${code.slice(5, code.length).split('-').join(' ')}`, {
-          position: toast.POSITION.TOP_CENTER,
-        });
+      .catch(error => {
+        const { code } = error;
+
+        const message = code.slice(5, code.length).split('-').join(' ');
+        toast.error(
+          message === 'wrong password' || message === 'user not found'
+            ? 'Wrong password or email'
+            : message,
+          {
+            position: toast.POSITION.TOP_CENTER,
+          }
+        );
         setIsLoading(false);
       });
   };
