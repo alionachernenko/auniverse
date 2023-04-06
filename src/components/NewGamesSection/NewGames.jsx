@@ -32,7 +32,7 @@ const NewGames = () => {
             <Subtitle>New 2023</Subtitle>
                    <InnerWrapper>
                         <Title>What will you choose this time?</Title>
-                        {isLoading ? <Loader className={'loader-homepage'} color={'darkblue'} /> : ( isError ? 
+                        {isLoading ? <Loader className='loader-homepage' color='#00021A' /> : ( isError ? 
                         <p>Something went wrong</p> : 
                         breakpoint === 'desktop' ?
                             <Slider games={games} /> :
