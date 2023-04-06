@@ -19,7 +19,7 @@ export const fetchNewGames = async page => {
   const currentDate = new Date();
 
   const data = await axios.get(
-    `${BASE_URL}games?key=${KEY}&page=${page}&dates=2023-01-01,${currentDate
+    `${BASE_URL}games?key=${KEY}&page=${page}&page_size=21&dates=2023-01-01,${currentDate
       .toISOString()
       .slice(0, 10)}`
   );

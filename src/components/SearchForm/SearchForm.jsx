@@ -50,7 +50,7 @@ export const SearchForm = memo(({className}) => {
             {value.length > 0 && <ClearButton type='button' onClick={() => setValue('')}><MdClose size='100%' /></ClearButton>}
                 <Button type='submit' className={className}>GO</Button>
             </div>
-            {location.pathname === '/catalog' && <SearchFilter/>}
+            {location.pathname === '/catalog' && <SearchFilter />}
             {(filteredGames && value !== '' && location.pathname === '/') && <FilteredSearchList results={filteredGames}/>}
         </Form>
     )

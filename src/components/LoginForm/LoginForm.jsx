@@ -52,7 +52,7 @@ export const LoginForm = () => {
                     <FormInput type='password'/>
                 </Inputs>
                 <Button type="submit">Log In</Button>
-            </FormWrapper>
+                </FormWrapper>
         </Formik>
     ) 
 }
@@ -62,13 +62,13 @@ const Inputs = styled.div`
     flex-direction: column;
     gap: 30px;
     margin-bottom: 30px;
+    width: 100%
 `
 
 
 const FormWrapper = styled(Form)`
     height: auto;
-    max-width: 100%;
-    padding: 40px 20px 20px 20px;
+    padding: 40px;
     box-sizing: border-box;
     border-radius: 20px;
 
@@ -80,6 +80,10 @@ const FormWrapper = styled(Form)`
     position: relative;
 
     background-color: #00021A;
+
+    @media screen and (max-width: 767px) {
+        width: 500px
+    }
 `
 const Title = styled.h2`
     margin-bottom: 30px;

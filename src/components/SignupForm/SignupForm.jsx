@@ -63,30 +63,28 @@ export const SignupForm = () => {
     )
 }
 
-
-
 const Inputs = styled.div`
     display: flex;
     flex-direction: column;
     gap: 30px;
     margin-bottom: 30px;
+    width: 100%
 `
 
 const FormWrapper = styled(Form)`
 display: flex;
+padding: 40px;
 height: auto;
 flex-direction: column; 
 background-color: #00021A;
-padding: 40px 20px 20px 20px;
 align-items: center;
 position: relative;
 justify-content: center;
 box-sizing: border-box;
 border-radius: 20px;
 
-@media screen and (max-width: 1199px) {
-    max-width: 100%;
-    padding: 40px 20px;
+@media screen and (max-width: 767px) {
+    width: 500px
 }
 `
 

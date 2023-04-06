@@ -38,8 +38,8 @@ const Catalog = () => {
         else { //temporarily solution
             fetchNewGames(page).then(({ data }) => {
                 const { results, count } = data
-            
-                setGames(results)
+                
+                setGames(results.filter(game => game.slug !== 'atomic-heart'))
                 setTotalPages(count / 25)
                 setIsLoading(false)
             }).catch(error => {
