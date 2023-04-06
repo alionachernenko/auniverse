@@ -1,11 +1,11 @@
 {
   "files": {
     "main.css": "/auniverse/static/css/main.ae17e0c7.css",
-    "main.js": "/auniverse/static/js/main.077dd51d.js",
+    "main.js": "/auniverse/static/js/main.c6cf5a3f.js",
     "static/js/199.253e1ef5.chunk.js": "/auniverse/static/js/199.253e1ef5.chunk.js",
-    "static/js/822.1a8ee1b3.chunk.js": "/auniverse/static/js/822.1a8ee1b3.chunk.js",
+    "static/js/822.f8c091de.chunk.js": "/auniverse/static/js/822.f8c091de.chunk.js",
     "static/js/522.15d4fdff.chunk.js": "/auniverse/static/js/522.15d4fdff.chunk.js",
-    "static/js/344.69116cfc.chunk.js": "/auniverse/static/js/344.69116cfc.chunk.js",
+    "static/js/344.306c2b44.chunk.js": "/auniverse/static/js/344.306c2b44.chunk.js",
     "static/js/900.3542993b.chunk.js": "/auniverse/static/js/900.3542993b.chunk.js",
     "static/js/247.c400a50a.chunk.js": "/auniverse/static/js/247.c400a50a.chunk.js",
     "static/js/260.e28a3819.chunk.js": "/auniverse/static/js/260.e28a3819.chunk.js",
@@ -16,11 +16,11 @@
     "static/media/avatar-placeholder.png": "/auniverse/static/media/avatar-placeholder.78bbfd211b36ced81970.png",
     "index.html": "/auniverse/index.html",
     "main.ae17e0c7.css.map": "/auniverse/static/css/main.ae17e0c7.css.map",
-    "main.077dd51d.js.map": "/auniverse/static/js/main.077dd51d.js.map",
+    "main.c6cf5a3f.js.map": "/auniverse/static/js/main.c6cf5a3f.js.map",
     "199.253e1ef5.chunk.js.map": "/auniverse/static/js/199.253e1ef5.chunk.js.map",
-    "822.1a8ee1b3.chunk.js.map": "/auniverse/static/js/822.1a8ee1b3.chunk.js.map",
+    "822.f8c091de.chunk.js.map": "/auniverse/static/js/822.f8c091de.chunk.js.map",
     "522.15d4fdff.chunk.js.map": "/auniverse/static/js/522.15d4fdff.chunk.js.map",
-    "344.69116cfc.chunk.js.map": "/auniverse/static/js/344.69116cfc.chunk.js.map",
+    "344.306c2b44.chunk.js.map": "/auniverse/static/js/344.306c2b44.chunk.js.map",
     "900.3542993b.chunk.js.map": "/auniverse/static/js/900.3542993b.chunk.js.map",
     "247.c400a50a.chunk.js.map": "/auniverse/static/js/247.c400a50a.chunk.js.map",
     "260.e28a3819.chunk.js.map": "/auniverse/static/js/260.e28a3819.chunk.js.map",
@@ -28,6 +28,6 @@
   },
   "entrypoints": [
     "static/css/main.ae17e0c7.css",
-    "static/js/main.077dd51d.js"
+    "static/js/main.c6cf5a3f.js"
   ]
 }
