@@ -7,15 +7,30 @@ import { authContext } from "context"
 import { nanoid } from "nanoid"
 import { MdClose } from "react-icons/md"
 import { Modal } from "components/Modal/Modal"
+import { FeedbackDialogWindow } from "components/DialogWindow/DialogWindow"
+import { Backdrop } from "components/Backdrop/Backdrop"
 
-export const FeedbackForm = ({onClick}) => {
+export const FeedbackForm = ({setIsFormOpen}) => {
     const {userId} = useContext(authContext)
 
-    const [images, setImages] = useState([])
-    const [files, setFiles] = useState([])
+    
+    const [files, setFiles] = useState()
     const [showForm, setShowForm] = useState(true)
     const [showModal, setShowModal] = useState(false)
     const [activeImage, setActiveImage] = useState()
+    const [showDialogWindow, setShowDialogWindow] = useState(false)
+    const [text, setText] = useState(() => {
+        if (JSON.parse(localStorage.getItem('text'))) {
+        return JSON.parse(localStorage.getItem('text'));
+      }
+      else return ''
+    })
+    const [images, setImages] = useState(() => {
+        if (JSON.parse(localStorage.getItem('files'))) {
+        return JSON.parse(localStorage.getItem('files'));
+      }
+      else return []
+    })
  
     const onFormSubmit = (e) => {
         e.preventDefault()
@@ -38,6 +53,8 @@ export const FeedbackForm = ({onClick}) => {
         const files = Object.values(e.target.files)
         let filesChoosen = []
 
+        
+
         files.forEach(file => {
             const reader = new FileReader()
             reader.readAsDataURL(file)
@@ -45,7 +62,7 @@ export const FeedbackForm = ({onClick}) => {
             reader.onload = () => {
             filesChoosen = [...filesChoosen, reader.result]
                 
-            setImages(filesChoosen)
+                setImages(filesChoosen)
             };
         })
 
@@ -59,15 +76,22 @@ export const FeedbackForm = ({onClick}) => {
 
     return (
         <>
+            <Backdrop onClick={() => {
+                    if (text !== '' || images.length !== 0) setShowDialogWindow(true)
+                    else setIsFormOpen(false)
+                }}>
             <FormBox>
-                <CloseButton type="button" onClick={onClick}>
+                <CloseButton type="button" onClick={() => {
+                    if (text !== '' || images.length !== 0) setShowDialogWindow(true)
+                    else setIsFormOpen(false)
+                }}>
                     <MdClose color='orange' size='100%' />
                 </CloseButton>
                 <Title>Leave your feedback below</Title>
                 {showForm ? <Form onSubmit={(e) => onFormSubmit(e)}>
                     <InputsWrapper>
                         <FeedbackUnputWrapper >
-                            <FeedbackInput name="feedback" required />
+                            <FeedbackInput name="feedback" required value={text} onChange={(e) => setText(e.target.value)}/>
                             <UploadPhotosButton htmlFor="photos">
                             <SlPicture size='100%' fill="#00021A" />
                             </UploadPhotosButton>
@@ -93,8 +117,15 @@ export const FeedbackForm = ({onClick}) => {
                         <ThanksMessage>We will take your notes into account and fix the problems</ThanksMessage></>
                 }
                 </FormBox>
-            {showModal && <Modal image={images[activeImage]} onClick={() => setShowModal(false)} />}
-        </>
+            {showModal && <Modal image={images[activeImage]}
+                onClick={() => setShowModal(false)} />}
+                {showDialogWindow && <FeedbackDialogWindow
+                setShowForm={setIsFormOpen}
+                files={images}
+                text={text}
+                    showDialogWindow={setShowDialogWindow} />}
+            </Backdrop>
+            </>
     )
 }
 

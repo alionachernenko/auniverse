@@ -1,5 +1,4 @@
 import { FeedbackForm } from "components"
-import { Backdrop } from "components/Backdrop/Backdrop"
 import { useState } from "react"
 
 import styled from "styled-components"
@@ -12,9 +11,9 @@ export const FeedbackFormButton = () => {
         <Button type="button" onClick={(() => setIsFormOpen(true))}>
             Leave feedback
         </Button>
-            {isFormOpen && <Backdrop onClick={() => setIsFormOpen(false)}>
-                <FeedbackForm onClick={() => setIsFormOpen(false)}/>
-            </Backdrop>}
+            {isFormOpen && 
+                <FeedbackForm setIsFormOpen={setIsFormOpen} />
+}
         </>
     )
 }
