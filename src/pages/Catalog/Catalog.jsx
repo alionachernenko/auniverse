@@ -36,7 +36,7 @@ const Catalog = () => {
             })
         }
         else { //temporarily solution
-            fetchNewGames(page).then(({ data }) => {
+            fetchNewGames(page, 25).then(({ data }) => {
                 const { results, count } = data
                 
                 setGames(results.filter(game => game.slug !== 'atomic-heart'))

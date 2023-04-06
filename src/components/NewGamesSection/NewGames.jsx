@@ -12,7 +12,7 @@ const NewGames = () => {
     const [isError, setIsError] = useState(false)
 
     useEffect(() => {
-            fetchNewGames(1).then(({data}) => {
+            fetchNewGames(1, 10).then(({data}) => {
             const { results } = data
                 
             setGames(results.filter(game => game.slug !== 'atomic-heart'))
