@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { fetchGameBySearchQuery } from "utils"
+import { fetchGameBySearchQuery, fetchNewGames } from "utils"
 import { Pagination, SearchForm, Loader, GameList, ErrorComponent } from 'components'
 import styled from "styled-components"
 import { useSearchParams } from "react-router-dom"
@@ -21,7 +21,8 @@ const Catalog = () => {
 
     useEffect(() => {
         setIsLoading(true)
-        fetchGameBySearchQuery(query, page, ordering, genre).then(({data}) => {
+        if (query && ordering && genre) {
+            fetchGameBySearchQuery(query, page, ordering, genre).then(({data}) => {
                 const { results, count } = data
 
                 setGames(results.filter(game => game.slug !== 'atomic-heart'))
@@ -33,6 +34,20 @@ const Catalog = () => {
                 setIsError(true)
                 setIsLoading(false)
             })
+        }
+        else { //temporarily solution
+            fetchNewGames(page).then(({ data }) => {
+                const { results, count } = data
+                setGames(results.filter(game => game.slug !== 'atomic-heart'))
+                setTotalPages(count / 20)
+                setIsLoading(false)
+            }).catch(error => {
+                console.log(error)
+                setIsError(true)
+                setIsLoading(false)
+            })
+        }
+        
     }, [query, ordering, genre, page, setParams, searchParams])
 
     const handlePageChange = (page) => {
