@@ -25,8 +25,8 @@ const Catalog = () => {
             fetchGameBySearchQuery(query, page, ordering, genre).then(({data}) => {
                 const { results, count } = data
 
-                setGames(results.filter(game => game.slug !== 'atomic-heart'))
-                setTotalPages(count / 20)
+                setGames(results)
+                setTotalPages(count / 25)
 
                 setIsLoading(false)
             }).catch(error => {
@@ -38,8 +38,9 @@ const Catalog = () => {
         else { //temporarily solution
             fetchNewGames(page).then(({ data }) => {
                 const { results, count } = data
-                setGames(results.filter(game => game.slug !== 'atomic-heart'))
-                setTotalPages(count / 20)
+            
+                setGames(results)
+                setTotalPages(count / 25)
                 setIsLoading(false)
             }).catch(error => {
                 console.log(error)

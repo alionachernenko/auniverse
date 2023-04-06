@@ -32,7 +32,7 @@ export const SearchForm = memo(({className}) => {
         searchParams.set('page', 1)
         
         if (query.value) searchParams.set('query', query.value);
-        if (ordering && ordering.value !== 'All') searchParams.set('ordering', ordering.value)
+        if (ordering && ordering.value !== 'None') searchParams.set('ordering', ordering.value)
         if (genre && genre.value !== 'All') searchParams.set('genre', genre.value)
         
         navigate(`/catalog?${searchParams.toString()}`);
