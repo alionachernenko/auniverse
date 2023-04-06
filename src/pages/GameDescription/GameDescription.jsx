@@ -43,7 +43,6 @@ const GameDescription = () => {
             const {name, description_raw, released} = data
             const { results } = screenshots.data
             
-            
             setGameData(data)
             setTitle(name)
             setDescription(description_raw)
@@ -80,8 +79,9 @@ const GameDescription = () => {
                                 {isLoggedIn && <BookmarkButton
                                     gameData={gameData}
                                     isBookmark={isBookmark}
-                                    setIsBookmark={setIsBookmark} />
-                                }
+                                    setIsBookmark={setIsBookmark}
+                                    className='game_description'
+                                />}
                             </Meta>
                                 {description && <GameOverview description={description} />}
                         </div>
@@ -138,6 +138,7 @@ const Meta = styled.div`
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
+    position: relative;
 
 
     @media screen and (min-width: 1200px) {

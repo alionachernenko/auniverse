@@ -2,20 +2,19 @@ import { memo, useContext } from "react"
 import { authContext } from 'context'
 import { removeGameFromBookmarks, addGameToBookmarks } from "utils"
 import { BsBookmark, BsFillBookmarkFill } from 'react-icons/bs'
-import { useParams } from "react-router-dom"
 
 import styled from "styled-components"
 
-export const BookmarkButton = memo(({isBookmark, gameData, setIsBookmark}) => {
+export const BookmarkButton = memo(({isBookmark, gameData, setIsBookmark, className}) => {
     const { userId } = useContext(authContext)
-    const {gameSlug} = useParams()
+    const { slug } = gameData
 
     const toggleIsFavourite = () => {
         if (isBookmark) {
-            removeGameFromBookmarks(userId, gameSlug)
+            removeGameFromBookmarks(userId, slug)
         }
         else {
-            addGameToBookmarks(userId, gameSlug, gameData)
+            addGameToBookmarks(userId, slug, gameData)
         }
         
         setIsBookmark(prevState => !prevState)
@@ -23,16 +22,14 @@ export const BookmarkButton = memo(({isBookmark, gameData, setIsBookmark}) => {
 
 
         return (
-            <Button type="button" onClick={toggleIsFavourite}>
-                Bookmark {isBookmark ? <BsFillBookmarkFill size='20px' /> : <BsBookmark size='20px' className="icon"/>}
+            <Button type="button" onClick={toggleIsFavourite} className={className}>
+                {className === 'game_description' && 'Bookmark'} {isBookmark ? <BsFillBookmarkFill size='100%' /> : <BsBookmark size='100%' className="icon"/>}
             </Button>
         )
 })
     
-
-
 const Button = styled.button`
-    height: auto;
+    height: 40px;
     padding: 10px 20px;
     border: none;
     border-radius: 10px;
@@ -48,4 +45,26 @@ const Button = styled.button`
     color: white;
     background-color: rgba(84, 84, 84, 0.5);
 
+    transition: 250ms all ease; 
+
+    &.gamecard_catalog{
+        position: absolute;
+        top: 265px;
+        right: 15px;
+        padding: 7px;
+        height: 30px;
+        z-index: 1111111111;
+
+        &:hover {
+            transform: scale(1.2);
+        }
+    }
+
+    &.gamecard_slider{
+        display: none
+    }
+
+    &:hover {
+        transform: scale(1.1);
+    }
 `

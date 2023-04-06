@@ -9,7 +9,7 @@ export const GameList = ({ games }) => {
                 {
                     games.map((game) => 
                     <Item key={game.id}>
-                        <GameCard data={game} className={'gamecard_catalog'}/>
+                        <GameCard data={game} className={'catalog'}/>
                     </Item>)
                 }
             </List>

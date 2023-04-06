@@ -1,15 +1,32 @@
 import { Link, useLocation } from "react-router-dom"
 import placeholderImage from 'assets/images/placeholder.png'
 import styled, { css } from 'styled-components'
+import { useContext, useEffect, useState } from "react"
+import { authContext } from "context"
+import { fetchBookmarks } from "utils"
+import { BookmarkButton } from "components"
 
 
 export const GameCard = ({ data, className }) => {
     const location = useLocation()
-
+    const [isBookmark, setIsBookmark] = useState()
+    const { userId, isLoggedIn } = useContext(authContext)
 
     const { name, released, genres, background_image, slug, rating } = data
+    
+    useEffect(() => { 
+        if (isLoggedIn) {
+            fetchBookmarks(userId).then(bookmarks => {
+                if (bookmarks.val()) {
+                    setIsBookmark(Object.keys(bookmarks.val()).some(el => el === slug))
+                }
+            })
+        }
+    },
+    [isLoggedIn, slug, userId])
 
     return (
+        <CardWrapper >
         <Link style={{display: 'flex', flex: 1}} to={`/catalog/${slug}`} aria-label={`Read more about ${name}`} state={
             { from: `${location.pathname}${location.search}`
         }}>
@@ -20,6 +37,7 @@ export const GameCard = ({ data, className }) => {
                     <Title>
                         {name}
                     </Title>
+                    
                     {released && <Year>{released.slice(0, 4)}</Year>}
                     {genres && <Genres>
                         {genres.map((({id, name}) => <Genre key={id}>{name}</Genre>))}
@@ -27,7 +45,14 @@ export const GameCard = ({ data, className }) => {
                 </Description>
              <Rating className='rating'>{rating}</Rating>
         </Card>
-    </Link>
+            </Link>
+            {isLoggedIn && <BookmarkButton
+                        isBookmark={isBookmark}
+                        gameData={data}
+                        setIsBookmark={setIsBookmark}
+                        className={`gamecard_${className}`}
+                    />}
+    </CardWrapper>
     )
 }
 
@@ -37,13 +62,24 @@ const Description = styled.div``
 
 const Year = styled.p``
 
+const CardWrapper = styled.div`
+    position: relative;
+    display: flex;
+    flex: 1;
+    transition: 250ms transform ease;
+
+    &:hover{
+        transform: scale(1.05);
+    }
+
+`
 const Card = styled.div`
     ${({className}) => {
     switch (className) {
-        case 'gamecard_catalog':
+        case 'catalog':
             return css`
                 height: auto;
-                position: relative;
+                
                 overflow: hidden;
                 display: flex;
                 flex-direction: column;
@@ -53,13 +89,9 @@ const Card = styled.div`
                 background-color: #00021A;
                 
                 clip-path: polygon(11% 0, 70% 0%, 100% 0, 100% 88%, 88% 100%, 0 100%, 0 67%, 0 11%);
-                transform: scale(1);
-                transition: 250ms transform ease;
+              
 
-                &:hover{
-                    transform: scale(1.05);
-                }
-
+                
 
                 & ${Poster}{
                     height: 250px;
@@ -71,14 +103,15 @@ const Card = styled.div`
 
             
                 & ${Description} {
-                    padding: 15px;
+                    
+                    padding: 15px 45px 15px 15px;
                     display: flex;
                     flex-direction: column;
                     gap: 5px;
                     flex-grow: 1
                 }
             `
-        case 'gamecard_slider':
+        case 'slider':
             return css`
                 max-width: 500px;
                 height: 350px;

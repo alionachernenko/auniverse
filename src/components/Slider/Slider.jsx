@@ -17,7 +17,6 @@ export const Slider = ({ games }) => {
             autoplay={{
                 delay: 1000,
                 pauseOnMouseEnter: true,
-                disableOnInteraction: false
             }}
             modules={[Autoplay]}
         > 
@@ -27,7 +26,7 @@ export const Slider = ({ games }) => {
                     margin: 0,
                     }
                 }key={game.id}>
-                    <GameCard data={game} className={'gamecard_slider'} />
+                    <GameCard data={game} className={'slider'} />
                 </SwiperSlide>
             ))}
         </Swiper>
