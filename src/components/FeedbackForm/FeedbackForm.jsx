@@ -77,12 +77,12 @@ export const FeedbackForm = ({setIsFormOpen}) => {
     return (
         <>
             <Backdrop onClick={() => {
-                    if (text !== '' || images.length !== 0) setShowDialogWindow(true)
+                    if ((text !== '' || images.length !== 0) && showForm) setShowDialogWindow(true)
                     else setIsFormOpen(false)
                 }}>
             <FormBox>
                 <CloseButton type="button" onClick={() => {
-                    if (text !== '' || images.length !== 0) setShowDialogWindow(true)
+                    if ((text !== '' || images.length !== 0) && showForm) setShowDialogWindow(true)
                     else setIsFormOpen(false)
                 }}>
                     <MdClose color='orange' size='100%' />
