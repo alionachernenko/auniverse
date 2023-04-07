@@ -6,6 +6,7 @@ import {
   uploadString,
 } from 'firebase/storage';
 import { set, ref as dbRef } from 'firebase/database';
+import { nanoid } from 'nanoid';
 
 //avatar
 
@@ -29,9 +30,10 @@ export const addAvatar = async (
 //feedback
 
 export const leaveFeedbackPhotos = (file, userId, feedbackId) => {
+  const id = nanoid();
   const storageRef = ref(
     storage,
-    `/feedback/${feedbackId}/${feedbackId}-${userId}`
+    `/feedback/${feedbackId}/${feedbackId}-${id}-${userId}`
   );
   uploadString(storageRef, file, 'data_url');
 };
