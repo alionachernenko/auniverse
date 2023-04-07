@@ -101,6 +101,7 @@ const Page = styled.div`
     padding: 30px;
     position: relative;
     box-sizing: border-box;
+    margin-top: 61px;
 
     min-height: calc(100vh - 61px);
     background-size: cover;

@@ -28,9 +28,9 @@ export const FeedbackForm = ({ setIsFormOpen }) => {
   });
 
   const onCloseForm = () => {
-    if ((text !== '' || images.length !== 0) && showForm)
-      setShowDialogWindow(true);
-    else setIsFormOpen(false);
+    const isFormFilled = text !== '' || images.length !== 0;
+    setShowDialogWindow(isFormFilled && showForm);
+    setIsFormOpen(isFormFilled && showForm);
   };
 
   const onFormSubmit = e => {
