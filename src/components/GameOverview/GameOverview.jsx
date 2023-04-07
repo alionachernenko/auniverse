@@ -29,7 +29,7 @@ const Overview = styled.p`
   line-height: 35px;
   overflow: hidden;
   transition: 250ms all ease;
-  margin-bottom: 20px;
+
   text-overflow: ellipsis;
 
   &.less {
@@ -39,6 +39,7 @@ const Overview = styled.p`
 
   &.more {
     height: auto;
+    margin-bottom: 20px;
   }
 `;
 
