@@ -6,18 +6,11 @@ import { useParams } from 'react-router-dom';
 
 import styled from 'styled-components';
 
-const getAndFormatAuthorId = comment => {
-  return Object.keys(comment)[0].split('-')[0];
-};
-
-const getCommentText = comment => {
-  return Object.values(comment)[0];
-};
-
 export const Comments = ({ comments, setComments }) => {
   const { userId, isLoggedIn } = useContext(authContext);
   const { gameSlug } = useParams();
 
+  console.log(comments);
   const onFormSubmit = e => {
     e.preventDefault();
 
@@ -46,13 +39,17 @@ export const Comments = ({ comments, setComments }) => {
       )}
       {comments.length !== 0 && (
         <CommentsList>
-          {comments.map(comment => (
-            <Comment
-              authorId={getAndFormatAuthorId(comment)}
-              key={Object.keys(comment)[0]}
-              text={getCommentText(comment)}
-            />
-          ))}
+          {comments.map(comment => {
+            console.log(comment.author);
+            return (
+              <Comment
+                authorId={comment.author}
+                key={comment.id}
+                text={comment.text}
+                date={comment.date}
+              />
+            );
+          })}
         </CommentsList>
       )}
     </Section>

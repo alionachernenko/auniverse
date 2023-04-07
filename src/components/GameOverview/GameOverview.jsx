@@ -39,7 +39,6 @@ const Overview = styled.p`
 
   &.more {
     height: auto;
-    margin-bottom: 20px;
   }
 `;
 
@@ -51,4 +50,5 @@ const ToggleShowButton = styled.button`
   padding: 5px 10px;
   border: 1px solid orange;
   border-radius: 10px;
+  margin-top: 20px;
 `;

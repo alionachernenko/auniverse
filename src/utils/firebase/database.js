@@ -1,7 +1,7 @@
 import { ref, set, get, remove } from 'firebase/database';
-import { nanoid } from 'nanoid';
 
 import { database } from '../../config/firebase';
+import { nanoid } from 'nanoid';
 
 export const addNewUser = (userId, email, favs, username) => {
   set(ref(database, 'users/' + userId), {
@@ -92,11 +92,18 @@ export const acceptInvitationAndAddUser = async (id, userId) => {
 //comments
 
 export const leaveComment = (userId, gameSlug, text) => {
+  const date = new Date();
+  const id = nanoid();
   get(ref(database, '/comments/' + gameSlug))
     .then(res =>
       set(ref(database, `/comments/` + gameSlug), {
         ...res.val(),
-        [`${userId}-${nanoid()}`]: text,
+        [id]: {
+          id,
+          author: userId,
+          text,
+          date: date.toISOString().slice(0, 10),
+        },
       })
     )
     .catch(error => console.log(error));

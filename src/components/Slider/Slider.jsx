@@ -24,7 +24,6 @@ export const Slider = ({ games }) => {
           style={{
             width: 'fit-content',
             margin: 0,
-            minWidth: 500,
           }}
           key={game.id}
         >

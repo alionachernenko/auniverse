@@ -39,7 +39,7 @@ export const GameCard = ({ data, className }) => {
               src={background_image}
               alt={`${name} poster`}
               width={500}
-              height="auto"
+              height={350}
             />
           ) : (
             <img
@@ -98,6 +98,10 @@ const CardWrapper = styled.div`
       transform: scale(1.05);
     }
   }
+
+  &.slider {
+    width: fit-content;
+  }
 `;
 
 const Card = styled.div`
@@ -133,6 +137,7 @@ const Card = styled.div`
     height: 350px;
     position: relative;
     overflow: hidden;
+    width: fit-content;
 
     & .year {
       color: white;
