@@ -92,7 +92,6 @@ export const acceptInvitationAndAddUser = async (id, userId) => {
 //comments
 
 export const leaveComment = (userId, gameSlug, text) => {
-  console.log('game');
   get(ref(database, '/comments/' + gameSlug))
     .then(res =>
       set(ref(database, `/comments/` + gameSlug), {

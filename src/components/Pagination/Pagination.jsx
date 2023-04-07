@@ -5,7 +5,6 @@ import styled from 'styled-components'
 
 export const Pagination = ({ totalPages, changePage, page }) => {
 
-    console.log(page)
     return (
         <PaginationContainer>
             <ReactPaginate

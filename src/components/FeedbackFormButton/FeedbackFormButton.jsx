@@ -11,9 +11,7 @@ export const FeedbackFormButton = () => {
         <Button type="button" onClick={(() => setIsFormOpen(true))}>
             Leave feedback
         </Button>
-            {isFormOpen && 
-                <FeedbackForm setIsFormOpen={setIsFormOpen} />
-}
+            {isFormOpen && <FeedbackForm setIsFormOpen={setIsFormOpen} />}
         </>
     )
 }

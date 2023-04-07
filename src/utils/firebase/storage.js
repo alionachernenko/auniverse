@@ -1,5 +1,10 @@
 import { database, storage } from '../../config/firebase';
-import { uploadBytes, getDownloadURL, ref } from 'firebase/storage';
+import {
+  uploadBytes,
+  getDownloadURL,
+  ref,
+  uploadString,
+} from 'firebase/storage';
 import { set, ref as dbRef } from 'firebase/database';
 
 //avatar
@@ -24,11 +29,9 @@ export const addAvatar = async (
 //feedback
 
 export const leaveFeedbackPhotos = (file, userId, feedbackId) => {
-  uploadBytes(
-    ref(storage, `/feedback/${feedbackId}/${file.name}-${userId}`),
-    file,
-    {
-      contentType: 'image/jpeg',
-    }
+  const storageRef = ref(
+    storage,
+    `/feedback/${feedbackId}/${feedbackId}-${userId}`
   );
+  uploadString(storageRef, file, 'data_url');
 };

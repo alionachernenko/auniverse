@@ -31,8 +31,6 @@ const Users = () => {
             })
     }, [userId])
 
-    console.log(userIDs)
-
     return (
     <div style={{minHeight: '100vh'}}>
             {isLoading ? <Loader className={'loader-profile'} color={'#00021A'} /> : isError ? <ErrorComponent /> :
