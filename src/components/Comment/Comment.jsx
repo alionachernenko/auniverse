@@ -5,7 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { authContext } from 'context';
 import avatarPlaceholder from '../../assets/images/avatar-placeholder.png';
 
-export const Comment = memo(({ authorId, text, date }) => {
+export const Comment = memo(({ authorId, text, date, id }) => {
   const [authorAvatar, setAuthorAvatar] = useState();
   const [authorUsername, setAuthorUsername] = useState('');
   const location = useLocation();
@@ -27,7 +27,7 @@ export const Comment = memo(({ authorId, text, date }) => {
   }, [authorId]);
 
   return (
-    <CommentWrapper>
+    <CommentWrapper key={id}>
       <Link
         to={
           authorId === userId

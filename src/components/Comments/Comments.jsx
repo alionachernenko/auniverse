@@ -5,6 +5,7 @@ import { Comment } from 'components';
 import { useParams } from 'react-router-dom';
 
 import styled from 'styled-components';
+import { nanoid } from 'nanoid';
 
 export const Comments = ({ comments, setComments }) => {
   const { userId, isLoggedIn } = useContext(authContext);
@@ -12,13 +13,23 @@ export const Comments = ({ comments, setComments }) => {
 
   console.log(comments);
   const onFormSubmit = e => {
+    const id = nanoid();
+    const date = new Date();
     e.preventDefault();
 
     const commentInput = e.target.elements.comment;
     const commentText = commentInput.value;
 
-    leaveComment(userId, gameSlug, commentText);
-    setComments(prev => [...prev, { [userId]: commentText }]);
+    leaveComment(userId, gameSlug, commentText, id);
+    setComments(prev => [
+      {
+        id,
+        author: userId,
+        text: commentText,
+        date: date.toISOString().slice(0, 10),
+      },
+      ...prev,
+    ]);
 
     commentInput.value = '';
   };
@@ -39,17 +50,15 @@ export const Comments = ({ comments, setComments }) => {
       )}
       {comments.length !== 0 && (
         <CommentsList>
-          {comments.map(comment => {
-            console.log(comment.author);
-            return (
-              <Comment
-                authorId={comment.author}
-                key={comment.id}
-                text={comment.text}
-                date={comment.date}
-              />
-            );
-          })}
+          {comments.map(comment => (
+            <Comment
+              authorId={comment.author}
+              id={comment.id}
+              key={comment.id}
+              text={comment.text}
+              date={comment.date}
+            />
+          ))}
         </CommentsList>
       )}
     </Section>
