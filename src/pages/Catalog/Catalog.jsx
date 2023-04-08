@@ -35,7 +35,7 @@ const Catalog = () => {
           const { results, count } = data;
 
           setGames(results);
-          setTotalPages(count / 25);
+          setTotalPages(count / 20);
 
           setIsLoading(false);
         })
@@ -46,12 +46,12 @@ const Catalog = () => {
         });
     } else {
       //temporarily solution
-      fetchNewGames(page, 25)
+      fetchNewGames(page, 20)
         .then(({ data }) => {
           const { results, count } = data;
 
-          setGames(results.filter(game => game.slug !== 'atomic-heart'));
-          setTotalPages(count / 25);
+          setGames(results);
+          setTotalPages(count / 20);
           setIsLoading(false);
         })
         .catch(error => {

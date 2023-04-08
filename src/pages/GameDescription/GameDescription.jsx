@@ -65,7 +65,6 @@ const GameDescription = () => {
           );
         }
 
-        console.log(comments.val());
         if (comments.val()) setComments(Object.values(comments.val()));
 
         setIsLoading(false);

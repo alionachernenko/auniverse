@@ -11,7 +11,6 @@ export const Comments = ({ comments, setComments }) => {
   const { userId, isLoggedIn } = useContext(authContext);
   const { gameSlug } = useParams();
 
-  console.log(comments);
   const onFormSubmit = e => {
     const id = nanoid();
     const date = new Date();

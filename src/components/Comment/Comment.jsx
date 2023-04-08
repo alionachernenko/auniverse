@@ -14,8 +14,6 @@ export const Comment = memo(({ authorId, text, date, id }) => {
   useEffect(() => {
     fetchUserInfo(authorId)
       .then(res => {
-        console.log(res.val());
-        console.log(authorId);
         const { username, photoUrl } = res.val();
 
         setAuthorUsername(username);
