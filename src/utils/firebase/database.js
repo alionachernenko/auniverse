@@ -1,4 +1,4 @@
-import { ref, set, get, remove } from 'firebase/database';
+import { ref, set, get, remove, serverTimestamp } from 'firebase/database';
 
 import { database } from '../../config/firebase';
 
@@ -91,8 +91,6 @@ export const acceptInvitationAndAddUser = async (id, userId) => {
 //comments
 
 export const leaveComment = (userId, gameSlug, text, id) => {
-  const date = new Date();
-
   get(ref(database, '/comments/' + gameSlug))
     .then(res =>
       set(ref(database, `/comments/` + gameSlug), {
@@ -100,7 +98,7 @@ export const leaveComment = (userId, gameSlug, text, id) => {
           id,
           author: userId,
           text,
-          date: date.toISOString().slice(0, 10),
+          date: serverTimestamp(),
         },
         ...res.val(),
       })

@@ -65,7 +65,10 @@ const GameDescription = () => {
           );
         }
 
-        if (comments.val()) setComments(Object.values(comments.val()));
+        if (comments.val())
+          setComments(
+            Object.values(comments.val()).sort((a, b) => b.date - a.date)
+          );
 
         setIsLoading(false);
       })

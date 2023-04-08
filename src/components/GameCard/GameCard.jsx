@@ -92,10 +92,12 @@ const CardWrapper = styled.div`
   );
 
   &.catalog {
-    transition: 250ms transform ease;
+    @media screen and (min-width: 1200px) {
+      transition: 250ms transform ease;
 
-    &:hover {
-      transform: scale(1.05);
+      &:hover {
+        transform: scale(1.05);
+      }
     }
   }
 

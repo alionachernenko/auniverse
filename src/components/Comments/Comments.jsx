@@ -7,6 +7,10 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { nanoid } from 'nanoid';
 
+const formatDateAndTime = value => {
+  return new Date(value).toISOString().slice(0, 10);
+};
+
 export const Comments = ({ comments, setComments }) => {
   const { userId, isLoggedIn } = useContext(authContext);
   const { gameSlug } = useParams();
@@ -15,6 +19,7 @@ export const Comments = ({ comments, setComments }) => {
     const id = nanoid();
     const date = new Date();
     e.preventDefault();
+    console.log(date.getDate());
 
     const commentInput = e.target.elements.comment;
     const commentText = commentInput.value;
@@ -25,7 +30,7 @@ export const Comments = ({ comments, setComments }) => {
         id,
         author: userId,
         text: commentText,
-        date: date.toISOString().slice(0, 10),
+        date: formatDateAndTime(date.getTime()),
       },
       ...prev,
     ]);
@@ -49,13 +54,13 @@ export const Comments = ({ comments, setComments }) => {
       )}
       {comments.length !== 0 && (
         <CommentsList>
-          {comments.map(comment => (
+          {comments.map(({ author, id, text, date }) => (
             <Comment
-              authorId={comment.author}
-              id={comment.id}
-              key={comment.id}
-              text={comment.text}
-              date={comment.date}
+              authorId={author}
+              id={id}
+              key={id}
+              text={text}
+              date={formatDateAndTime(date)}
             />
           ))}
         </CommentsList>

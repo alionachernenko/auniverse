@@ -14,7 +14,7 @@ export const Modal = ({ image, onClick, children }) => {
 };
 
 const ModalWindow = styled.div`
-  position: relative;
+  position: absolute;
   width: 95%;
   max-width: 800px;
   height: auto;

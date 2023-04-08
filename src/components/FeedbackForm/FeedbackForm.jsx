@@ -266,6 +266,7 @@ const PhotoWrapper = styled.li`
   border-radius: 10px;
   overflow: hidden;
   position: relative;
+  cursor: pointer;
 `;
 
 const RemovePhotoButton = styled.span`
@@ -276,13 +277,9 @@ const RemovePhotoButton = styled.span`
   width: 20px;
   background-color: white;
   border-radius: 10px;
-  opacity: 0;
+  opacity: 1;
   transition: 200ms all ease;
   cursor: pointer;
-
-  ${PhotoWrapper}:hover & {
-    opacity: 1;
-  }
 `;
 
 const Photo = styled.img`
