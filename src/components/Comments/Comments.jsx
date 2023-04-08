@@ -14,6 +14,7 @@ const formatDateAndTime = value => {
 export const Comments = ({ comments, setComments }) => {
   const { userId, isLoggedIn } = useContext(authContext);
   const { gameSlug } = useParams();
+  console.log(comments);
 
   const onFormSubmit = e => {
     const id = nanoid();
@@ -55,15 +56,18 @@ export const Comments = ({ comments, setComments }) => {
       )}
       {comments.length !== 0 && (
         <CommentsList>
-          {comments.map(({ author, id, text, date }) => (
-            <Comment
-              authorId={author}
-              id={id}
-              key={id}
-              text={text}
-              date={formatDateAndTime(date)}
-            />
-          ))}
+          {comments.map(({ author, id, text, date }) => {
+            return (
+              <Comment
+                authorId={author}
+                id={id}
+                key={id}
+                text={text}
+                date={formatDateAndTime(date)}
+                setComments={setComments}
+              />
+            );
+          })}
         </CommentsList>
       )}
     </Section>

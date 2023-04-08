@@ -109,6 +109,10 @@ export const fetchComments = gameSlug => {
   return get(ref(database, '/comments/' + gameSlug));
 };
 
+export const removeComment = (gameSlug, id) => {
+  remove(ref(database, `/comments/${gameSlug}/${id}`));
+};
+
 //ussername
 
 export const changeUsername = (userId, username) => {

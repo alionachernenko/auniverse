@@ -4,8 +4,9 @@ import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import { authContext } from 'context';
 import avatarPlaceholder from '../../assets/images/avatar-placeholder.png';
+import { RemoveCommentButton } from 'components/RemoveCommentButton/RemoveCommentButton';
 
-export const Comment = memo(({ authorId, text, date, id }) => {
+export const Comment = memo(({ authorId, text, date, id, setComments }) => {
   const [authorAvatar, setAuthorAvatar] = useState();
   const [authorUsername, setAuthorUsername] = useState('');
   const location = useLocation();
@@ -50,13 +51,17 @@ export const Comment = memo(({ authorId, text, date, id }) => {
       </Link>
 
       <CommentText>{text}</CommentText>
+      {userId === authorId && (
+        <RemoveCommentButton id={id} setComments={setComments} />
+      )}
     </CommentWrapper>
   );
 });
 
 const CommentWrapper = styled.li`
   width: 100%;
-  padding: 10px 20px;
+  position: relative;
+  padding: 20px;
   box-sizing: border-box;
   border: 2px solid #2f3149;
   border-radius: 20px;
