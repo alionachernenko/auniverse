@@ -26,17 +26,16 @@ export const fetchBookmarks = userId => {
   return get(ref(database, `users/${userId}/bookmarks`));
 };
 
-export const addGameToBookmarks = (userId, gameSlug, gameData) => {
-  get(ref(database, `users/${userId}/bookmarks`)).then(res => {
-    set(ref(database, 'users/' + userId + '/bookmarks'), {
-      ...res.val(),
-      [gameSlug]: gameData,
-    }).catch(error => console.log(error));
+export const addGameToBookmarks = async (userId, gameSlug, gameData) => {
+  const res = await get(ref(database, `users/${userId}/bookmarks`));
+  return await set(ref(database, 'users/' + userId + '/bookmarks'), {
+    ...res.val(),
+    [gameSlug]: gameData,
   });
 };
 
 export const removeGameFromBookmarks = (userId, gameSlug) => {
-  remove(ref(database, `users/${userId}/bookmarks/${gameSlug}`));
+  return remove(ref(database, `users/${userId}/bookmarks/${gameSlug}`));
 };
 
 //friends

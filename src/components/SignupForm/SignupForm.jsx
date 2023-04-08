@@ -5,7 +5,7 @@ import { authContext } from 'context';
 import styled from 'styled-components';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
-import { FormInput } from 'components/FormInput/FormInput';
+import { FormInput } from 'components';
 
 const schema = yup.object().shape({
   email: yup

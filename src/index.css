@@ -63,7 +63,7 @@ img{
 }
 
 .Toastify__toast-container {
-  z-index: 111111111 !important;
+  z-index: 111111111;
 }
 
 button, a {

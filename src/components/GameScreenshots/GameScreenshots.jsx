@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { memo, useState } from 'react';
-import { Modal } from 'components/Modal/Modal';
-import { Backdrop } from 'components/Backdrop/Backdrop';
+import { Modal, Backdrop } from 'components';
 import { GoArrowRight, GoArrowLeft } from 'react-icons/go';
 
 export const GameScreenshots = memo(({ screenshots }) => {

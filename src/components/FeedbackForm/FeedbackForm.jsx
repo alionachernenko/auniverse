@@ -6,9 +6,7 @@ import { SlPicture } from 'react-icons/sl';
 import { authContext } from 'context';
 import { nanoid } from 'nanoid';
 import { MdClose } from 'react-icons/md';
-import { Modal } from 'components/Modal/Modal';
-import { FeedbackDialogWindow } from 'components/DialogWindow/DialogWindow';
-import { Backdrop } from 'components/Backdrop/Backdrop';
+import { Modal, FeedbackDialogWindow, Backdrop } from 'components';
 
 export const FeedbackForm = ({ setIsFormOpen }) => {
   const { userId } = useContext(authContext);

@@ -1,8 +1,7 @@
 import { memo, useContext } from 'react';
 import { authContext } from 'context';
-import { removeGameFromBookmarks, addGameToBookmarks } from 'utils';
+import { removeGameFromBookmarks, addGameToBookmarks, toastify } from 'utils';
 import { BsBookmark, BsFillBookmarkFill } from 'react-icons/bs';
-
 import styled from 'styled-components';
 
 export const BookmarkButton = memo(
@@ -12,12 +11,24 @@ export const BookmarkButton = memo(
 
     const toggleIsFavourite = () => {
       if (isBookmark) {
-        removeGameFromBookmarks(userId, slug);
+        removeGameFromBookmarks(userId, slug)
+          .then(() => {
+            setIsBookmark(prevState => !prevState);
+          })
+          .catch(error => {
+            console.log(error);
+            toastify('Something went wront. Try again later');
+          });
       } else {
-        addGameToBookmarks(userId, slug, gameData);
+        addGameToBookmarks(userId, slug, gameData)
+          .then(() => {
+            setIsBookmark(prevState => !prevState);
+          })
+          .catch(error => {
+            console.log(error);
+            toastify('Something went wront. Try again later');
+          });
       }
-
-      setIsBookmark(prevState => !prevState);
     };
 
     return (

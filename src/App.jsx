@@ -5,8 +5,14 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import { useEffect, lazy, Suspense } from 'react';
 import { ToastContainer } from 'react-toastify';
 
-import { Header, Footer, LoadingPage, SignupForm, LoginForm } from 'components';
-import { ScrollButton } from 'components/ScrollButton/ScrollButton';
+import {
+  Header,
+  Footer,
+  LoadingPage,
+  SignupForm,
+  LoginForm,
+  ScrollButton,
+} from 'components';
 
 const Homepage = lazy(() => import('./pages/Homepage/Homepage'));
 const Catalog = lazy(() => import('./pages/Catalog/Catalog'));

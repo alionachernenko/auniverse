@@ -45,6 +45,7 @@ export const Comments = ({ comments, setComments }) => {
       ) : (
         <Form onSubmit={e => onFormSubmit(e)}>
           <Input
+            rows={5}
             required
             name="comment"
             placeholder="What do you think about this game?"
@@ -114,7 +115,6 @@ const CommentsList = styled.ul`
 
 const Input = styled.textarea`
   width: 100%;
-  min-height: 80px !important;
   resize: vertical;
 
   padding: 10px 20px;

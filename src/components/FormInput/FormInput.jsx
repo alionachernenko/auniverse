@@ -85,7 +85,7 @@ const Input = styled.input`
   font-size: 20px;
 
   color: white;
-  background: transparent !important;
+  background: transparent;
   border-bottom: 1px solid white;
   -webkit-box-shadow: inset 0 0 0 50px #00021a;
   -webkit-text-fill-color: #ffffff;

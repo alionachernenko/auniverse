@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { authContext } from 'context';
-import { changeUsername, addAvatar } from 'utils';
+import { changeUsername, addAvatar, toastify } from 'utils';
 import { Oval } from 'react-loader-spinner';
 import { RxUpload } from 'react-icons/rx';
 import { BsPencilSquare } from 'react-icons/bs';
@@ -9,7 +9,6 @@ import { memo } from 'react';
 import { MdDone, MdClose } from 'react-icons/md';
 
 import styled from 'styled-components';
-import { toast } from 'react-toastify';
 
 export const ProfileCard = memo(
   ({
@@ -46,32 +45,13 @@ export const ProfileCard = memo(
 
       if (file) {
         if (file.size > 4194304) {
-          toast(
-            `Maximum size: 4MB. Your size: ${Math.ceil(file.size / 1048576)}MB`,
-            {
-              position: 'top-right',
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: 'dark',
-            }
+          toastify(
+            `Maximum size: 4MB. Your size: ${Math.ceil(file.size / 1048576)}MB`
           );
           return;
         }
         if (!availableTypes.includes(file.type)) {
-          toast(`Available formats: .png, .gif, .jpg, .jpeg`, {
-            position: 'top-right',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'dark',
-          });
+          toastify(`Available formats: .png, .gif, .jpg, .jpeg`);
           return;
         }
         setIsAvatarLoading(true);
