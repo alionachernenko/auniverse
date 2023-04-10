@@ -105,12 +105,25 @@ export const leaveComment = (userId, gameSlug, text, id) => {
     .catch(error => console.log(error));
 };
 
+export const leaveReply = (refer, commentObject) => {
+  get(ref(database, refer)).then(() =>
+    set(ref(database, refer), commentObject)
+  );
+};
+
 export const fetchComments = gameSlug => {
   return get(ref(database, '/comments/' + gameSlug));
 };
 
 export const removeComment = (gameSlug, id) => {
   remove(ref(database, `/comments/${gameSlug}/${id}`));
+};
+
+export const removeReply = refer => {
+  remove(ref(database, refer));
+};
+export const fetchCommentReplies = refer => {
+  return get(ref(database, refer));
 };
 
 //ussername

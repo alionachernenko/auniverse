@@ -8,16 +8,15 @@ import styled from 'styled-components';
 import { nanoid } from 'nanoid';
 
 const formatDateAndTime = value => {
-  return new Date(value).toISOString().slice(0, 10);
+  if (value) return new Date(value).toISOString().slice(0, 10);
 };
 
 export const Comments = ({ comments, setComments }) => {
   const { userId, isLoggedIn } = useContext(authContext);
   const { gameSlug } = useParams();
-  console.log(comments);
 
   const onFormSubmit = e => {
-    const id = nanoid();
+    const commentId = nanoid();
     const date = new Date();
     e.preventDefault();
     console.log(date.getDate());
@@ -25,10 +24,10 @@ export const Comments = ({ comments, setComments }) => {
     const commentInput = e.target.elements.comment;
     const commentText = commentInput.value;
 
-    leaveComment(userId, gameSlug, commentText, id);
+    leaveComment(userId, gameSlug, commentText, commentId);
     setComments(prev => [
       {
-        id,
+        commentId,
         author: userId,
         text: commentText,
         date: formatDateAndTime(date.getTime()),
@@ -36,7 +35,7 @@ export const Comments = ({ comments, setComments }) => {
       ...prev,
     ]);
 
-    commentInput.value = '';
+    e.target.reset();
   };
 
   return (
@@ -83,7 +82,6 @@ const Message = styled.p`
 
 const Section = styled.div`
   width: 100%;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -106,11 +104,10 @@ const Form = styled.form`
 `;
 
 const CommentsList = styled.ul`
-  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  width: 100%;
 
   @media screen and (min-width: 1200px) {
     align-items: flex-start;
@@ -126,11 +123,6 @@ const Input = styled.textarea`
 
   font-family: 'Nunito', sans-serif;
   font-size: 17px;
-
-  @media screen and (min-width: 768px) {
-    width: 500px;
-    min-height: 30px;
-  }
 
   &::placeholder {
     font-family: 'Nunito', sans-serif;

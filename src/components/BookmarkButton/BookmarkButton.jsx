@@ -3,41 +3,49 @@ import { authContext } from 'context';
 import { removeGameFromBookmarks, addGameToBookmarks, toastify } from 'utils';
 import { BsBookmark, BsFillBookmarkFill } from 'react-icons/bs';
 import styled from 'styled-components';
+import { Oval } from 'react-loader-spinner';
+import { useState } from 'react';
 
 export const BookmarkButton = memo(
   ({ isBookmark, gameData, setIsBookmark, className }) => {
     const { userId } = useContext(authContext);
     const { slug } = gameData;
+    const [isLoading, setIsLoading] = useState(false);
 
     const toggleIsFavourite = () => {
-      if (isBookmark) {
-        removeGameFromBookmarks(userId, slug)
-          .then(() => {
-            setIsBookmark(prevState => !prevState);
-          })
-          .catch(error => {
-            console.log(error);
-            toastify('Something went wront. Try again later');
-          });
-      } else {
-        addGameToBookmarks(userId, slug, gameData)
-          .then(() => {
-            setIsBookmark(prevState => !prevState);
-          })
-          .catch(error => {
-            console.log(error);
-            toastify('Something went wront. Try again later');
-          });
-      }
+      const toggle = () => {
+        if (isBookmark) return removeGameFromBookmarks(userId, slug);
+        else return addGameToBookmarks(userId, slug, gameData);
+      };
+
+      setIsLoading(true);
+
+      toggle()
+        .then(() => {
+          setIsBookmark(prevState => !prevState);
+        })
+        .catch(error => {
+          console.log(error);
+          toastify('Something went wront. Try again later');
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     };
 
     return (
       <Button type="button" onClick={toggleIsFavourite} className={className}>
-        {className === 'game_description' && 'Bookmark'}{' '}
-        {isBookmark ? (
-          <BsFillBookmarkFill size="100%" />
+        {className === 'game_description' && 'Bookmark'}
+        {isLoading ? (
+          <Oval
+            width="100%"
+            height="100%"
+            wrapperStyle={{ width: '100%', height: '100%' }}
+          />
+        ) : isBookmark ? (
+          <BsFillBookmarkFill size="100%" style={{ padding: 3 }} />
         ) : (
-          <BsBookmark size="100%" className="icon" />
+          <BsBookmark size="100%" className="icon" style={{ padding: 3 }} />
         )}
       </Button>
     );
@@ -62,6 +70,10 @@ const Button = styled.button`
   background-color: rgba(84, 84, 84, 0.5);
 
   transition: 250ms all ease;
+
+  & div {
+    padding: 0;
+  }
 
   &.gamecard_catalog {
     position: absolute;

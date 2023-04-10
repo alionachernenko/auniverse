@@ -1,82 +1,151 @@
 import { memo, useContext, useEffect, useState } from 'react';
-import { fetchUserInfo } from 'utils';
+import { fetchCommentReplies, fetchUserInfo } from 'utils';
 import styled from 'styled-components';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { authContext } from 'context';
 import avatarPlaceholder from '../../assets/images/avatar-placeholder.png';
 import { RemoveCommentButton } from 'components/RemoveCommentButton/RemoveCommentButton';
+import { FaReply } from 'react-icons/fa';
+import { ReplyForm } from 'components/ReplyForm/ReplyForm';
+import { Replies } from 'components/Replies/Replies';
 
 export const Comment = memo(({ authorId, text, date, id, setComments }) => {
   const [authorAvatar, setAuthorAvatar] = useState();
   const [authorUsername, setAuthorUsername] = useState('');
+  const [showReplyForm, setShowReplyForm] = useState(false);
+  const [replies, setReplies] = useState([]);
+  const [showReplies, setShowReplies] = useState(false);
+
+  const { gameSlug } = useParams();
+  const { userId, isLoggedIn } = useContext(authContext);
   const location = useLocation();
-  const { userId } = useContext(authContext);
 
   useEffect(() => {
-    fetchUserInfo(authorId)
+    Promise.all([
+      fetchUserInfo(authorId),
+      fetchCommentReplies(`/comments/${gameSlug}/${id}/replies`),
+    ])
       .then(res => {
-        const { username, photoUrl } = res.val();
+        const [info, replies] = res;
+        const { username, photoUrl } = info.val();
 
         setAuthorUsername(username);
         setAuthorAvatar(photoUrl ?? avatarPlaceholder);
+        if (replies.val()) setReplies(Object.values(replies.val()));
       })
       .catch(error => {
         console.log(error);
       });
-  }, [authorId]);
+  }, [authorId, gameSlug, id]);
 
   return (
-    <CommentWrapper key={id}>
-      <Link
-        to={
-          authorId === userId
-            ? '/profile/bookmarks'
-            : `/users/${authorId}/bookmarks`
-        }
-        state={{ from: location.pathname }}
-      >
-        <AuthorInfo>
-          <AvatarWrapper>
-            {authorAvatar && (
-              <AuthorAvatar
-                src={authorAvatar}
-                alt={`${authorUsername}'s avatar`}
-              ></AuthorAvatar>
+    <li style={{ width: '100%' }}>
+      <div style={{ position: 'relative', width: '100%' }}>
+        <CommentWrapper key={id}>
+          <Link
+            to={
+              authorId === userId
+                ? '/profile/bookmarks'
+                : `/users/${authorId}/bookmarks`
+            }
+            state={{ from: location.pathname }}
+          >
+            <AuthorInfo>
+              <AvatarWrapper>
+                <AuthorAvatar
+                  src={authorAvatar}
+                  alt={`${authorUsername}'s avatar`}
+                ></AuthorAvatar>
+              </AvatarWrapper>
+
+              <AuthorName>{authorUsername}</AuthorName>
+              <Date>{date}</Date>
+            </AuthorInfo>
+          </Link>
+
+          <CommentText>{text}</CommentText>
+          <Options>
+            {replies.length !== 0 && (
+              <ShowRepliesButton
+                onClick={() => {
+                  setShowReplies(prev => !prev);
+                }}
+              >
+                {showReplies ? 'Hide' : 'Show'} replies ({replies.length})
+              </ShowRepliesButton>
             )}
-          </AvatarWrapper>
-
-          <AuthorName>{authorUsername}</AuthorName>
-          <Date>{date}</Date>
-        </AuthorInfo>
-      </Link>
-
-      <CommentText>{text}</CommentText>
-      {userId === authorId && (
-        <RemoveCommentButton id={id} setComments={setComments} />
-      )}
-    </CommentWrapper>
+            {isLoggedIn && (
+              <ReplyButton
+                onClick={() => {
+                  setShowReplyForm(prev => !prev);
+                }}
+              >
+                <FaReply size="100%" />
+              </ReplyButton>
+            )}
+            {userId === authorId && (
+              <RemoveCommentButton id={id} setComments={setComments} />
+            )}
+          </Options>
+        </CommentWrapper>
+        {showReplyForm && <ReplyForm id={id} setReplies={setReplies} />}
+        {showReplies && (
+          <Replies
+            replies={replies}
+            commentId={id}
+            mainCommentId={id}
+            setCommentReplies={setReplies}
+          />
+        )}
+      </div>
+    </li>
   );
 });
 
-const CommentWrapper = styled.li`
+const Options = styled.div`
+  position: absolute;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  right: 20px;
+  gap: 10px;
+`;
+
+const ReplyButton = styled.button`
+  padding: 0;
+  background: none;
+  border: none;
+  width: 20px;
+  height: 20px;
+
+  & svg {
+    fill: #ffffffb8;
+    transition: 150ms all ease;
+
+    &:hover {
+      fill: white;
+    }
+  }
+`;
+
+const CommentWrapper = styled.div`
   width: 100%;
   position: relative;
   padding: 20px;
   box-sizing: border-box;
-  border: 2px solid #2f3149;
+  border: 2px solid white;
   border-radius: 20px;
-
-  @media screen and (min-width: 768px) {
-    width: 542px;
-  }
+  margin-bottom: 10px;
 `;
 
 const AuthorName = styled.p`
   color: white;
+  font-family: 'Nunito', sans-serif;
 `;
 
 const CommentText = styled.p`
   color: white;
+  font-family: 'Nunito', sans-serif;
 `;
 
 const AuthorInfo = styled.div`
@@ -105,4 +174,18 @@ const Date = styled.p`
   font-family: inherit;
   color: #ffffffb8;
   margin-left: auto;
+`;
+
+const ShowRepliesButton = styled.button`
+  color: white;
+  font-size: 15px;
+  font-family: 'Nunito', sans-serif;
+  background: none;
+  border: none;
+  padding: 0;
+  transition: 150ms all ease;
+
+  &:hover {
+    color: #ffffffb8;
+  }
 `;
