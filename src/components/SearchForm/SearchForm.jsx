@@ -14,7 +14,7 @@ export const SearchForm = memo(({ className }) => {
   const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname === '/' && value !== '') {
+    if (value !== '') {
       fetchGameByName(value)
         .then(({ data: { results } }) => {
           setFilteredGames(results);
@@ -68,7 +68,7 @@ export const SearchForm = memo(({ className }) => {
         </Button>
       </div>
       {location.pathname === '/catalog' && <SearchFilter />}
-      {filteredGames && value !== '' && location.pathname === '/' && (
+      {filteredGames && value !== '' && location.pathname !== '/catalog' && (
         <FilteredSearchList results={filteredGames} />
       )}
     </Form>
