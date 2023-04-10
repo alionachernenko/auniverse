@@ -10,9 +10,16 @@ const formatDateAndTime = value => {
   return new Date(value).toISOString().slice(0, 10);
 };
 
-export const ReplyForm = ({ id, setReplies, parentReplyId, commentId }) => {
+export const ReplyForm = ({
+  id,
+  setReplies,
+  parentReplyId,
+  commentId,
+  mainCommentId,
+}) => {
   const { userId } = useContext(authContext);
   const { gameSlug } = useParams();
+  console.log(parentReplyId, mainCommentId);
 
   const onFormSubmit = e => {
     e.preventDefault();
@@ -28,11 +35,11 @@ export const ReplyForm = ({ id, setReplies, parentReplyId, commentId }) => {
       date: serverTimestamp(),
     };
 
-    console.log(parentReplyId);
+    // console.log(id, commentId);
 
     const ref = parentReplyId
-      ? `/comments/${gameSlug}/${commentId}/replies/${parentReplyId}/replies/${replyId}`
-      : `/comments/${gameSlug}/${id}/replies/${replyId}`;
+      ? `/comments/${gameSlug}/${mainCommentId}/replies/${parentReplyId}/replies/${replyId}`
+      : `/comments/${gameSlug}/${commentId}/replies/${replyId}`;
 
     leaveReply(ref, replyData);
     setReplies(prev => [

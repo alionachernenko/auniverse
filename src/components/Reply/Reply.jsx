@@ -105,6 +105,7 @@ export const Reply = memo(
             parentReplyId={replyId}
             setReplies={setReplies}
             id={replyId}
+            mainCommentId={mainCommentId}
           />
         )}
         {showReplies && (

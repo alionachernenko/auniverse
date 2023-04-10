@@ -19,6 +19,7 @@ export const Comment = memo(({ authorId, text, date, id, setComments }) => {
   const { gameSlug } = useParams();
   const { userId, isLoggedIn } = useContext(authContext);
   const location = useLocation();
+  console.log(id);
 
   useEffect(() => {
     Promise.all([
@@ -27,10 +28,13 @@ export const Comment = memo(({ authorId, text, date, id, setComments }) => {
     ])
       .then(res => {
         const [info, replies] = res;
-        const { username, photoUrl } = info.val();
+        if (info.val()) {
+          const { username, photoUrl } = info.val();
 
-        setAuthorUsername(username);
-        setAuthorAvatar(photoUrl ?? avatarPlaceholder);
+          setAuthorUsername(username);
+          setAuthorAvatar(photoUrl ?? avatarPlaceholder);
+        }
+
         if (replies.val()) setReplies(Object.values(replies.val()));
       })
       .catch(error => {
@@ -88,7 +92,9 @@ export const Comment = memo(({ authorId, text, date, id, setComments }) => {
             )}
           </Options>
         </CommentWrapper>
-        {showReplyForm && <ReplyForm id={id} setReplies={setReplies} />}
+        {showReplyForm && (
+          <ReplyForm id={id} setReplies={setReplies} commentId={id} />
+        )}
         {showReplies && (
           <Replies
             replies={replies}

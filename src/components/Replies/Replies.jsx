@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 export const Replies = memo(
   ({ replies, commentId, mainCommentId, setReplies, setCommentReplies }) => {
+    console.log('main ', mainCommentId);
     return (
       <>
         {replies.length !== 0 && (

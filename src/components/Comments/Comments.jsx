@@ -16,7 +16,7 @@ export const Comments = ({ comments, setComments }) => {
   const { gameSlug } = useParams();
 
   const onFormSubmit = e => {
-    const commentId = nanoid();
+    const id = nanoid();
     const date = new Date();
     e.preventDefault();
     console.log(date.getDate());
@@ -24,10 +24,10 @@ export const Comments = ({ comments, setComments }) => {
     const commentInput = e.target.elements.comment;
     const commentText = commentInput.value;
 
-    leaveComment(userId, gameSlug, commentText, commentId);
+    leaveComment(userId, gameSlug, commentText, id);
     setComments(prev => [
       {
-        commentId,
+        id,
         author: userId,
         text: commentText,
         date: formatDateAndTime(date.getTime()),
