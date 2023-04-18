@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { fetchGameByName } from 'utils/rawg-api';
+import { fetchGameBySearchQuery } from 'utils/rawg-api';
 import { SearchFilter, FilteredSearchList } from 'components';
 
 import styled from 'styled-components';
@@ -9,19 +9,26 @@ import { MdClose } from 'react-icons/md';
 export const SearchForm = memo(({ className }) => {
   const [value, setValue] = useState('');
   const [filteredGames, setFilteredGames] = useState();
+  const [showFilteredResults, setShowFilteredResults] = useState(false)
+  const [ordering, setOrdering] = useState(null)
+  const [genre, setGenre] = useState(null)
   const navigate = useNavigate();
 
   const location = useLocation();
 
   useEffect(() => {
     if (value !== '') {
-      fetchGameByName(value)
+      fetchGameBySearchQuery(value, 1, ordering, genre)
         .then(({ data: { results } }) => {
           setFilteredGames(results);
         })
         .catch(error => console.log(error));
     }
-  }, [location.pathname, value]);
+    if (filteredGames && value !== '' && location.pathname !== '/auniverse/catalog') {
+      setShowFilteredResults(true)
+      return
+    }
+  }, [filteredGames, genre, ordering, location.pathname, value]);
 
   const onFormSubmit = e => {
     e.preventDefault();
@@ -36,7 +43,12 @@ export const SearchForm = memo(({ className }) => {
       searchParams.set('ordering', ordering.value);
     if (genre && genre.value !== 'All') searchParams.set('genre', genre.value);
 
-    navigate(`/catalog?${searchParams.toString()}`);
+    if(location.pathname !== '/auniverse/catalog') {
+      navigate(`/catalog?${searchParams.toString()}`);
+    }
+
+    setShowFilteredResults(false)
+    setValue('')
   };
 
   const onInputChange = e => {
@@ -67,8 +79,8 @@ export const SearchForm = memo(({ className }) => {
           GO
         </Button>
       </div>
-      {location.pathname === '/catalog' && <SearchFilter />}
-      {filteredGames && value !== '' && location.pathname !== '/catalog' && (
+      {location.pathname === '/catalog' && <SearchFilter setOrdering={setOrdering} setGenre={setGenre}/>}
+      {showFilteredResults && (
         <FilteredSearchList results={filteredGames} />
       )}
     </Form>

@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom"
 import styled from "styled-components"
+import { useLocation } from "react-router-dom"
 
 export const FilteredSearchList = ({results}) => {
+    const location = useLocation()
     return (
         <FilteredResults>
                 {results.map(({id, background_image, slug, name}) => 
@@ -9,7 +11,7 @@ export const FilteredSearchList = ({results}) => {
                         <PosterWrapper>
                             <Poster src={`${background_image}`} loading='lazy' alt={`${name} poster`} />
                         </PosterWrapper>
-                    <Title to={`/catalog/${slug}`}>
+                    <Title to={`/catalog/${slug}`} state={{from: location.pathname}}>
                         {name}
                     </Title>
                 </Item>)}
@@ -32,6 +34,7 @@ const FilteredResults = styled.ul`
 
     position: absolute;
     z-index: 3;
+    top: 100%;
     
     background-color: white;
 

@@ -1,13 +1,15 @@
 import styled from "styled-components"
 
-export const SearchFilter = () => {
+export const SearchFilter = ({setOrdering, setGenre}) => {
 
 
     return (
         <Filters>
                 <Filter>
                     <Label htmlFor='order_select'>Order by:</Label>
-                    <FilterOptions name="ordering" id="order_select">
+                    <FilterOptions name="ordering" id="order_select" onChange={(e) => {
+                        setOrdering(e.target.value)
+                    }}>
                         <option>None</option>
                         <option value="added">Added</option>
                         <option value="released">Released</option>
@@ -20,7 +22,9 @@ export const SearchFilter = () => {
                 </Filter>
                 <Filter>
                     <Label htmlFor='genre_select'>Genre:</Label>
-                    <FilterOptions name="genre" id="genre_select">
+                    <FilterOptions name="genre" id="genre_select" onChange={(e) => {
+                        setOrdering(e.target.value)
+                    }}>
                         <option>All</option>
                         <option value="action">Action</option>
                         <option value="adventure">Adventure</option>
