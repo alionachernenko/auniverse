@@ -75,6 +75,7 @@ export const GameCard = ({ data, className }) => {
 };
 
 const CardWrapper = styled.div`
+width: 100%;
   position: relative;
   display: flex;
   flex: 1;

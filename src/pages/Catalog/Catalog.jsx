@@ -25,12 +25,14 @@ const Catalog = () => {
     query = null,
     genre = null,
     page = 1,
+    platform = null,
+    developer = null
   } = searchParams;
 
   useEffect(() => {
     setIsLoading(true);
-    if (query || ordering || genre) {
-      fetchGameBySearchQuery(query, page, ordering, genre)
+    if (query || ordering || genre || platform || developer) {
+      fetchGameBySearchQuery(query, page, ordering, genre, platform, developer)
         .then(({ data }) => {
           const { results, count } = data;
 
@@ -60,7 +62,7 @@ const Catalog = () => {
           setIsLoading(false);
         });
     }
-  }, [query, ordering, genre, page, setParams, searchParams]);
+  }, [query, ordering, genre, page, setParams, searchParams, platform, developer]);
 
   const handlePageChange = page => {
     setParams({ ...searchParams, page: page + 1 });

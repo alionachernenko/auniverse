@@ -35,16 +35,13 @@ export const FeedbackForm = ({ setIsFormOpen }) => {
     e.preventDefault();
 
     const feedbackId = nanoid();
-    console.log(images);
-
     leaveFeedbackMessage(text, userId, feedbackId);
-    console.log(images);
+
     Object.values(images).forEach(file => {
       leaveFeedbackPhotos(file, userId, feedbackId);
     });
 
     setShowForm(false);
-    console.log(images);
 
     localStorage.removeItem('text');
     localStorage.removeItem('files');

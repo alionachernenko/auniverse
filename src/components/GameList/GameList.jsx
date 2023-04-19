@@ -30,7 +30,7 @@ const Item = styled.li`
     width: calc((100% - 30px) / 2);
   }
 
-  @media screen and (min-width: 1100px) {
+  @media screen and (min-width: 1000px) {
     width: calc((100% - 60px) / 3);
   }
 

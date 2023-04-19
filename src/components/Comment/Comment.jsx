@@ -19,7 +19,6 @@ export const Comment = memo(({ authorId, text, date, id, setComments }) => {
   const { gameSlug } = useParams();
   const { userId, isLoggedIn } = useContext(authContext);
   const location = useLocation();
-  console.log(id);
 
   useEffect(() => {
     Promise.all([

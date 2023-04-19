@@ -9,29 +9,30 @@ import { MdClose } from 'react-icons/md';
 export const SearchForm = memo(({ className }) => {
   const [value, setValue] = useState('');
   const [filteredGames, setFilteredGames] = useState([]);
-  const [showFilteredResults, setShowFilteredResults] = useState(false)
-  const [ordering, setOrdering] = useState(null)
-  const [genre, setGenre] = useState(null)
+  const [showFilteredResults, setShowFilteredResults] = useState(false);
+  const [ordering, setOrdering] = useState(null);
+  const [genre, setGenre] = useState(null);
+  const [platform, setPlatform] = useState(null);
+  const [developer, setDeveloper] = useState(null);
+
   const navigate = useNavigate();
 
   const location = useLocation();
 
   useEffect(() => {
-    console.log(ordering, genre)
-    if (value !== '') {
-      setShowFilteredResults(true)
-      fetchGameBySearchQuery(value, 1,  ordering, genre)
+    if (value || ordering || genre || platform || developer) {
+      setShowFilteredResults(true);
+      fetchGameBySearchQuery(value, 1, ordering, genre, platform, developer)
         .then(({ data: { results } }) => {
           setFilteredGames(results);
         })
         .catch(error => console.log(error));
-    }
-    else setShowFilteredResults(false)
-  }, [genre, ordering, location.pathname, value]);
+    } else setShowFilteredResults(false);
+  }, [genre, ordering, location.pathname, value, platform, developer]);
 
   const onFormSubmit = e => {
     e.preventDefault();
-    const { query, ordering, genre } = e.target.elements;
+    const { query, ordering, genre, platform, developer } = e.target.elements;
 
     const searchParams = new URLSearchParams();
 
@@ -41,12 +42,16 @@ export const SearchForm = memo(({ className }) => {
     if (ordering && ordering.value !== 'None')
       searchParams.set('ordering', ordering.value);
     if (genre && genre.value !== 'All') searchParams.set('genre', genre.value);
+    if (platform && platform.value !== 'All')
+      searchParams.set('platform', platform.value);
+    if (developer && developer.value !== 'All')
+      searchParams.set('developer', developer.value);
 
-    if(location.pathname !== '/auniverse/catalog') {
+    if (location.pathname !== '/auniverse/catalog') {
       navigate(`/catalog?${searchParams.toString()}`);
     }
 
-    setShowFilteredResults(false)
+    setShowFilteredResults(false);
   };
 
   const onInputChange = e => {
@@ -68,7 +73,7 @@ export const SearchForm = memo(({ className }) => {
           onChange={onInputChange}
           className={className}
         />
-        {value.length > 0 && (
+        {value && (
           <ClearButton type="button" onClick={() => setValue('')}>
             <MdClose size="100%" />
           </ClearButton>
@@ -77,10 +82,15 @@ export const SearchForm = memo(({ className }) => {
           GO
         </Button>
       </div>
-      {location.pathname === '/catalog' && <SearchFilter setOrdering={setOrdering} setGenre={setGenre}/>}
-      {showFilteredResults && (
-        <FilteredSearchList results={filteredGames} />
+      {location.pathname === '/catalog' && (
+        <SearchFilter
+          setDeveloper={setDeveloper}
+          setOrdering={setOrdering}
+          setGenre={setGenre}
+          setPlatform={setPlatform}
+        />
       )}
+      {showFilteredResults && <FilteredSearchList results={filteredGames} />}
     </Form>
   );
 });
@@ -193,7 +203,7 @@ const showClearButton = keyframes`
     transform: translateY(-50%) scale(1);
     opacity: 1;
   }
-`
+`;
 
 const ClearButton = styled.button`
   position: absolute;

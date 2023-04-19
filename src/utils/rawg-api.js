@@ -30,7 +30,9 @@ export const fetchGameBySearchQuery = async (
   searchQuery,
   page,
   ordering,
-  genres
+  genres,
+  platforms,
+  developers
 ) => {
   const params = {
     ordering: ordering !== null ? `-${ordering}` : ordering,
@@ -38,6 +40,8 @@ export const fetchGameBySearchQuery = async (
     page,
     key: KEY,
     search: searchQuery,
+    platforms: platforms,
+    developers: developers
   };
 
   return await axios.get(`${BASE_URL}games`, { params });
@@ -57,3 +61,18 @@ export const fetchStores = async id => {
   const data = await axios.get(`${BASE_URL}games/${id}/stores?key=${KEY}`);
   return data;
 };
+
+export const fetchGenres = async () => {
+  const genres = await axios.get(`${BASE_URL}genres?key=${KEY}`)
+  return genres
+}
+
+export const fetchPlatforms = async () => {
+  const platforms = await axios.get(`${BASE_URL}platforms?key=${KEY}`)
+  return platforms
+}
+
+export const fetchDevelopers = async () => {
+  const developers = await axios.get(`${BASE_URL}developers?key=${KEY}`)
+  return developers
+}

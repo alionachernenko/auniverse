@@ -40,6 +40,8 @@ export const BookmarkButton = memo(
           <Oval
             width="100%"
             height="100%"
+            color="#FF6600"
+            secondaryColor="orange"
             wrapperStyle={{ width: '100%', height: '100%' }}
           />
         ) : isBookmark ? (

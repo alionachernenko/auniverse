@@ -19,7 +19,6 @@ export const ReplyForm = ({
 }) => {
   const { userId } = useContext(authContext);
   const { gameSlug } = useParams();
-  console.log(parentReplyId, mainCommentId);
 
   const onFormSubmit = e => {
     e.preventDefault();

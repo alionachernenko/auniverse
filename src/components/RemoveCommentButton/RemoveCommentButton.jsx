@@ -5,7 +5,6 @@ import { removeComment } from 'utils';
 
 export const RemoveCommentButton = ({ id, setComments }) => {
   const { gameSlug } = useParams();
-  console.log(gameSlug);
 
   const onRemoveButtonClick = commentId => {
     removeComment(gameSlug, id);
