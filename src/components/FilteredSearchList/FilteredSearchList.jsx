@@ -6,10 +6,11 @@ import LinearProgress from '@mui/material/LinearProgress';
 
 export const FilteredSearchList = ({ results, isLoading, onClick }) => {
   const location = useLocation();
+  console.log(results)
   return (
     <Results>
       {isLoading && <LinearProgress className="loader" />}
-      {!results ? (
+      {results.length === 0 ? (
         <p style={{fontSize: 20, color: '#00021a'}}>No matches</p>
       ) : (
         <List>

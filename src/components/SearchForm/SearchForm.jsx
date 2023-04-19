@@ -8,7 +8,7 @@ import { MdClose } from 'react-icons/md';
 
 export const SearchForm = memo(({ className }) => {
   const [value, setValue] = useState('');
-  const [filteredGames, setFilteredGames] = useState();
+  const [filteredGames, setFilteredGames] = useState([]);
   const [showFilteredResults, setShowFilteredResults] = useState(false);
   const [ordering, setOrdering] = useState(null);
   const [genre, setGenre] = useState(null);
