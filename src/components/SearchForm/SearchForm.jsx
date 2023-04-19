@@ -20,6 +20,7 @@ export const SearchForm = memo(({ className }) => {
 
   const location = useLocation();
 
+
   useEffect(() => {
     if (value || ordering || genre || platform || developer) {
       setIsLoading(true);
@@ -97,7 +98,7 @@ export const SearchForm = memo(({ className }) => {
         />
       )}
       {showFilteredResults && (
-        <FilteredSearchList results={filteredGames} isLoading={isLoading} />
+        <FilteredSearchList results={filteredGames} isLoading={isLoading} onClick={() => setValue('')}/>
       )}
     </Form>
   );

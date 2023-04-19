@@ -4,35 +4,43 @@ import { useLocation } from 'react-router-dom';
 import placeholderImage from '../../assets/images/placeholder.png';
 import LinearProgress from '@mui/material/LinearProgress';
 
-export const FilteredSearchList = ({ results, isLoading }) => {
+export const FilteredSearchList = ({ results, isLoading, onClick }) => {
   const location = useLocation();
   return (
     <Results>
-      {isLoading && <LinearProgress className='loader'/>}
-      <List>
-        {results.map(({ id, background_image, slug, name }) => (
-          <Item key={id}>
-            <PosterWrapper>
-              {background_image ? (
-                <Poster
-                  src={`${background_image}`}
-                  loading="lazy"
-                  alt={`${name} poster`}
-                />
-              ) : (
-                <Poster
-                  className="poster"
-                  src={placeholderImage}
-                  alt="No poster here"
-                />
-              )}
-            </PosterWrapper>
-            <Title to={`/catalog/${slug}`} state={{ from: location.pathname }}>
-              {name}
-            </Title>
-          </Item>
-        ))}
-      </List>
+      {isLoading && <LinearProgress className="loader" />}
+      {results.lendth === 0 ? (
+        <p style={{fontSize: 20, color: '#00021a'}}>No matches</p>
+      ) : (
+        <List>
+          {results.map(({ id, background_image, slug, name }) => (
+            <Item key={id}>
+              <PosterWrapper>
+                {background_image ? (
+                  <Poster
+                    src={`${background_image}`}
+                    loading="lazy"
+                    alt={`${name} poster`}
+                  />
+                ) : (
+                  <Poster
+                    className="poster"
+                    src={placeholderImage}
+                    alt="No poster here"
+                  />
+                )}
+              </PosterWrapper>
+              <Title
+                to={`/catalog/${slug}`}
+                state={{ from: location.pathname }}
+                onClick={onClick}
+              >
+                {name}
+              </Title>
+            </Item>
+          ))}
+        </List>
+      )}
     </Results>
   );
 };
@@ -40,10 +48,7 @@ export const FilteredSearchList = ({ results, isLoading }) => {
 const List = styled.ul`
   display: flex;
   flex-direction: column;
-
   gap: 10px;
-
-  overflow-y: scroll;
 `;
 
 const Results = styled.div`
@@ -57,6 +62,7 @@ const Results = styled.div`
   max-height: 50vh;
   padding: 10px;
   border-radius: 20px;
+  overflow-x: hidden;
 
   background-color: white;
 
@@ -70,7 +76,7 @@ const Results = styled.div`
     background-color: #00021a;
 
     & span {
-      background-color: orange
+      background-color: orange;
     }
   }
 `;
