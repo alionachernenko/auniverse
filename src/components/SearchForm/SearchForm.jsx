@@ -3,12 +3,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchGameBySearchQuery } from 'utils/rawg-api';
 import { SearchFilter, FilteredSearchList } from 'components';
 
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { MdClose } from 'react-icons/md';
 
 export const SearchForm = memo(({ className }) => {
   const [value, setValue] = useState('');
-  const [filteredGames, setFilteredGames] = useState();
+  const [filteredGames, setFilteredGames] = useState([]);
   const [showFilteredResults, setShowFilteredResults] = useState(false)
   const [ordering, setOrdering] = useState(null)
   const [genre, setGenre] = useState(null)
@@ -17,18 +17,17 @@ export const SearchForm = memo(({ className }) => {
   const location = useLocation();
 
   useEffect(() => {
+    console.log(ordering, genre)
     if (value !== '') {
-      fetchGameBySearchQuery(value, 1, ordering, genre)
+      setShowFilteredResults(true)
+      fetchGameBySearchQuery(value, 1,  ordering, genre)
         .then(({ data: { results } }) => {
           setFilteredGames(results);
         })
         .catch(error => console.log(error));
     }
-    if (filteredGames && value !== '' && location.pathname !== '/auniverse/catalog') {
-      setShowFilteredResults(true)
-      return
-    }
-  }, [filteredGames, genre, ordering, location.pathname, value]);
+    else setShowFilteredResults(false)
+  }, [genre, ordering, location.pathname, value]);
 
   const onFormSubmit = e => {
     e.preventDefault();
@@ -48,7 +47,6 @@ export const SearchForm = memo(({ className }) => {
     }
 
     setShowFilteredResults(false)
-    setValue('')
   };
 
   const onInputChange = e => {
@@ -185,6 +183,18 @@ const Button = styled.button`
   }
 `;
 
+const showClearButton = keyframes`
+  from {
+    transform: translateY(-50%) scale(0);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(-50%) scale(1);
+    opacity: 1;
+  }
+`
+
 const ClearButton = styled.button`
   position: absolute;
   right: 12%;
@@ -192,8 +202,11 @@ const ClearButton = styled.button`
   border: none;
   background-color: transparent;
   padding: 0;
-  transform: translateY(-50%);
+  transform: translateY(-50%) scale(1);
+
   display: flex;
   align-items: center;
   height: 70%;
+
+  animation: ${showClearButton} 100ms ease;
 `;

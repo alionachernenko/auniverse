@@ -21,7 +21,7 @@ export const FilteredSearchList = ({results}) => {
 }
 
 const FilteredResults = styled.ul`
-    width: 100%;
+    width: calc(100% - 20px);
     box-sizing: border-box;
     max-height: 50vh;
     padding: 10px;
@@ -34,7 +34,9 @@ const FilteredResults = styled.ul`
 
     position: absolute;
     z-index: 3;
-    top: 100%;
+    margin-top: 10px;
+    left: 10px;
+    right: 10px;
     
     background-color: white;
 
