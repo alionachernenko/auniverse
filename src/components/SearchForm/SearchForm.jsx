@@ -14,6 +14,7 @@ export const SearchForm = memo(({ className }) => {
   const [genre, setGenre] = useState(null);
   const [platform, setPlatform] = useState(null);
   const [developer, setDeveloper] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -21,12 +22,17 @@ export const SearchForm = memo(({ className }) => {
 
   useEffect(() => {
     if (value || ordering || genre || platform || developer) {
+      setIsLoading(true);
       setShowFilteredResults(true);
       fetchGameBySearchQuery(value, 1, ordering, genre, platform, developer)
         .then(({ data: { results } }) => {
           setFilteredGames(results);
+          setIsLoading(false);
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+          console.log(error);
+          setIsLoading(false);
+        });
     } else setShowFilteredResults(false);
   }, [genre, ordering, location.pathname, value, platform, developer]);
 
@@ -90,7 +96,9 @@ export const SearchForm = memo(({ className }) => {
           setPlatform={setPlatform}
         />
       )}
-      {showFilteredResults && <FilteredSearchList results={filteredGames} />}
+      {showFilteredResults && (
+        <FilteredSearchList results={filteredGames} isLoading={isLoading} />
+      )}
     </Form>
   );
 });

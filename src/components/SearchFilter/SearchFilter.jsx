@@ -47,7 +47,7 @@ export const SearchFilter = ({ setOrdering, setGenre, setPlatform, setDeveloper 
         >
           <option>All</option>
           {genres.map(genre => (
-            <option value={genre.slug}>{genre.name}</option>
+            <option key={genre.id} value={genre.slug}>{genre.name}</option>
           ))}
         </FilterOptions>
       </Filter>
@@ -62,7 +62,7 @@ export const SearchFilter = ({ setOrdering, setGenre, setPlatform, setDeveloper 
         >
           <option>All</option>
           {platforms.map(platform => (
-            <option value={platform.id}>{platform.name}</option>
+            <option key={platform.id} value={platform.id}>{platform.name}</option>
           ))}
         </FilterOptions>
       </Filter>
@@ -77,7 +77,7 @@ export const SearchFilter = ({ setOrdering, setGenre, setPlatform, setDeveloper 
         >
           <option>All</option>
           {developers.map(developer => (
-            <option value={developer.slug}>{developer.name}</option>
+            <option key={developer.id} value={developer.slug}>{developer.name}</option>
           ))}
         </FilterOptions>
       </Filter>
