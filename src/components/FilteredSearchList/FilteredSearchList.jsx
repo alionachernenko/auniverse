@@ -9,7 +9,7 @@ export const FilteredSearchList = ({ results, isLoading, onClick }) => {
   return (
     <Results>
       {isLoading && <LinearProgress className="loader" />}
-      {results.lendth === 0 ? (
+      {!results ? (
         <p style={{fontSize: 20, color: '#00021a'}}>No matches</p>
       ) : (
         <List>
