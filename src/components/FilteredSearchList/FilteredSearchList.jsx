@@ -4,9 +4,9 @@ import { useLocation } from 'react-router-dom';
 import placeholderImage from '../../assets/images/placeholder.png';
 import LinearProgress from '@mui/material/LinearProgress';
 
-export const FilteredSearchList = ({ results, isLoading, onClick }) => {
+export const FilteredSearchList = ({ results, isLoading }) => {
   const location = useLocation();
-  console.log(results)
+
   return (
     <Results>
       {isLoading && <LinearProgress className="loader" />}
@@ -34,7 +34,6 @@ export const FilteredSearchList = ({ results, isLoading, onClick }) => {
               <Title
                 to={`/catalog/${slug}`}
                 state={{ from: location.pathname }}
-                onClick={onClick}
               >
                 {name}
               </Title>

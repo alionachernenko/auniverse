@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 
-import { authContext } from 'context';
+import { authContext} from 'context';
 
 import styled, { keyframes } from 'styled-components';
 

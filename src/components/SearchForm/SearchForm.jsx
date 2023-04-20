@@ -1,13 +1,14 @@
-import { memo, useEffect, useState } from 'react';
+import { memo, useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchGameBySearchQuery } from 'utils/rawg-api';
 import { SearchFilter, FilteredSearchList } from 'components';
 
 import styled, { keyframes } from 'styled-components';
 import { MdClose } from 'react-icons/md';
+import { searchFormContext } from 'context';
 
 export const SearchForm = memo(({ className }) => {
-  const [value, setValue] = useState('');
+  const {value, setValue} = useContext(searchFormContext)
   const [filteredGames, setFilteredGames] = useState([]);
   const [showFilteredResults, setShowFilteredResults] = useState(false);
   const [ordering, setOrdering] = useState(null);
@@ -19,7 +20,6 @@ export const SearchForm = memo(({ className }) => {
   const navigate = useNavigate();
 
   const location = useLocation();
-
 
   useEffect(() => {
     if (value || ordering || genre || platform || developer) {
@@ -98,7 +98,7 @@ export const SearchForm = memo(({ className }) => {
         />
       )}
       {showFilteredResults && (
-        <FilteredSearchList results={filteredGames} isLoading={isLoading} onClick={() => setValue('')}/>
+        <FilteredSearchList results={filteredGames} isLoading={isLoading}/>
       )}
     </Form>
   );

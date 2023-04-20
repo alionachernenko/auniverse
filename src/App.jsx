@@ -2,7 +2,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { Route, Routes, useLocation } from 'react-router-dom';
 
-import { useEffect, lazy, Suspense } from 'react';
+import { useEffect, lazy, Suspense, useContext } from 'react';
 import { ToastContainer } from 'react-toastify';
 
 import {
@@ -13,6 +13,7 @@ import {
   LoginForm,
   ScrollButton,
 } from 'components';
+import { searchFormContext } from 'context';
 
 const Homepage = lazy(() => import('./pages/Homepage/Homepage'));
 const Catalog = lazy(() => import('./pages/Catalog/Catalog'));
@@ -28,13 +29,15 @@ const UserProfile = lazy(() => import('./pages/UserProfile/UserProfile'));
 const Users = lazy(() => import('./pages/Community/Community'));
 
 export const App = () => {
+  const {setValue} = useContext(searchFormContext)
   const location = useLocation();
 
   useEffect(() => {
+    setValue('')
     window.scroll({
       top: 0,
     });
-  }, [location.pathname]);
+  }, [location.pathname, setValue]);
 
   return (
     <>

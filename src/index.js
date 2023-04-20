@@ -5,13 +5,16 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import AuthProvider from 'context/providers/authProvider';
 import BreakpointProvider from 'context/providers/breakpointProvider';
+import SearchFormProvider from 'context/providers/searchFormProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter basename="/auniverse">
     <AuthProvider>
       <BreakpointProvider>
-        <App />
+        <SearchFormProvider>
+          <App />
+        </SearchFormProvider>
       </BreakpointProvider>
     </AuthProvider>
   </BrowserRouter>
