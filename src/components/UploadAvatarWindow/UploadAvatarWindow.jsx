@@ -21,7 +21,7 @@ export const UploadAvatarWindow = ({
 
     setIsAvatarLoading(true);
     addAvatar(file, userId, setPhotoPath, setIsAvatarLoading);
-    onClose()
+    onClose();
   };
 
   const makeAvatarPreview = file => {
@@ -41,12 +41,15 @@ export const UploadAvatarWindow = ({
       'image/jpeg',
     ];
 
+    console.log(file.type);
+
     if (file) {
-        if (!availableTypes.includes(file.type)) {
+      if (!availableTypes.includes(file.type)) {
+        const splittedFilename = file.name.split('.');
         setUploadingError(
-          `Available formats: .png, .jpg, .gif, .jpeg. Your format: .${file.type.split(
-            '/'
-          )[1]}`
+          `Available formats: .png, .jpg, .gif, .jpeg. Your format: .${
+            splittedFilename[splittedFilename.length - 1]
+          }`
         );
         return;
       }
@@ -55,11 +58,9 @@ export const UploadAvatarWindow = ({
           `Maximum size: 4MB. Your size: ${Math.ceil(file.size / 1048576)}MB `
         );
         return;
+      } else {
+        setUploadingError(null);
       }
-      else {
-        setUploadingError(null)
-      }
-      
 
       makeAvatarPreview(file);
       setFile(file);
@@ -99,7 +100,7 @@ export const UploadAvatarWindow = ({
               </UploadButton>
             </form>
             <DragAndDropField
-            onDragOver={(e) => e.preventDefault()}
+              onDragOver={e => e.preventDefault()}
               onDrop={e => {
                 e.preventDefault();
                 console.log(e);
@@ -212,11 +213,10 @@ const UploadButton = styled.label`
   padding: 10px 15px;
   margin: 0 auto;
 `;
-const DragAndDropField = styled.div` 
-
-@media screen and (max-width: 767px) {
+const DragAndDropField = styled.div`
+  @media screen and (max-width: 767px) {
     display: none;
-  };
+  }
 
   min-width: 250px;
   min-height: 250px;
@@ -226,8 +226,6 @@ const DragAndDropField = styled.div`
   justify-content: center;
   background-color: #80808021;
   border-radius: 20px;
-
- 
 `;
 const Window = styled.div`
   border-radius: 20px;
@@ -279,6 +277,6 @@ const SubmitButton = styled.button`
   border-radius: 20px;
 
   &:disabled {
-    background-color: grey
+    background-color: grey;
   }
 `;
