@@ -172,6 +172,7 @@ const Meta = styled.div`
 const Title = styled.h1`
   padding: 10px 0;
   border-bottom: 1px solid orange;
+  max-width: 700px;
 
   font-size: 35px;
   font-weight: 700;

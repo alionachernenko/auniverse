@@ -6,7 +6,6 @@ import {
   fetchUserInfo,
   fetchFriendsList,
   fetchFriendsInvitationsList,
-  userSignOut,
 } from 'utils';
 import {
   Loader,
@@ -16,7 +15,6 @@ import {
   Friends,
   Bookmarks,
 } from 'components';
-import { ImExit } from 'react-icons/im';
 
 import { authContext } from 'context';
 
@@ -24,7 +22,7 @@ import avatarPlaceholder from '../../assets/images/avatar-placeholder.png';
 import styled from 'styled-components';
 
 const AccountPage = () => {
-  const { userId, isLoggedIn, setUserId } = useContext(authContext);
+  const { userId, isLoggedIn } = useContext(authContext);
 
   const [friends, setFriends] = useState([]);
   const [favouriteGames, setFavouriteGames] = useState([]);
@@ -96,13 +94,6 @@ const AccountPage = () => {
       });
   }, [isLoggedIn, navigate, userId]);
 
-  const logOut = () => {
-    userSignOut().then(() => {
-      navigate('/login/login-page');
-      setUserId('');
-    });
-  };
-
   return (
     <>
       <Page style={{ marginTop: 61 }}>
@@ -139,9 +130,6 @@ const AccountPage = () => {
 
                   {routes}
                 </OutletsSection>
-                <LogOut type="button" onClick={logOut}>
-                  <ImExit />
-                </LogOut>
               </Page>
             </>
           )}
@@ -200,80 +188,13 @@ const OutletsSection = styled.div`
   }
 `;
 
-const LogOut = styled.button`
-  position: absolute;
-  top: 0;
-  right: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  color: white;
-
-  font-family: 'Nunito', sans-serif;
-  width: fit-content;
-  box-sizing: border-box;
-  padding: 10px;
-  background-color: #080d2b;
-  font-size: 20px;
-  background-color: orange;
-  box-shadow: red 2px 3px;
-  transition: 100ms all linear;
-
-  &:hover {
-    box-shadow: red 4px 5px;
-    transform: scale(1.05);
-    background-color: white;
-    color: orange;
-  }
-
-  &::before {
-    content: '';
-    width: 20px;
-    height: 20px;
-
-    position: absolute;
-    top: 0px;
-    right: 0px;
-
-    background-color: transparent;
-    border-top: 2px solid orange;
-    border-right: 2px solid orange;
-
-    transition: 100ms all linear;
-  }
-
-  &::after {
-    content: '';
-    height: 20px;
-    width: 20px;
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-
-    background-color: transparent;
-    border-bottom: 2px solid orange;
-    border-left: 2px solid orange;
-
-    transition: 100ms all linear;
-  }
-
-  &:hover::after {
-    bottom: -15px;
-    left: -13px;
-  }
-
-  &:hover::before {
-    top: -13px;
-    right: -15px;
-  }
-`;
 
 const Tabs = styled.div`
   margin-bottom: 20px;
   margin-left: auto;
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
   gap: 0 40px;
 `;
