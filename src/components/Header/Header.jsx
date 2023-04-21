@@ -35,7 +35,7 @@ export const Header = ({ onSubmit }) => {
               <ProfileOptions>
                 <ProfileMenu>
                   <ProfileButton />
-                  {isLoggedIn && !showLogoutOption ? (
+                  {isLoggedIn && (!showLogoutOption ? (
                     <IoMdArrowDropdown
                       color="white"
                       onClick={() => setShowLogoutOption(prev => !prev)}
@@ -47,7 +47,7 @@ export const Header = ({ onSubmit }) => {
                       onClick={() => setShowLogoutOption(prev => !prev)}
                       className="open-logout-menu-icon close"
                     />
-                  )}
+                  ))}
                 </ProfileMenu>{' '}
               </ProfileOptions>
               <MenuButton />
