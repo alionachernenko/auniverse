@@ -142,6 +142,7 @@ export const FeedbackForm = ({ setIsFormOpen }) => {
             files={images}
             text={text}
             showDialogWindow={setShowDialogWindow}
+            
           />
         )}
       </Backdrop>

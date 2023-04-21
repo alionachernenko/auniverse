@@ -23,14 +23,12 @@ import styled from 'styled-components';
 
 const AccountPage = () => {
   const { userId, isLoggedIn } = useContext(authContext);
-
   const [friends, setFriends] = useState([]);
   const [favouriteGames, setFavouriteGames] = useState([]);
   const [username, setUsername] = useState('');
   const [invitations, setInvitations] = useState([]);
   const [photoPath, setPhotoPath] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [isAvatarLoading, setIsAvatarLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
   const navigate = useNavigate();
@@ -109,8 +107,6 @@ const AccountPage = () => {
                   setPhotoPath={setPhotoPath}
                   avatar={photoPath}
                   username={username}
-                  isAvatarLoading={isAvatarLoading}
-                  setIsAvatarLoading={setIsAvatarLoading}
                   setUsername={setUsername}
                   setInvitations={setInvitations}
                   setFriends={setFriends}

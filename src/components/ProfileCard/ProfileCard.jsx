@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { authContext } from 'context';
-import { changeUsername, addAvatar, toastify } from 'utils';
+import { changeUsername } from 'utils';
 import { Oval } from 'react-loader-spinner';
 import { RxUpload } from 'react-icons/rx';
 import { BsPencilSquare } from 'react-icons/bs';
@@ -9,17 +9,14 @@ import { memo } from 'react';
 import { MdDone, MdClose } from 'react-icons/md';
 
 import styled from 'styled-components';
+import { UploadAvatarWindow } from 'components/UploadAvatarWindow/UploadAvatarWindow';
 
 export const ProfileCard = memo(
-  ({
-    avatar,
-    username,
-    isAvatarLoading,
-    setPhotoPath,
-    setIsAvatarLoading,
-    setUsername,
-  }) => {
+  ({ avatar, username, setPhotoPath, setUsername }) => {
     const { userId } = useContext(authContext);
+    const [showUploadAvatarWindow, setShowUploadAvatarWindow] = useState(false);
+    const [isAvatarLoading, setIsAvatarLoading] = useState(false);
+
     const location = useLocation();
 
     const [showChangeUsernameForm, setShowChangeUsernameForm] = useState(false);
@@ -34,44 +31,12 @@ export const ProfileCard = memo(
       setShowChangeUsernameForm(false);
     };
 
-    const uploadAvatar = e => {
-      const file = e.target.files[0];
-      const availableTypes = [
-        'image/png',
-        'image/jpg',
-        'image/gif',
-        'image/jpeg',
-      ];
-
-      if (file) {
-        if (file.size > 4194304) {
-          toastify(
-            `Maximum size: 4MB. Your size: ${Math.ceil(file.size / 1048576)}MB`
-          );
-          return;
-        }
-        if (!availableTypes.includes(file.type)) {
-          toastify(`Available formats: .png, .gif, .jpg, .jpeg`);
-          return;
-        }
-        setIsAvatarLoading(true);
-        addAvatar(file, userId, setPhotoPath, setIsAvatarLoading);
-      }
-    };
-
     return (
       <Info>
         <AvatarWrapper>
           {location.pathname.includes('profile') && (
             <>
-              <UploadInput
-                id="upload_file"
-                accept=".png, .jpg, .jpeg, .gif"
-                type="file"
-                name="photo"
-                onChange={e => uploadAvatar(e)}
-              />
-              <UploadButton htmlFor="upload_file">
+              <UploadButton onClick={() => setShowUploadAvatarWindow(true)}>
                 <RxUpload
                   size="100%"
                   fill="orange"
@@ -79,6 +44,13 @@ export const ProfileCard = memo(
                   stroke="orange"
                 />
               </UploadButton>
+              {showUploadAvatarWindow && (
+                <UploadAvatarWindow
+                  onClose={() => setShowUploadAvatarWindow(false)}
+                  setPhotoPath={setPhotoPath}
+                  setIsAvatarLoading={setIsAvatarLoading}
+                />
+              )}
             </>
           )}
 
@@ -225,15 +197,6 @@ const UploadButton = styled.label`
   ${AvatarWrapper}:hover & {
     opacity: 1;
   }
-`;
-
-const UploadInput = styled.input`
-  width: 0.1px;
-  height: 0.1px;
-  position: absolute;
-  z-index: -1;
-  opacity: 0;
-  overflow: hidden;
 `;
 
 const ChangeUsernameButton = styled.button`
