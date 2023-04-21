@@ -44,7 +44,7 @@ export const UploadAvatarWindow = ({
     if (file) {
         if (!availableTypes.includes(file.type)) {
         setUploadingError(
-          `Available formats: .pngm .jpg, .gif, .jpeg. Your format: .${file.type.split(
+          `Available formats: .png, .jpg, .gif, .jpeg. Your format: .${file.type.split(
             '/'
           )[1]}`
         );
