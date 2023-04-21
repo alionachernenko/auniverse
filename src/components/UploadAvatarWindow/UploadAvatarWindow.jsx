@@ -99,6 +99,7 @@ export const UploadAvatarWindow = ({
               </UploadButton>
             </form>
             <DragAndDropField
+            onDragOver={(e) => e.preventDefault()}
               onDrop={e => {
                 e.preventDefault();
                 console.log(e);
