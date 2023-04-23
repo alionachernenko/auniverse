@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { MdClose } from 'react-icons/md';
 
 import { addAvatar } from 'utils';
+import { preview } from '@cloudinary/url-gen/actions/videoEdit';
 
 export const UploadAvatarWindow = ({
   setPhotoPath,
@@ -100,7 +101,9 @@ export const UploadAvatarWindow = ({
               </UploadButton>
             </form>
             <DragAndDropField
-              onDragOver={e => e.preventDefault()}
+              onDragOver={e => {
+                e.preventDefault();
+              }}
               onDrop={e => {
                 e.preventDefault();
                 console.log(e);
@@ -112,9 +115,17 @@ export const UploadAvatarWindow = ({
           </div>
         </InnerWrapper>
         {preview && (
-          <PreviewImageWrapper>
-            <PreviewImage src={preview} alt="avatar preview" />
-          </PreviewImageWrapper>
+          <Previews>
+            <PreviewImageWrapper className="large">
+              <PreviewImage src={preview} alt="avatar preview" />
+            </PreviewImageWrapper>
+            <PreviewImageWrapper className="medium">
+              <PreviewImage src={preview} alt="avatar preview" />
+            </PreviewImageWrapper>
+            <PreviewImageWrapper className="small">
+              <PreviewImage src={preview} alt="avatar preview" />
+            </PreviewImageWrapper>
+          </Previews>
         )}
         <SubmitButton
           disabled={!file || uploadingError}
@@ -127,6 +138,18 @@ export const UploadAvatarWindow = ({
     </Backdrop>
   );
 };
+
+const Previews = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+
+  @media screen and (min-width: 400px) {
+    flex-direction: row
+  }
+`;
 
 const CloseButton = styled.button`
   width: 30px;
@@ -225,6 +248,7 @@ const DragAndDropField = styled.div`
   align-items: center;
   justify-content: center;
   background-color: #80808021;
+  background-image: url(${preview});
   border-radius: 20px;
 `;
 const Window = styled.div`
@@ -252,19 +276,37 @@ const Window = styled.div`
   }
 `;
 const PreviewImage = styled.img`
-  width: auto;
-  max-width: 100%;
+  width: 100%;
   height: 100%;
   object-fit: cover;
 `;
 
 const PreviewImageWrapper = styled.div`
-  height: 200px;
-  min-height: 200px;
-  width: fit-content;
-  border-radius: 10px;
+  object-fit: cover;
+  border-radius: 100px;
   overflow: hidden;
   cursor: pointer;
+
+  &.large {
+    height: 200px;
+    min-height: 200px;
+    width: 200px;
+    min-width: 200px;
+  }
+
+  &.medium {
+    height: 60px;
+    min-height: 60px;
+    width: 60px;
+    min-width: 60px;
+  }
+
+  &.small {
+    height: 40px;
+    min-height: 40px;
+    width: 40px;
+    min-width: 40px;
+  }
 `;
 
 const SubmitButton = styled.button`
