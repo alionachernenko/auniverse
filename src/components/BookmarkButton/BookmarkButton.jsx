@@ -1,16 +1,29 @@
 import { memo, useContext } from 'react';
 import { authContext } from 'context';
-import { removeGameFromBookmarks, addGameToBookmarks, toastify } from 'utils';
+import { removeGameFromBookmarks, addGameToBookmarks, toastify, fetchBookmarks} from 'utils';
 import { BsBookmark, BsFillBookmarkFill } from 'react-icons/bs';
 import styled from 'styled-components';
 import { Oval } from 'react-loader-spinner';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 export const BookmarkButton = memo(
-  ({ isBookmark, gameData, setIsBookmark, className }) => {
-    const { userId } = useContext(authContext);
+  ({ gameData, className, setBookmarks }) => {
+    const location = useLocation()
     const { slug } = gameData;
     const [isLoading, setIsLoading] = useState(false);
+    const { userId, isLoggedIn } = useContext(authContext);
+    const [isBookmark, setIsBookmark] = useState(() => location.pathname === '/profile/bookmarks')
+
+    useEffect(() => {
+    if (isLoggedIn) {
+      fetchBookmarks(userId).then(bookmarks => {
+        if (bookmarks.val()) {
+          setIsBookmark(Object.keys(bookmarks.val()).some(el => el === slug));
+        }
+      });
+    }
+  }, [isLoggedIn, setIsBookmark, slug, userId]);
 
     const toggleIsFavourite = () => {
       const toggle = () => {
@@ -23,6 +36,10 @@ export const BookmarkButton = memo(
       toggle()
         .then(() => {
           setIsBookmark(prevState => !prevState);
+
+          if(isBookmark) {
+            setBookmarks(prev => prev.filter(bookmark => bookmark.id !== gameData.id))
+          }
         })
         .catch(error => {
           console.log(error);
@@ -75,6 +92,19 @@ const Button = styled.button`
 
   & div {
     padding: 0;
+  }
+
+  &.bookmarks_list {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    background-color: rgb(84, 84, 84);
+    padding: 10px;
+
+    &:hover {
+      background-color: rgba(84, 84, 84, 0.8);
+    }
   }
 
   &.gamecard_catalog {

@@ -16,6 +16,7 @@ export const UploadAvatarWindow = ({
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [uploadingError, setUploadingError] = useState(null);
+  const [isDragOver, setIsDragOver] = useState(false)
 
   const onFormSubmit = e => {
     e.preventDefault();
@@ -100,9 +101,14 @@ export const UploadAvatarWindow = ({
                 Upload from device
               </UploadButton>
             </form>
-            <DragAndDropField
+            <DragAndDropField className={isDragOver && 'active'}
               onDragOver={e => {
                 e.preventDefault();
+                setIsDragOver(true)
+              }}
+              onDragLeave={e => {
+                e.preventDefault()
+                setIsDragOver(false)
               }}
               onDrop={e => {
                 e.preventDefault();
@@ -250,6 +256,11 @@ const DragAndDropField = styled.div`
   background-color: #80808021;
   background-image: url(${preview});
   border-radius: 20px;
+  transition: 150ms all ease;
+
+  &.active {
+    background-color: white
+  }
 `;
 const Window = styled.div`
   border-radius: 20px;

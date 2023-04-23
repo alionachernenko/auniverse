@@ -24,7 +24,7 @@ import styled from 'styled-components';
 const AccountPage = () => {
   const { userId, isLoggedIn } = useContext(authContext);
   const [friends, setFriends] = useState([]);
-  const [favouriteGames, setFavouriteGames] = useState([]);
+  const [bookmarks, setBookmarks] = useState([]);
   const [username, setUsername] = useState('');
   const [invitations, setInvitations] = useState([]);
   const [photoPath, setPhotoPath] = useState();
@@ -48,7 +48,7 @@ const AccountPage = () => {
     },
     {
       path: '/bookmarks',
-      element: <Bookmarks navigate={navigate} bookmarks={favouriteGames} />,
+      element: <Bookmarks navigate={navigate} bookmarks={bookmarks} setBookmarks={setBookmarks}/>,
     },
   ]);
 
@@ -78,7 +78,7 @@ const AccountPage = () => {
           setUsername('User');
         }
 
-        if (games.val()) setFavouriteGames([...Object.values(games.val())]);
+        if (games.val()) setBookmarks([...Object.values(games.val())]);
         if (friends.val()) setFriends([...Object.values(friends.val())]);
         if (invitations.val())
           setInvitations([...Object.values(invitations.val())]);

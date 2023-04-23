@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react"
-import { fetchUserInfo, removeFriendFromInvitationsList, acceptInvitationAndAddUser } from "utils"
+import { fetchUserInfo, removeFriendFromInvitationsList, acceptInvitationAndAddUser, removeFriend } from "utils"
 import { authContext } from "context"
+import { FiUserX } from "react-icons/fi"
 
 import { Link, useLocation } from "react-router-dom"
 import { FiPlusCircle } from 'react-icons/fi'
@@ -9,12 +10,17 @@ import { AiOutlineCloseCircle } from 'react-icons/ai'
 import styled from "styled-components"
 import avatarPlaceholder from '../../assets/images/avatar-placeholder.png'
 
-export const FriendCard = ({id, isPending, setInvitations, setFriends}) => {
+export const FriendCard = ({id, isPending, setInvitations, setFriends, friends}) => {
     const { userId } = useContext(authContext)
 
     const [name, setName] = useState('')
     const [avatar, setAvatar] = useState()
     const location = useLocation()
+
+    const onRemoveFriendButtonClick = () => {
+        setFriends(prev => prev.filter(friend => friend !== id))
+        removeFriend(id, userId)
+    }
 
       const onAcceptButtonClick = () => {
           acceptInvitationAndAddUser(id, userId).then(() => {
@@ -45,17 +51,39 @@ export const FriendCard = ({id, isPending, setInvitations, setFriends}) => {
                 <Avatar width={200} src={`${avatar}`} alt={`${name}'s avatar`}/>
 
             <Username>{name}</Username></Card>
-            {isPending &&
+            {isPending ?
                 <ChangeInviteStatusButtons><AcceptButton onClick={onAcceptButtonClick}>
                     <FiPlusCircle size='100%' /></AcceptButton>
                     <DeclineButton onClick={onDeclineButtonClick}>
                         <AiOutlineCloseCircle size='100%' />
                     </DeclineButton>
-                </ChangeInviteStatusButtons>}
+                </ChangeInviteStatusButtons> : <RemoveFriendButton onClick={onRemoveFriendButtonClick}>
+                    <FiUserX className="icon" size={30} fill='orange' stroke="orange" />
+                    </RemoveFriendButton>}
                     
         </li>
     )
 }
+
+const RemoveFriendButton = styled.button`
+    height: auto;
+    width: auto;
+    border: none;
+    background-color: white;
+   
+    border-radius: 100px;
+    cursor: pointer;    
+
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    transition: 150ms all ease;
+
+    &:hover {
+        transform: translateY(-50%) scale(1.1)
+    }
+`
 
 const ChangeInviteStatusButtons = styled.div`
     display: flex;

@@ -1,27 +1,15 @@
 import { Link, useLocation } from 'react-router-dom';
 import placeholderImage from 'assets/images/placeholder.png';
 import styled from 'styled-components';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { authContext } from 'context';
-import { fetchBookmarks } from 'utils';
 import { BookmarkButton } from 'components';
 
 export const GameCard = ({ data, className }) => {
   const location = useLocation();
-  const [isBookmark, setIsBookmark] = useState();
-  const { userId, isLoggedIn } = useContext(authContext);
+  const { isLoggedIn } = useContext(authContext);
 
   const { name, released, genres, background_image, slug, rating } = data;
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      fetchBookmarks(userId).then(bookmarks => {
-        if (bookmarks.val()) {
-          setIsBookmark(Object.keys(bookmarks.val()).some(el => el === slug));
-        }
-      });
-    }
-  }, [isLoggedIn, slug, userId]);
 
   return (
     <CardWrapper className={`${className}`}>
@@ -64,9 +52,7 @@ export const GameCard = ({ data, className }) => {
       </Link>
       {isLoggedIn && (
         <BookmarkButton
-          isBookmark={isBookmark}
           gameData={data}
-          setIsBookmark={setIsBookmark}
           className={`gamecard_${className}`}
         />
       )}

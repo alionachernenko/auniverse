@@ -12,7 +12,7 @@ export const Friends = memo(({friends, setFriends, invitations, setInvitations})
                 </InvitationsList>
             }
             {friends.length === 0? <p style={{textAlign: 'left'}}>No friends</p> : <FriendsList>
-                {friends.map(friend => <FriendCard id={friend} key={friend} isPending={false} />)}
+                {friends.map(friend => <FriendCard id={friend} key={friend} isPending={false} friends={friends} setFriends={setFriends}/>)}
             </FriendsList>}
             
         </Block>
