@@ -37,7 +37,7 @@ export const BookmarkButton = memo(
         .then(() => {
           setIsBookmark(prevState => !prevState);
 
-          if(isBookmark) {
+          if(isBookmark && location.pathname === '/profile/bookmarks') {
             setBookmarks(prev => prev.filter(bookmark => bookmark.id !== gameData.id))
           }
         })
