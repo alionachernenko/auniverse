@@ -34,20 +34,22 @@ export const Header = ({ onSubmit }) => {
               <Navigation />
               <ProfileOptions>
                 <ProfileMenu>
+                  
                   <ProfileButton />
-                  {isLoggedIn && (!showLogoutOption ? (
-                    <IoMdArrowDropdown
-                      color="white"
-                      onClick={() => setShowLogoutOption(prev => !prev)}
-                      className="open-logout-menu-icon open"
-                    />
-                  ) : (
-                    <IoMdArrowDropup
-                      color="white"
-                      onClick={() => setShowLogoutOption(prev => !prev)}
-                      className="open-logout-menu-icon close"
-                    />
-                  ))}
+                  {isLoggedIn &&
+                    (!showLogoutOption ? (
+                      <IoMdArrowDropdown
+                        color="white"
+                        onClick={() => setShowLogoutOption(prev => !prev)}
+                        className="open-logout-menu-icon open"
+                      />
+                    ) : (
+                      <IoMdArrowDropup
+                        color="white"
+                        onClick={() => setShowLogoutOption(prev => !prev)}
+                        className="open-logout-menu-icon close"
+                      />
+                    ))}
                 </ProfileMenu>{' '}
               </ProfileOptions>
               <MenuButton />
@@ -61,6 +63,7 @@ export const Header = ({ onSubmit }) => {
           className="header"
         />
       </LogOutOption>
+      
     </>
   );
 };

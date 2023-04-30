@@ -16,6 +16,9 @@ export const ProfileCard = memo(
     const { userId } = useContext(authContext);
     const [showUploadAvatarWindow, setShowUploadAvatarWindow] = useState(false);
     const [isAvatarLoading, setIsAvatarLoading] = useState(false);
+    const [usernameFormValue, setUsernameFormValue] = useState('');
+    const [showUsernameFormWarning, setShowUsernameFormWarning] =
+      useState(false);
 
     const location = useLocation();
 
@@ -24,7 +27,7 @@ export const ProfileCard = memo(
     const onUsernameFormSubmit = e => {
       e.preventDefault();
 
-      const username = e.target.elements.username.value;
+      const username = e.target.elements.username.value.trim();
 
       changeUsername(userId, username);
       setUsername(username);
@@ -82,13 +85,23 @@ export const ProfileCard = memo(
         {showChangeUsernameForm && (
           <ChangeUsernameFormWrapper>
             <ChangeUsernameForm onSubmit={e => onUsernameFormSubmit(e)}>
-              <input
-                type="text"
-                name="username"
-                minLength="3"
-                required
-                autoComplete="off"
-              />
+              <div>
+                <input
+                  type="text"
+                  name="username"
+                  minLength="3"
+                  required
+                  autoComplete="off"
+                  value={usernameFormValue}
+                  onChange={e => {
+                    const { value } = e.target;
+                    console.log(value.length);
+                    setShowUsernameFormWarning(value.length > 10);
+                    setUsernameFormValue(value);
+                  }}
+                />
+                {showUsernameFormWarning && <p>Limit: 10 characters</p>}
+              </div>
               <button type="submit">
                 <MdDone size={15} />
               </button>
@@ -109,6 +122,17 @@ export const ProfileCard = memo(
 const ChangeUsernameFormWrapper = styled.div`
   display: flex;
   gap: 5px;
+  & div {
+    position: relative;
+
+    & p {
+      position: absolute;
+      bottom: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%
+    }
+  }
 `;
 
 const CloseChangeUsernameFormButton = styled.button`
@@ -211,6 +235,7 @@ const ChangeUsernameButton = styled.button`
 const ChangeUsernameForm = styled.form`
   height: 30px;
   display: flex;
+
   & input {
     height: 100%;
     padding: 0 15px;
@@ -219,6 +244,9 @@ const ChangeUsernameForm = styled.form`
     background-color: white;
     border: 1px solid orange;
     margin-right: 5px;
+    font-size: 17px;
+    font-family: 'Nunito', sans-sefif;
+    color: #00021a
   }
 
   & button {

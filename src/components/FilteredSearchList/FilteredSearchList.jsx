@@ -10,7 +10,7 @@ export const FilteredSearchList = ({ results, isLoading }) => {
   return (
     <Results>
       {isLoading && <LinearProgress className="loader" />}
-      {results.length === 0 ? (
+      {results.length === 0 && !isLoading ? (
         <p style={{fontSize: 20, color: '#00021a'}}>No matches</p>
       ) : (
         <List>

@@ -1,6 +1,19 @@
-import { ref, set, get, remove, serverTimestamp } from 'firebase/database';
+import {
+  ref,
+  set,
+  get,
+  remove,
+  serverTimestamp,
+} from 'firebase/database';
 
-import { database } from '../../config/firebase';
+import { database, firestore } from '../../config/firebase';
+import {
+  addDoc,
+  arrayUnion,
+  collection,
+  doc,
+  updateDoc,
+} from 'firebase/firestore';
 
 export const addNewUser = (userId, email, favs, username) => {
   set(ref(database, 'users/' + userId), {
@@ -138,5 +151,30 @@ export const leaveFeedbackMessage = (text, userId, feedbackId) => {
   set(ref(database, `/feedback/${feedbackId}`), {
     author: userId,
     text,
+  });
+};
+
+//messages
+
+export const createNewChat = async (senderId, recepientId, message) => {
+  const chat = {
+    members: [senderId, recepientId],
+    senderId,
+    recepientId,
+    messages: [message],
+    typing: null
+  };
+  try {
+    return await addDoc(collection(firestore, 'chats'), chat);
+  } catch (e) {
+    console.error('Error adding document: ', e);
+  }
+};
+
+export const addNewMessage = async (chatId, message) => {
+  const chatsRef = doc(firestore, 'chats', chatId);
+
+  await updateDoc(chatsRef, {
+    messages: arrayUnion(message),
   });
 };

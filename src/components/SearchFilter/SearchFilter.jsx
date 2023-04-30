@@ -104,7 +104,7 @@ export const SearchFilter = ({
 
 const Filters = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 `;
 
 const Filter = styled.div`
@@ -119,8 +119,9 @@ const Label = styled.label`
 `;
 
 const FilterOptions = styled.select`
-  width: 80px;
-  height: 30px;
+  width: 80px; 
+  height: auto;
+  padding: 5px;
   border-radius: 15px;
   font-family: inherit;
   color: darkblue;

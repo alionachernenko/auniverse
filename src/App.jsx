@@ -27,13 +27,14 @@ const AccountPage = lazy(() => import('./pages/AccountPage/AccountPage'));
 const ErrorPage = lazy(() => import('./pages/ErrorPage/ErrorPage'));
 const UserProfile = lazy(() => import('./pages/UserProfile/UserProfile'));
 const Users = lazy(() => import('./pages/Community/Community'));
+const MessagesPage = lazy(() => import('./pages/MessagesPage/MessagesPage'));
 
 export const App = () => {
-  const {setValue} = useContext(searchFormContext)
+  const { setValue } = useContext(searchFormContext);
   const location = useLocation();
 
   useEffect(() => {
-    setValue('')
+    setValue('');
     window.scroll({
       top: 0,
     });
@@ -54,6 +55,7 @@ export const App = () => {
           <Route path="/users" element={<Users />} />
           <Route path="/users/:id/*" element={<UserProfile />} />
           <Route path="/profile/*" element={<AccountPage />} />
+          <Route path="/messages" element={<MessagesPage />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Suspense>

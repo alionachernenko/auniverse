@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { useNavigate, useParams, useRoutes } from 'react-router-dom';
+import { Link, useNavigate, useParams, useRoutes } from 'react-router-dom';
 import {
   fetchFriendsInvitationsList,
   fetchUserInfo,
@@ -106,6 +106,7 @@ const User = () => {
             />
 
             {isLoggedIn && (
+              <>
               <FriendshipOptions
                 isFriendInvited={isFriendInvited}
                 isFriend={isFriend}
@@ -113,6 +114,8 @@ const User = () => {
                 setIsFriend={setIsFriend}
                 isPending={isPending}
               />
+              <Link to={`/messages?with=${id}`}>Send message</Link>
+              </>
             )}
           </Wrapper>
 
