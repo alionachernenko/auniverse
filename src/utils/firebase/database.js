@@ -1,10 +1,4 @@
-import {
-  ref,
-  set,
-  get,
-  remove,
-  serverTimestamp,
-} from 'firebase/database';
+import { ref, set, get, remove, serverTimestamp } from 'firebase/database';
 
 import { database, firestore } from '../../config/firebase';
 import {
@@ -162,7 +156,7 @@ export const createNewChat = async (senderId, recepientId, message) => {
     senderId,
     recepientId,
     messages: [message],
-    typing: null
+    typing: null,
   };
   try {
     return await addDoc(collection(firestore, 'chats'), chat);
@@ -173,7 +167,6 @@ export const createNewChat = async (senderId, recepientId, message) => {
 
 export const addNewMessage = async (chatId, message) => {
   const chatsRef = doc(firestore, 'chats', chatId);
-
   await updateDoc(chatsRef, {
     messages: arrayUnion(message),
   });

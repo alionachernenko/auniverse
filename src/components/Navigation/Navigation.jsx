@@ -27,7 +27,7 @@ export const Navigation = () => {
           </Item>
           {isLoggedIn && (
             <Item>
-              <Tab to="/messages" end>
+              <Tab to="/messages?id=new&with=none" end>
                 <span>Messages</span>
               </Tab>
             </Item>

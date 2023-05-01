@@ -34,8 +34,6 @@ export const ReplyForm = ({
       date: serverTimestamp(),
     };
 
-    // console.log(id, commentId);
-
     const ref = parentReplyId
       ? `/comments/${gameSlug}/${mainCommentId}/replies/${parentReplyId}/replies/${replyId}`
       : `/comments/${gameSlug}/${commentId}/replies/${replyId}`;

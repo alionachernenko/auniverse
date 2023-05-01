@@ -1,3 +1,4 @@
+import { Loader } from 'components';
 import { Chat } from 'components/Chat';
 import { ChatItem } from 'components/ChatItem/ChatItem';
 import { firestore } from 'config/firebase';
@@ -11,11 +12,13 @@ import styled from 'styled-components';
 const MessagesPage = () => {
   const [chats, setChats] = useState([]);
   const [searchParams] = useSearchParams();
+  const [isLoading, setIsLoading] = useState(false);
   const { userId } = useContext(authContext);
   const chatId = searchParams.get('id');
   const recepientId = searchParams.get('with');
 
   useEffect(() => {
+    setIsLoading(true);
     getChats(userId);
   }, [userId]);
 
@@ -31,6 +34,7 @@ const MessagesPage = () => {
         chats.push({ ...doc.data(), id: doc.id });
       });
       setChats(chats);
+      setIsLoading(false);
     });
   };
 
@@ -43,17 +47,25 @@ const MessagesPage = () => {
         position: 'relative',
       }}
     >
-      <ChatsList>
-        {chats.map(chat => (
-          <ChatItem data={chat} />
-        ))}
-      </ChatsList>
-      {chatId === 'new' && (recepientId === 'none' ? (
-        <StartMessage>Select a chat</StartMessage>
+      {isLoading ? (
+        <Loader color="#00021a" />
       ) : (
-        <StartMessage>Start a chat</StartMessage>
-      ))}
-      <Chat />
+        <>
+          <ChatsList>
+            {chats.map(chat => (
+              <ChatItem data={chat} key={chat.id} />
+            ))}
+          </ChatsList>
+          {chatId === 'new' && chats.length === 0 && recepientId === 'none' ? (
+            <StartMessage>You have no chats yet</StartMessage>
+          ) : recepientId === 'none' ? (
+            <StartMessage>Select a chat</StartMessage>
+          ) : chatId === 'new' && (
+            <StartMessage>Start a chat</StartMessage>
+          )}
+          <Chat />
+        </>
+      )}
     </div>
   );
 };
@@ -70,7 +82,6 @@ const StartMessage = styled.p`
 `;
 
 const ChatsList = styled.ul`
-  width: 25vw;
   height: 100%;
   overflowy: scroll;
   background-color: #00021a;

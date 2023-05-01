@@ -6,7 +6,6 @@ import { BookmarkButton } from 'components';
 
 export const Bookmarks = memo(({ bookmarks, setBookmarks }) => {
   const location = useLocation();
-  console.log(location.pathname)
 
   return (
     <Block>

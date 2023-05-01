@@ -95,7 +95,6 @@ export const ProfileCard = memo(
                   value={usernameFormValue}
                   onChange={e => {
                     const { value } = e.target;
-                    console.log(value.length);
                     setShowUsernameFormWarning(value.length > 10);
                     setUsernameFormValue(value);
                   }}

@@ -14,21 +14,22 @@ import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { addNewMessage, createNewChat } from 'utils';
 import { Loader } from './Loader/Loader';
-import { nanoid } from 'nanoid';
 import { RiSendPlaneFill } from 'react-icons/ri';
+import { nanoid } from 'nanoid';
+import { TypingDots } from './TypingDots/TypingDots';
+
 export const Chat = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [messages, setMessages] = useState(null);
   const [messageValue, setMessageValue] = useState('');
   const [chatExists, setChatExists] = useState(false);
   const { userId } = useContext(authContext);
-  const chatId = searchParams.get('id');
-  const recepientId = searchParams.get('with');
   const [isLoading, setIsLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const chatId = searchParams.get('id');
+  const recepientId = searchParams.get('with');
 
   useEffect(() => {
-    setIsLoading(true);
     const checkChatExists = async () => {
       const q = query(
         collection(firestore, 'chats'),
@@ -43,19 +44,15 @@ export const Chat = () => {
         });
       else setSearchParams({ id: 'new', with: recepientId || 'none' });
     };
-
     checkChatExists();
-    setIsLoading(false);
   }, [recepientId, setSearchParams]);
 
   useEffect(() => {
-    setIsLoading(true);
-    if (chatId) {
+    if (chatId && chatId !== 'new') {
       const docRef = doc(firestore, 'chats', chatId);
       onSnapshot(docRef, snapshot => {
         setMessages(snapshot.data()?.messages);
-        setIsLoading(false);
-        if (snapshot.data().typing && snapshot.data().typing !== userId) {
+        if (snapshot.data()?.typing && snapshot.data()?.typing !== userId) {
           setIsTyping(snapshot.data().typing);
         } else setIsTyping(false);
       });
@@ -67,6 +64,7 @@ export const Chat = () => {
     const message = {
       senderId: userId,
       text: messageValue,
+      id: nanoid(),
     };
 
     e.preventDefault();
@@ -82,29 +80,32 @@ export const Chat = () => {
   };
 
   const onBlur = () => {
-    const chatRef = doc(firestore, 'chats', chatId);
-    updateDoc(chatRef, {
-      typing: null,
-    });
+    if (chatId && chatId !== 'new') {
+      const chatRef = doc(firestore, 'chats', chatId);
+      updateDoc(chatRef, {
+        typing: null,
+      });
+    }
   };
 
   const onFocus = () => {
-    const chatRef = doc(firestore, 'chats', chatId);
-    updateDoc(chatRef, {
-      typing: userId,
-    });
+    if (chatId && chatId !== 'new') {
+      const chatRef = doc(firestore, 'chats', chatId);
+      updateDoc(chatRef, {
+        typing: userId,
+      });
+    }
   };
 
   return (
     <Window>
-      {isLoading ? (
+      {chatExists && isLoading ? (
         <Loader color="#00021a" className="loader-chat" />
       ) : (
-        chatExists &&
         messages && (
           <Messages>
             {messages.map(message => (
-              <div key={nanoid()}>
+              <div key={message.id}>
                 {message.senderId === userId && (
                   <p
                     style={{
@@ -127,9 +128,11 @@ export const Chat = () => {
           </Messages>
         )
       )}
-      {chatId !== 'new' && isTyping === recepientId && <p>Typing...</p>}
       {(chatId !== 'new' || recepientId !== 'none') && (
         <Form onSubmit={e => onSendMessageFormSubmit(e)}>
+          {chatId !== 'new' && isTyping === recepientId && (
+            <TypingDots size={10} color="#00021a" className="large" />
+          )}
           <textarea
             onChange={e => {
               setMessageValue(e.target.value);
@@ -137,7 +140,7 @@ export const Chat = () => {
             onFocus={onFocus}
             onBlur={onBlur}
           />
-          <button disabled={messageValue === ''} type="submit">
+          <button disabled={!messageValue.trim().length} type="submit">
             <RiSendPlaneFill size="100%" color="white" />
           </button>
         </Form>
@@ -178,6 +181,7 @@ const Form = styled.form`
   width: auto;
   display: flex;
   justify-content: space-between;
+  position: relative;
 
   & textarea {
     max-width: 100%;

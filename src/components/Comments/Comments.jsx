@@ -19,7 +19,6 @@ export const Comments = ({ comments, setComments }) => {
     const id = nanoid();
     const date = new Date();
     e.preventDefault();
-    console.log(date.getDate());
 
     const commentInput = e.target.elements.comment;
     const commentText = commentInput.value;

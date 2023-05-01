@@ -43,7 +43,6 @@ export const UploadAvatarWindow = ({
       'image/jpeg',
     ];
 
-    console.log(file.type);
 
     if (file) {
       if (!availableTypes.includes(file.type)) {
@@ -112,7 +111,6 @@ export const UploadAvatarWindow = ({
               }}
               onDrop={e => {
                 e.preventDefault();
-                console.log(e);
                 uploadAvatar(e.dataTransfer.files[0]);
               }}
             >
