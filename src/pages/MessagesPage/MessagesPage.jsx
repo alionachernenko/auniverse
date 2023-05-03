@@ -60,10 +60,10 @@ const MessagesPage = () => {
             <StartMessage>You have no chats yet</StartMessage>
           ) : recepientId === 'none' ? (
             <StartMessage>Select a chat</StartMessage>
-          ) : chatId === 'new' && (
-            <StartMessage>Start a chat</StartMessage>
+          ) : (
+            chatId === 'new' && <StartMessage>Start a chat</StartMessage>
           )}
-          <Chat />
+          {(chatId !== 'new' || recepientId !== 'none') && <Chat />}
         </>
       )}
     </div>

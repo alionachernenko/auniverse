@@ -29,11 +29,13 @@ export const Chat = () => {
   const chatId = searchParams.get('id');
   const recepientId = searchParams.get('with');
 
+  console.log(recepientId, userId);
+
   useEffect(() => {
     const checkChatExists = async () => {
       const q = query(
         collection(firestore, 'chats'),
-        where('members', 'array-contains', recepientId)
+        where('members', 'array-contains', recepientId, userId)
       );
       const querySnapshot = await getDocs(q);
       setChatExists(!querySnapshot.empty);
@@ -45,7 +47,7 @@ export const Chat = () => {
       else setSearchParams({ id: 'new', with: recepientId || 'none' });
     };
     checkChatExists();
-  }, [recepientId, setSearchParams]);
+  }, [recepientId, setSearchParams, userId]);
 
   useEffect(() => {
     if (chatId && chatId !== 'new') {
@@ -106,21 +108,10 @@ export const Chat = () => {
           <Messages>
             {messages.map(message => (
               <div key={message.id}>
-                {message.senderId === userId && (
-                  <p
-                    style={{
-                      fontSize: 12,
-                      color: 'grey',
-                      marginBottom: 2,
-                      marginLeft: 20,
-                    }}
-                  >
-                    You
-                  </p>
-                )}
                 <Message
                   className={message.senderId === userId ? 'send' : 'received'}
                 >
+                  {message.senderId === userId && <p>You</p>}
                   {message.text}
                 </Message>
               </div>
@@ -157,12 +148,14 @@ const Window = styled.div`
   box-sizing: border-box;
   position: relative;
 `;
+
 const Message = styled.li`
   width: 40%;
   padding: 12px;
   border-radius: 20px;
   font-family: 'Nunito', sans-serif;
   word-break: break-all;
+  position: relative;
   &.received {
     color: #00021a;
     border: 1px solid orange;
@@ -172,6 +165,13 @@ const Message = styled.li`
     background-color: aliceblue;
     color: #00021a;
     border: 1px solid #00021a;
+    margin-left: auto;
+  }
+
+  & > p {
+    font-size: 12px;
+    color: grey;
+    bottom: 100%;
   }
 `;
 

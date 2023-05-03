@@ -18,6 +18,7 @@ import {
   FriendshipOptions,
 } from 'components';
 import avatarPlaceholder from '../../assets/images/avatar-placeholder.png';
+import { FiMail } from 'react-icons/fi';
 
 const User = () => {
   const { userId, isLoggedIn } = useContext(authContext);
@@ -106,19 +107,25 @@ const User = () => {
             />
 
             {isLoggedIn && (
-              <>
-              <FriendshipOptions
-                isFriendInvited={isFriendInvited}
-                isFriend={isFriend}
-                setIsFriendInvited={setIsFriendInvited}
-                setIsFriend={setIsFriend}
-                isPending={isPending}
-              />
-              <Link to={`/messages?with=${id}`}>Send message</Link>
-              </>
+              <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
+                <FriendshipOptions
+                  isFriendInvited={isFriendInvited}
+                  isFriend={isFriend}
+                  setIsFriendInvited={setIsFriendInvited}
+                  setIsFriend={setIsFriend}
+                  isPending={isPending}
+                />
+                <MessageButton>
+                  <Link
+                    to={`/messages?with=${id}`}
+                    style={{ height: 20, display: 'block' }}
+                  >
+                    <FiMail color="#00021a" size={20} />
+                  </Link>
+                </MessageButton>
+              </div>
             )}
           </Wrapper>
-
           {isPending && (
             <AcceptInvitationForm
               setIsPending={setIsPending}
@@ -137,6 +144,24 @@ const User = () => {
     </Page>
   );
 };
+
+const MessageButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  padding: 7px;
+  border: 1px solid white;
+  border-radius: 100px;
+  transition: 200ms all ease;
+
+  &:hover {
+    background-color: transparent;
+    & svg {
+      stroke: white
+    }
+  }
+`;
 
 const Wrapper = styled.div`
   display: flex;

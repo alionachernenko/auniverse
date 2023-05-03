@@ -107,6 +107,7 @@ const Item = styled.li`
   font-family: 'Nunito', sans-serif;
   width: 230px;
   position: relative;
+  cursor: pointer;
 
   &.selected {
     background-color: #00021a;
