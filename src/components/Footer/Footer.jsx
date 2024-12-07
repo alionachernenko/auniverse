@@ -33,7 +33,6 @@ export const Footer = () => {
             </Links>
           </Navigation>
           <Contacts>
-            <a href="tel:+380953596448">+380953596448</a>
             <a href="mailto:alionachernenkoch@gmail.com">
               alionachernenkoch@gmail.com
             </a>
