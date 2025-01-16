@@ -33,9 +33,6 @@ export const Footer = () => {
             </Links>
           </Navigation>
           <Contacts>
-            <a href="mailto:alionachernenkoch@gmail.com">
-              alionachernenkoch@gmail.com
-            </a>
             <FeedbackFormButton />
           </Contacts>
         </FooterContainer>
